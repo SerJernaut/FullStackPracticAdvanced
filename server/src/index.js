@@ -4,16 +4,19 @@ const express = require('express');
 const router = require('./server/router');
 const cors = require('cors');
 const controller = require('./socketInit');
-const handlerError = require('./server/handlerError/handler');
+const errorsHandler = require('./server/handlerError/errorsHandler');
+const errorsHandleLogger = require('./server/loggers/errorsHandleLogger');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9632;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use('/public', express.static('public'));
 app.use(router);
-app.use(handlerError);
+
+app.use(errorsHandleLogger);
+app.use(errorsHandler);
 
 const server = http.createServer(app);
 server.listen(PORT/*,
