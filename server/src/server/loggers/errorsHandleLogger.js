@@ -15,13 +15,14 @@ module.exports = (err, req, res, next) => {
     const absolutePathToLogFile = path.resolve(absolutePathToLogsDir, 'errorLogs.json');
     if (fs.existsSync(absolutePathToLogFile)) {
         const existingLogs = fs.readFileSync(absolutePathToLogFile);
-        if(existingLogs) {
-            const jsonExistingLogs = JSON.parse(existingLogs);
+        const jsonExistingLogs = JSON.parse(existingLogs);
+        if (Array.isArray(jsonExistingLogs)) {
             jsonExistingLogs.push(errorData);
             fs.writeFileSync(absolutePathToLogFile, JSON.stringify(jsonExistingLogs, null, 2), 'utf-8')
+        } else {
+            fs.writeFileSync(absolutePathToLogFile, JSON.stringify([]));
         }
-    }
-        else {
+    } else {
         fs.appendFileSync(absolutePathToLogFile, JSON.stringify([errorData], null, 2), 'utf-8')
     }
     next(err);
