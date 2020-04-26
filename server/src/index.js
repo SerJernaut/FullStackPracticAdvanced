@@ -4,7 +4,7 @@ const express = require('express');
 const router = require('./server/router');
 const cors = require('cors');
 const controller = require('./socketInit');
-const errorsHandler = require('./server/handlerError/errorsHandler');
+const errorsHandler = require('./server/handlerError/handler');
 const errorsHandleLogger = require('./server/loggers/errorsHandleLogger');
 const schedule = require('node-schedule');
 const scheduledAutoCopyingLogs = require('./server/loggers/scheduledAutoCopyingLogs');
@@ -20,7 +20,7 @@ app.use(router);
 app.use(errorsHandleLogger);
 app.use(errorsHandler);
 
-schedule.scheduleJob('15 2 * * *', scheduledAutoCopyingLogs);
+schedule.scheduleJob('29 9 * * *', scheduledAutoCopyingLogs);
 
 const server = http.createServer(app);
 server.listen(PORT/*,
