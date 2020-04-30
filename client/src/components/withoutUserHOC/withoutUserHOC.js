@@ -1,15 +1,11 @@
 import React from 'react';
 import {onlyForNotAuthorize} from '../../actions/actionCreator';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
 
+const withoutUserHOC = Component => {
 
-const OnlyNotAuthorizedUserHoc = (Component) => {
-
-    const mapStateToProps = (state) => {
-        return state.userStore;
-    };
+    const mapStateToProps = state => state.userStore;
 
     const mapDispatchToProps = (dispatch) => {
         return {
@@ -17,7 +13,7 @@ const OnlyNotAuthorizedUserHoc = (Component) => {
         }
     };
 
-    class HocForLoginSignUp extends React.Component {
+    class ComponentOnlyForNotAuthorized extends React.Component {
         componentDidMount() {
             this.props.checkAuth(this.props.history.replace);
         }
@@ -32,8 +28,8 @@ const OnlyNotAuthorizedUserHoc = (Component) => {
         }
     }
 
-    return connect(mapStateToProps, mapDispatchToProps)(HocForLoginSignUp);
-};
+    return connect(mapStateToProps, mapDispatchToProps)(ComponentOnlyForNotAuthorized);
 
+}
 
-export default OnlyNotAuthorizedUserHoc;
+export default withoutUserHOC;

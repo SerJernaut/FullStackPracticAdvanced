@@ -9,7 +9,6 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import PrivateHoc from "./components/PrivateHoc/PrivateHoc";
 import NotFound from "./components/NotFound/NotFound";
 import Home from "./pages/Home/Home";
-import OnlyNotAuthorizedUserHoc from "./components/OnlyNotAuthorizedUserHoc/OnlyNotAuthorizedUserHoc";
 import ContestPage from "./pages/ContestPage/ContestPage";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +18,8 @@ import CONSTANTS from "./constants";
 import browserHistory from "./browserHistory";
 import ChatContainer from "./components/Chat/ChatComponents/ChatContainer/ChatContainer";
 import UserTransactionsPage from "./pages/UserTransactionsPage";
+import withoutUserHOC from "./components/withoutUserHOC/withoutUserHOC";
+import RecoveryPasswordPage from "./pages/RecoveryPasswordPage/RecoveryPasswordPage";
 
 class App extends Component {
   render() {
@@ -40,12 +41,17 @@ class App extends Component {
           <Route
             exact
             path="/login"
-            component={OnlyNotAuthorizedUserHoc(LoginPage)}
+            component={withoutUserHOC(LoginPage)}
           />
+            <Route
+                exact
+                path="/recovery_password"
+                component={withoutUserHOC(RecoveryPasswordPage)}
+            />
           <Route
             exact
             path="/registration"
-            component={OnlyNotAuthorizedUserHoc(RegistrationPage)}
+            component={withoutUserHOC(RegistrationPage)}
           />
           <Route exact path="/payment" component={PrivateHoc(Payment)} />
           <Route

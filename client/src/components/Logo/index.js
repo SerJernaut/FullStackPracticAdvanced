@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CONSTANTS from '../../constants.js';
 
-const Logo = ({to, ...props}) => {
+const Logo = ({className, to, ...props}) => {
   return (
-    <Link to={ to }>
+    <Link className={className} to={ to }>
       <img { ...props }/>
     </Link>
   );
