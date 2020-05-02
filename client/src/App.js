@@ -19,7 +19,6 @@ import browserHistory from "./browserHistory";
 import ChatContainer from "./components/Chat/ChatComponents/ChatContainer/ChatContainer";
 import UserTransactionsPage from "./pages/UserTransactionsPage";
 import withoutUserHOC from "./components/withoutUserHOC/withoutUserHOC";
-import RecoveryPasswordPage from "./pages/RecoveryPasswordPage/RecoveryPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import RedirectToLogin from "./pages/RedirectToLogin/RedirectToLogin";
 
