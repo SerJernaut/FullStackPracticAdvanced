@@ -16,6 +16,38 @@ const userQueries = require('./queries/userQueries');
 const bankQueries = require('./queries/bankQueries');
 const ratingQueries = require('./queries/ratingQueries');
 
+module.exports.findUserByEmail = async (req, res, next) => {
+  try{
+    const email = req.body.email || req.tokenData.email;
+    console.log(email)
+    const foundUser = await userQueries.findUser({email});
+    if (foundUser) {
+      req.foundUser = foundUser
+      return next();
+    }
+    next(new ServerError());
+  }
+  catch (err) {
+    next(err);
+  }
+}
+
+module.exports.compareNewPasswordWithCurrent = async (req, res, next) => {
+  const newPassword = req.body.newPassword || req.tokenData.newPassword;
+  const {foundUser: {password}} = req;
+  try{
+    const isPasswordsEqual = await userQueries.comparePasswordWithCurrent(newPassword, password);
+    console.log(isPasswordsEqual)
+    if (!isPasswordsEqual) next();
+  }
+  catch(err) {
+    next(err);
+  }
+}
+
+
+
+
 module.exports.login = async (req, res, next) => {
   try {
     const foundUser = await userQueries.findUser({ email: req.body.email });
@@ -260,3 +292,17 @@ module.exports.getUserTransactionBankStatements = async (req, res, next) => {
   }
 };
 
+module.exports.updateUserByAccessToken = async (req, res, next) => {
+  try{
+    const {tokenData: {email, newPassword}} = req;
+    const updatedUser = await userQueries.updateUserByEmail({password: newPassword}, email);
+    if (updatedUser) {
+      req.updatedUser = updatedUser;
+      return next();
+    }
+    return new ServerError("can't find the user")
+  }
+  catch(e) {
+    next(e);
+  }
+}

@@ -2,6 +2,7 @@ import axios from 'axios';
 import CONTANTS from '../constants';
 import history from '../browserHistory';
 
+
 const instance = axios.create({
     baseURL: CONTANTS.BASE_URL
 });
@@ -21,7 +22,12 @@ instance.interceptors.response.use(response => {
     }
     return response;
 }, err => {
-    if (err.response.status === 408 && history.location.pathname !== '/login' && history.location.pathname !== '/registration' && history.location.pathname !== '/recovery_password' && history.location.pathname !== '/') {
+
+    if (err.response.status === 408 &&
+        history.location.pathname !== '/login'
+        && history.location.pathname !== '/registration'
+        && history.location.pathname !== '/reset_password'
+        && history.location.pathname !== '/') {
         history.replace('/login');
     }
     return Promise.reject(err);

@@ -1,3 +1,6 @@
+import authenticateRouter from "./authenticateRouter";
+import resetPasswordRouter from "./resetPasswordRouter";
+
 const express = require('express');
 const basicMiddlewares = require('../middlewares/basicMiddlewares');
 const hashPass = require('../middlewares/hashPassMiddle');
@@ -9,18 +12,8 @@ const chatController = require('../controllers/chatController');
 const upload = require('../utils/fileUpload');
 const router = express.Router();
 
-router.post(
-  '/registration',
-  validators.validateRegistrationData,
-  hashPass,
-  userController.registration,
-);
-
-router.post(
-  '/login',
-  validators.validateLogin,
-  userController.login,
-);
+router.use('/authentication', authenticateRouter);
+router.use('/recovery', resetPasswordRouter)
 
 router.post(
   '/dataForContest',

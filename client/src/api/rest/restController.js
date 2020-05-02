@@ -1,7 +1,7 @@
 import http from '../interceptor';
 
-export const registerRequest = (data) => http.post('registration', data);
-export const loginRequest = (data) => http.post('login', data);
+export const registerRequest = (data) => http.post('authentication/registration', data);
+export const loginRequest = (data) => http.post('authentication/login', data);
 export const getUser = () => http.post('getUser');
 export const updateContest = data => http.post('updateContest', data);
 export const setNewOffer = data => http.post('setNewOffer', data);
@@ -51,8 +51,13 @@ export const getUserTransactionStatements = () => {
     return http.get('getUserTransactionBankStatements');
 }
 
+export const resetPassword = formValues => {
+    return http.post('recovery/send_email_for_reset_password', formValues);
+}
 
-
+export const confirmResetPassword = accessToken => {
+    return http.post('recovery/confirm_reset_password', accessToken);
+}
 
 
 

@@ -2,6 +2,7 @@ const bd = require('../../models/index');
 const UserNotFoundError = require('../../errors/UserNotFoundError');
 const NotFoundError = require('../../errors/NotFoundError');
 const ServerError = require('../../errors/ServerError');
+const PasswordAffiliationError = require('../../errors/PasswordAffiliationError')
 const bcrypt = require('bcrypt');
 
 module.exports.updateUser = async (data, userId, transaction) => {
@@ -12,6 +13,16 @@ module.exports.updateUser = async (data, userId, transaction) => {
   }
   return updatedUser.dataValues;
 };
+
+module.exports.updateUserByEmail = async (data, email) => {
+  const [updatedCount, [updatedUser]] = await bd.Users.update(data,
+      { where: { email }, returning: true });
+  if (updatedCount !== 1) {
+    throw new ServerError('cannot update user');
+  }
+  return updatedUser.dataValues;
+};
+
 
 module.exports.findUser = async (predicate, transaction) => {
   const result = await bd.Users.findOne({ where: predicate, transaction });
@@ -37,6 +48,16 @@ module.exports.passwordCompare = async (pass1, pass2) => {
     throw new UserNotFoundError('Wrong password');
   }
 };
+
+module.exports.comparePasswordWithCurrent = async (pass1, pass2) => {
+  const passwordCompare = await bcrypt.compare(pass1, pass2);
+  if ( passwordCompare) {
+    throw new PasswordAffiliationError();
+  }
+  return passwordCompare;
+};
+
+
 
 module.exports.findTransactionHistory = async (userId) => {
   try{

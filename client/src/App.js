@@ -20,6 +20,8 @@ import ChatContainer from "./components/Chat/ChatComponents/ChatContainer/ChatCo
 import UserTransactionsPage from "./pages/UserTransactionsPage";
 import withoutUserHOC from "./components/withoutUserHOC/withoutUserHOC";
 import RecoveryPasswordPage from "./pages/RecoveryPasswordPage/RecoveryPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
+import RedirectToLogin from "./pages/RedirectToLogin/RedirectToLogin";
 
 class App extends Component {
   render() {
@@ -45,8 +47,13 @@ class App extends Component {
           />
             <Route
                 exact
-                path="/recovery_password"
-                component={withoutUserHOC(RecoveryPasswordPage)}
+                path="/reset_password"
+                component={withoutUserHOC(ResetPasswordPage)}
+            />
+            <Route
+                exact path="/confirm_reset_password/:accessToken"
+                render={({match}) => (
+                    <RedirectToLogin match={match}/>)}
             />
           <Route
             exact

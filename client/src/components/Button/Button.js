@@ -1,16 +1,17 @@
-import React      from 'react';
-import PropTypes  from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import styles     from './Button.module.sass';
+import styles from './Button.module.sass';
 
-const Button = ({ className, ...rest }) => {
+const Button = ({className, isDisabled, ...rest}) => {
 
-    const classNameValue = classNames( styles.button,
-        className
+    const classNameValue = classNames(styles.button,
+        className,
+        {[styles.disabled]: isDisabled}
     );
 
     return (
-        <button className={classNameValue} {...rest}/>
+        <button disabled={isDisabled} className={classNameValue} {...rest}/>
     );
 };
 

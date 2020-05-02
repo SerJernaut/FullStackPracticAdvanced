@@ -110,16 +110,12 @@ export const clearBundle = () => {
 };
 
 
-
-
 export const updateContest = (data) => {
     return {
         type: ACTION.UPDATE_CONTEST_ACTION,
         data: data
     }
 };
-
-
 
 
 export const saveContestToStore = (data) => {
@@ -153,8 +149,8 @@ export const setOfferStatus = (data) => {
 };
 
 
-export const createCatalog=(data)=>{
-    return{
+export const createCatalog = (data) => {
+    return {
         type: ACTION.CREATE_CATALOG_REQUEST,
         data: data
     }
@@ -166,8 +162,6 @@ export const updateUserData = (data) => {
         data: data
     }
 };
-
-
 
 
 export const cashOut = (data) => {
@@ -446,5 +440,47 @@ export const getUserTransactionsHistoryRequest = () => {
 export const getUserTransactionStatementsRequest = () => {
     return {
         type: ACTION.GET_USER_TRANSACTION_STATEMENTS_REQUEST
+    }
+}
+
+export const sendMailForResetPasswordRequest = formValues => {
+    return {
+        type: ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_REQUEST,
+        data: formValues
+    }
+}
+
+export const sendMailForResetPasswordSuccess = noticeMessage => {
+    return {
+        type: ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_SUCCESS,
+        noticeMessage
+    }
+}
+
+export const sendMailForResetPasswordError = error => {
+    return {
+        type: ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_ERROR,
+        error
+    }
+}
+
+export const confirmResetPasswordRequest = accessToken => {
+    return {
+        type: ACTION.CONFIRM_RESET_PASSWORD_REQUEST,
+        accessToken
+    }
+}
+
+export const confirmResetPasswordSuccess = noticeMessage => {
+    return {
+        type: ACTION.CONFIRM_RESET_PASSWORD_SUCCESS,
+        noticeMessage
+    }
+}
+
+export const confirmResetPasswordError = error => {
+    return {
+        type: ACTION.CONFIRM_RESET_PASSWORD_ERROR,
+        error
     }
 }

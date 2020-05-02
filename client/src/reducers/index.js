@@ -12,8 +12,8 @@ import updateContestReducer from './updateContestReducer';
 import chatReducer from './chatReducer';
 import userProfileReducer from './userProfileReducer';
 import transactionsReducer from './transactionsReducer'
-
-
+import confirmResetPasswordReducer from "./confirmResetPasswordReducer";
+import sendEmailForResetPasswordReducer from "./sendEmailForResetPasswordReducer";
 
 const appReducer=combineReducers({
    form: formReducer,
@@ -28,7 +28,9 @@ const appReducer=combineReducers({
    updateContestStore: updateContestReducer,
    chatStore: chatReducer,
    userProfile: userProfileReducer,
-   transactionsStore: transactionsReducer
+   transactionsStore: transactionsReducer,
+   preResetPasswordStore: sendEmailForResetPasswordReducer,
+   confirmResetPasswordStore: confirmResetPasswordReducer
 });
 
 export default appReducer;

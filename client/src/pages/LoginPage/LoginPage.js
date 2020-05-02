@@ -23,7 +23,7 @@ const LoginPage = (props) => {
         <div className={ styles.loginFormContainer }>
           <h2>LOGIN TO YOUR ACCOUNT</h2>
           <LoginForm/>
-          <Link to='/recovery_password'>Forgot password? Reset password</Link>
+          <Link to='/reset_password'>Forgot password? Reset password</Link>
 
         </div>
       </div>
@@ -31,6 +31,8 @@ const LoginPage = (props) => {
   );
 
 };
+
+const mapStateToProps = state => state.preResetPasswordStore;
 
 const mapDispatchToProps = (dispatch) => {
   return {
