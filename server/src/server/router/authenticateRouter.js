@@ -19,4 +19,4 @@ authenticateRouter.post(
 );
 
 
-export default authenticateRouter;
+module.exports = authenticateRouter;

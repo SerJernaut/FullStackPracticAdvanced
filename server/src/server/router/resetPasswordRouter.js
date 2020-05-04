@@ -27,4 +27,4 @@ resetPasswordRouter.post('/confirm_reset_password',
     sendSuccessResetEmail
 )
 
-export default resetPasswordRouter;
+module.exports = resetPasswordRouter;
