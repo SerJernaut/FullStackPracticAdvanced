@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "backend",
+    "username": "serjnut",
+    "password": "admin",
+    "database": "squadhelp_exam",
     "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": "Op"
