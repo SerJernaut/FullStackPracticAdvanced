@@ -3,7 +3,7 @@ import styles from './Header.module.sass';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import CONSTANTS from '../../constants';
-import {getUserAction, clearUserStore, headerRequest} from '../../actions/actionCreator';
+import {clearUserStore, headerRequest} from '../../actions/actionCreator';
 
 
 class Header extends React.Component{
@@ -11,6 +11,11 @@ class Header extends React.Component{
     if ( !this.props.data) {
       this.props.getUser();
     }
+  }
+
+  isForModerator = () => {
+      const {data} = this.props;
+      return data ? data.role === CONSTANTS.MODERATOR : false
   }
 
   logOut = () => {
@@ -33,13 +38,19 @@ class Header extends React.Component{
                         <span>{`Hi, ${this.props.data.displayName}`}</span>
                         <img src={`${CONSTANTS.STATIC_IMAGES_PATH}menu-down.png`} alt='menu'/>
                         <ul>
-                            <li><Link to='/dashboard'
-                                      style={{textDecoration: 'none'}}><span>View Dashboard</span></Link></li>
+
+                            <li><Link to='/dashboard' style={{textDecoration: 'none'}}><span>{this.isForModerator()? 'Moderate Offers' : 'View Dashboard'}</span>
+                            </Link></li>
                             <li><Link to='/account' style={{textDecoration: 'none'}}><span>My Account</span></Link></li>
-                            <li><Link to='http:/www.google.com'
-                                      style={{textDecoration: 'none'}}><span>Messages</span></Link></li>
-                            <li><Link to='http:/www.google.com' style={{textDecoration: 'none'}}><span>Affiliate Dashboard</span></Link>
-                            </li>
+                            {!this.isForModerator() &&
+                            <>
+                                <li><Link to='http:/www.google.com'
+                                          style={{textDecoration: 'none'}}><span>Messages</span></Link></li>
+                                <li><Link to='http:/www.google.com' style={{textDecoration: 'none'}}><span>Affiliate Dashboard</span></Link>
+                                </li>
+                            </>
+                            }
+
                             <li><span onClick={this.logOut}>Logout</span></li>
                         </ul>
                     </div>
@@ -147,7 +158,7 @@ class Header extends React.Component{
                                 </li>
                             </ul>
                         </div>
-                        {this.props.data && this.props.data.role !== CONSTANTS.CREATOR &&
+                        {this.props.data && this.props.data.role === CONSTANTS.CUSTOMER &&
                         <div className={styles.startContestBtn} onClick={this.startContests}>START CONTEST</div>}
                     </div>
                 </div>
