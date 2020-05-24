@@ -56,8 +56,15 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.fn('now'),
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
       }
-    });
+      },
+      {timestamps: true},
+    );
   },
   down: (queryInterface) => {
     return queryInterface.dropTable('Offers');

@@ -33,7 +33,6 @@ contestRouter.post(
 contestRouter.get(
     '/getContestById',
     checkToken.checkToken,
-    basicMiddlewares.canGetContest,
     contestController.getContestById,
 );
 

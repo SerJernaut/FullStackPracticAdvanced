@@ -1,4 +1,5 @@
 'use strict';
+const {OFFER_MODERATION_EXPECTED_STATUS, OFFER_MODERATION_REJECTED_STATUS, OFFER_MODERATION_RESOLVED_STATUS} = require("../../constants");
 
 module.exports = (sequelize, DataTypes) => {
   const Offer = sequelize.define('Offers', {
@@ -33,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: 'pending',
+      },
+      moderationStatus: {
+          allowNull: false,
+          type: DataTypes.ENUM(OFFER_MODERATION_EXPECTED_STATUS, OFFER_MODERATION_RESOLVED_STATUS, OFFER_MODERATION_REJECTED_STATUS),
+          defaultValue: OFFER_MODERATION_EXPECTED_STATUS
       },
       createdAt: {
           type: DataTypes.DATE,
