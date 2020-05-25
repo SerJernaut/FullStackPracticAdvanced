@@ -6,9 +6,9 @@ const upload = require('../utils/fileUpload');
 const userController = require('../controllers/userController');
 const validators = require('../middlewares/validators');
 
-const contestRouter = express.Router();
+const contestsRouter = express.Router();
 
-contestRouter.post(
+contestsRouter.post(
     '/pay',
     checkToken.checkToken,
     basicMiddlewares.onlyForCustomer,
@@ -18,72 +18,42 @@ contestRouter.post(
     userController.payment,
 );
 
-contestRouter.post(
+contestsRouter.post(
     '/dataForContest',
     checkToken.checkToken,
     contestController.dataForContest,
 );
 
-contestRouter.post(
+contestsRouter.post(
     '/getCustomersContests',
     checkToken.checkToken,
     contestController.getCustomersContests,
 );
 
-contestRouter.get(
+contestsRouter.get(
     '/getContestById',
     checkToken.checkToken,
     contestController.getContestById,
 );
 
-contestRouter.post(
+contestsRouter.post(
     '/getAllContests',
     checkToken.checkToken,
     basicMiddlewares.onlyForCreative,
     contestController.getContests,
 );
 
-contestRouter.post(
+contestsRouter.post(
     '/updateContest',
     checkToken.checkToken,
     upload.updateContestFile,
     contestController.updateContest,
 );
 
-contestRouter.get(
+contestsRouter.get(
     '/downloadFile/:fileName',
     checkToken.checkToken,
     contestController.downloadFile,
 );
 
-contestRouter.post(
-    '/changeMark',
-    checkToken.checkToken,
-    basicMiddlewares.onlyForCustomer,
-    userController.changeMark,
-);
-
-contestRouter.post(
-    '/setNewOffer',
-    checkToken.checkToken,
-    upload.uploadLogoFiles,
-    basicMiddlewares.canSendOffer,
-    contestController.setNewOffer,
-);
-
-contestRouter.post(
-    '/setOfferStatus',
-    checkToken.checkToken,
-    basicMiddlewares.onlyForCustomerWhoCreateContest,
-    contestController.setOfferStatus,
-);
-
-
-contestRouter.get(
-    '/getOffersFiles',
-    validators.validateOffersFiles,
-    contestController.getOffersByFilter
-)
-
-
-module.exports = contestRouter;
+module.exports = contestsRouter;
