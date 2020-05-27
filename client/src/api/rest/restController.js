@@ -59,6 +59,10 @@ export const confirmResetPassword = accessToken => {
     return http.post('recovery/confirm_reset_password', accessToken);
 }
 
+export const getModerationOffers = paginationFilter => {
+    return http.post('offers/getModerationOffers', paginationFilter)
+}
+
 
 
 

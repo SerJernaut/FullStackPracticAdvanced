@@ -9,22 +9,29 @@ const CONSTANTS = require('../../constants');
 
 module.exports.getOffersByFilter = async (req, res, next) => {
     try{
-        const {from} = req.body;
+        const {from, limit, offset, moderationStatus} = req.body;
         const filter = {
-            where: {
-                fileName: {
-                    [db.Sequelize.Op.not]: null,
+            where: {moderationStatus},
+            limit,
+            offset,
+            attributes: ['id', 'text', 'fileName', 'moderationStatus', 'createdAt'],
+            include: [
+                {
+                    model: db.Users,
+                    required: false,
+                    attributes: ['id', 'displayName'],
                 },
-            },
-            attributes: ['fileName']
+            ],
         };
         if (from) {
             filter.where.createdAt = {
                 [db.Sequelize.Op.gte]: moment(from).format()
             }
         }
-        const result = await offerQueries.getAllOffers(filter);
-        return res.send(result);
+        const offers = await offerQueries.getAllOffers(filter);
+        if (offers.length) {
+            return res.send({offers, isMore: limit <= offers.length});
+        }
     }
     catch (e) {
         next(e);
@@ -116,11 +123,6 @@ module.exports.setOfferStatus = async (req, res, next) => {
             const winningOffer = await resolveOffer(req.body.contestId,
                 req.body.creatorId, req.body.orderId, req.body.offerId,
                 req.body.priority, transaction);
-            await userQueries.createTransactionByFilter({
-                typeOperation: "INCOME",
-                sum: winningOffer.prize,
-                userId: winningOffer.userId,
-            });
             res.send(winningOffer);
         } catch (err) {
             transaction.rollback();

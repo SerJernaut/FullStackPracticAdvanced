@@ -30,9 +30,10 @@ offersRouter.post(
     offerController.setOfferStatus,
 );
 
-offersRouter.get(
-    '/getOffersFiles',
-    validators.validateOffersFiles,
+offersRouter.post(
+    '/getModerationOffers',
+    checkToken.checkToken,
+    basicMiddlewares.onlyForModerator,
     offerController.getOffersByFilter
 )
 
