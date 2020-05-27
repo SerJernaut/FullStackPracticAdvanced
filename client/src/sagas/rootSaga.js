@@ -11,7 +11,7 @@ import {
     getContestByIdSaga,
     downloadContestFileSaga
 } from './contestsSagas'
-import {changeMarkSaga, setOfferStatusSaga, addOfferSaga} from './offerSagas';
+import {changeMarkSaga, setOfferStatusSaga, addOfferSaga, getModerationOffersSaga} from './offerSagas';
 import {
     previewSaga,
     getDialog,
@@ -64,6 +64,7 @@ function* rootSaga() {
     yield takeLatest(ACTION.GET_USER_TRANSACTION_STATEMENTS_REQUEST, getUserTransactionStatementsSaga);
     yield takeLatest(ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_REQUEST, sendEmailForResetPasswordSaga);
     yield takeLatest(ACTION.CONFIRM_RESET_PASSWORD_REQUEST, confirmResetPasswordSaga);
+    yield takeLatest(ACTION.GET_MODERATION_OFFERS_REQUEST, getModerationOffersSaga)
 }
 
 export default rootSaga;

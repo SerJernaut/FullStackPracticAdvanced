@@ -484,3 +484,26 @@ export const confirmResetPasswordError = error => {
         error
     }
 }
+
+export const getModerationOffersRequest = paginationFilter => {
+    return {
+        type: ACTION.GET_MODERATION_OFFERS_REQUEST,
+        paginationFilter
+    }
+}
+
+export const getModerationOffersSuccess = (offers, isMore) => {
+    return {
+        type: ACTION.GET_MODERATION_OFFERS_SUCCESS,
+        offers,
+        isMore
+    }
+}
+
+export const getModerationOffersError = error => {
+    return {
+        type: ACTION.GET_MODERATION_OFFERS_ERROR,
+        error
+    }
+}
+

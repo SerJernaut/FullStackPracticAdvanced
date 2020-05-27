@@ -2,7 +2,7 @@ import {put, select} from 'redux-saga/effects';
 import ACTION from '../actions/actionTypes';
 import * as restController from '../api/rest/restController';
 import CONSTANTS from "../constants";
-
+import {getModerationOffersError, getModerationOffersSuccess} from "../actions/actionCreator";
 
 export function* changeMarkSaga(action) {
     try {
@@ -35,8 +35,6 @@ export function* addOfferSaga(action) {
 }
 
 
-
-
 export function* setOfferStatusSaga(action) {
     try {
         const {data} = yield  restController.setOfferStatus(action.data);
@@ -51,6 +49,18 @@ export function* setOfferStatusSaga(action) {
         yield  put({type: ACTION.CHANGE_STORE_FOR_STATUS, data: offers});
     } catch (e) {
         yield  put({type: ACTION.SET_OFFER_STATUS_ERROR, error: e.response});
+    }
+}
+
+export function* getModerationOffersSaga (action) {
+    try {
+        const {data} = yield restController.getModerationOffers(action.paginationFilter);
+        if (data) {
+            yield put (getModerationOffersSuccess(data.offers, data.isMore))
+        }
+    }
+    catch (e) {
+        yield put(getModerationOffersError())
     }
 }
 
