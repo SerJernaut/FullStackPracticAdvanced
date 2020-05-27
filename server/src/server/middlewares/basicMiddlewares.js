@@ -43,19 +43,26 @@ module.exports.canGetContest = async (req, res, next) => {
 };
 
 module.exports.onlyForCreative = (req, res, next) => {
-  if (req.tokenData.role === CONSTANTS.CUSTOMER) {
-    next(new RightsError());
+  if (req.tokenData.role === CONSTANTS.CREATOR) {
+    return next();
   } else {
-    next();
+    next(new RightsError('this page only for creators'));
   }
-
 };
 
 module.exports.onlyForCustomer = (req, res, next) => {
-  if (req.tokenData.role === CONSTANTS.CREATOR) {
-    return next(new RightsError('this page only for customers'));
+  if (req.tokenData.role === CONSTANTS.CUSTOMER) {
+    return next();
   } else {
-    next();
+    next(new RightsError('this page only for customers'));
+  }
+};
+
+module.exports.onlyForModerator= (req, res, next) => {
+  if (req.tokenData.role === CONSTANTS.MODERATOR) {
+    return next();
+  } else {
+    next(new RightsError('this page only for moderators'));
   }
 };
 
