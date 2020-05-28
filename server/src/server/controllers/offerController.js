@@ -17,11 +17,16 @@ module.exports.getOffersByFilter = async (req, res, next) => {
             attributes: ['id', 'text', 'fileName', 'moderationStatus', 'createdAt'],
             include: [
                 {
-                    model: db.Users,
+                    model: db.Contests,
+                    include: {
+                        model: db.Users,
+                        attributes: ['id', 'displayName']
+                    },
                     required: false,
-                    attributes: ['id', 'displayName'],
+                    attributes: ['contestType', 'title'],
                 },
             ],
+
         };
         if (from) {
             filter.where.createdAt = {
