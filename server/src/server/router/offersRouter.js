@@ -5,8 +5,8 @@ const basicMiddlewares = require('../middlewares/basicMiddlewares');
 const upload = require('../utils/fileUpload');
 const userController = require('../controllers/userController');
 const contestController = require('../controllers/contestController');
-const sendModeratorResolvingEmail = require('../middlewares/sendModeratorResolvingEmail');
-const sendModeratorRejectingEmail = require('../middlewares/sendModeratorRejectingEmail');
+const sendModerationResolvingEmail = require('../middlewares/sendModerationResolvingEmail');
+const sendModerationRejectingEmail = require('../middlewares/sendModerationRejectingEmail');
 
 
 const offersRouter = express.Router();
@@ -41,23 +41,23 @@ offersRouter.post(
 )
 
 offersRouter.post(
-    '/moderationResolveOffer',
+    '/moderationResolvingOffer',
     checkToken.checkToken,
     basicMiddlewares.onlyForModerator,
     offerController.resolveOfferByModerator,
     userController.findUserById,
     contestController.findContestById,
-    sendModeratorResolvingEmail
+    sendModerationResolvingEmail
 )
 
 offersRouter.post(
-    '/moderationRejectOffer',
+    '/moderationRejectingOffer',
     checkToken.checkToken,
     basicMiddlewares.onlyForModerator,
     offerController.rejectOfferByModerator,
     userController.findUserById,
     contestController.findContestById,
-    sendModeratorRejectingEmail
+    sendModerationRejectingEmail
 )
 
 module.exports = offersRouter;

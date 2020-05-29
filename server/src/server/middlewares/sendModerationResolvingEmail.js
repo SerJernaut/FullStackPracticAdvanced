@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
     try {
         const messageData = {
             to: email,
-            template: 'moderatorResolving',
+            template: 'moderationResolving',
             subject: 'Your offer is resolved by moderator',
             context: {
                 userFullName: `${firstName} ${lastName}`,
