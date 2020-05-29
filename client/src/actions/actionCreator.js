@@ -507,3 +507,48 @@ export const getModerationOffersError = error => {
     }
 }
 
+
+export const offerModerationResolvingRequest = offerId => {
+    return {
+        type: ACTION.OFFER_MODERATION_RESOLVING_REQUEST,
+        offerId
+    }
+}
+
+export const offerModerationResolvingSuccess = (offerId, resolvedNoticeMessage) => {
+    return {
+        type: ACTION.OFFER_MODERATION_RESOLVING_SUCCESS,
+        offerId,
+        resolvedNoticeMessage
+    }
+}
+
+export const offerModerationResolvingError = error => {
+    return {
+        type: ACTION.OFFER_MODERATION_RESOLVING_ERROR,
+        error
+    }
+}
+
+export const offerModerationRejectingRequest = offerId => {
+    return {
+        type: ACTION.OFFER_MODERATION_REJECTING_REQUEST,
+        offerId
+    }
+}
+
+export const offerModerationRejectingSuccess = (offerId, rejectedNoticeMessage) => {
+    return {
+        type: ACTION.OFFER_MODERATION_REJECTING_SUCCESS,
+        offerId,
+        rejectedNoticeMessage
+    }
+}
+
+export const offerModerationRejectingError = error => {
+    return {
+        type: ACTION.OFFER_MODERATION_REJECTING_ERROR,
+        error
+    }
+}
+

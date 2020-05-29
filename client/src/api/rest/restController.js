@@ -63,7 +63,13 @@ export const getModerationOffers = paginationFilter => {
     return http.post('offers/getModerationOffers', paginationFilter)
 }
 
+export const moderationResolvingOffer = offerId => {
+    return http.post('offers/moderationResolvingOffer')
+}
 
+export const moderationRejectingOffer = offerId => {
+    return http.post('offers/moderationRejectingOffer')
+}
 
 
 
