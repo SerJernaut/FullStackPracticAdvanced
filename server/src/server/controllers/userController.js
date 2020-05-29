@@ -19,7 +19,6 @@ const ratingQueries = require('./queries/ratingQueries');
 module.exports.findUserByEmail = async (req, res, next) => {
   try{
     const email = req.body.email || req.tokenData.email;
-    console.log(email)
     const foundUser = await userQueries.findUser({email});
     if (foundUser) {
       req.foundUser = foundUser
@@ -32,12 +31,22 @@ module.exports.findUserByEmail = async (req, res, next) => {
   }
 }
 
+module.exports.findUserById = async (req, res, next) => {
+  try{
+    const {userId} = req.updatedOffer;
+    req.foundUser = await userQueries.findUser({userId}, ['firstName', 'lastName', 'email']);
+    next();
+  }
+  catch (err) {
+    next(err);
+  }
+}
+
 module.exports.compareNewPasswordWithCurrent = async (req, res, next) => {
   const newPassword = req.body.newPassword || req.tokenData.newPassword;
   const {foundUser: {password}} = req;
   try{
     const isPasswordsEqual = await userQueries.comparePasswordWithCurrent(newPassword, password);
-    console.log(isPasswordsEqual)
     if (!isPasswordsEqual) next();
   }
   catch(err) {

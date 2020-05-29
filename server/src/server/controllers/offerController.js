@@ -7,6 +7,27 @@ const contestQueries = require('./queries/contestQueries');
 const controller = require('../../socketInit');
 const CONSTANTS = require('../../constants');
 
+module.exports.resolveOfferByModerator = async (req, res, next) => {
+    try {
+        const {offerId} = req.body;
+        req.updatedOffer = await offerQueries.updateOffer({moderationStatus: CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS}, {offerId});
+        next();
+    } catch (e) {
+        next(e);
+    }
+}
+
+module.exports.rejectOfferByModerator = async (req, res, next) => {
+    try {
+        const {offerId} = req.body;
+        req.updatedOffer = await offerQueries.updateOffer({moderationStatus: CONSTANTS.OFFER_MODERATION_REJECTED_STATUS}, {offerId});
+        next();
+    } catch (e) {
+        next(e);
+    }
+}
+
+
 module.exports.getOffersByFilter = async (req, res, next) => {
     try{
         const {from, limit, offset, moderationStatus} = req.body;
@@ -66,7 +87,7 @@ module.exports.setNewOffer = async (req, res, next) => {
     }
 };
 
-const rejectOffer = async (offerId, creatorId, contestId) => {
+const rejectOfferByCustomer = async (offerId, creatorId, contestId) => {
     const rejectedOffer = await offerQueries.updateOffer(
         { status: CONSTANTS.OFFER_STATUS_REJECTED }, { id: offerId });
     controller.getNotificationController().emitChangeOfferStatus(creatorId,
@@ -74,7 +95,7 @@ const rejectOffer = async (offerId, creatorId, contestId) => {
     return rejectedOffer;
 };
 
-const resolveOffer = async (
+const resolveOfferByCustomer = async (
     contestId, creatorId, orderId, offerId, priority, transaction) => {
     const finishedContest = await contestQueries.updateContestStatus({
         status: db.sequelize.literal(`   CASE
@@ -116,7 +137,7 @@ module.exports.setOfferStatus = async (req, res, next) => {
     let transaction;
     if (req.body.command === 'reject') {
         try {
-            const offer = await rejectOffer(req.body.offerId, req.body.creatorId,
+            const offer = await rejectOfferByCustomer(req.body.offerId, req.body.creatorId,
                 req.body.contestId);
             res.send(offer);
         } catch (err) {
@@ -125,7 +146,7 @@ module.exports.setOfferStatus = async (req, res, next) => {
     } else if (req.body.command === 'resolve') {
         try {
             transaction = await db.sequelize.transaction();
-            const winningOffer = await resolveOffer(req.body.contestId,
+            const winningOffer = await resolveOfferByCustomer(req.body.contestId,
                 req.body.creatorId, req.body.orderId, req.body.offerId,
                 req.body.priority, transaction);
             res.send(winningOffer);
@@ -135,3 +156,4 @@ module.exports.setOfferStatus = async (req, res, next) => {
         }
     }
 };
+

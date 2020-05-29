@@ -1,6 +1,5 @@
 const bd = require('../../models/index');
 const UserNotFoundError = require('../../errors/UserNotFoundError');
-const NotFoundError = require('../../errors/NotFoundError');
 const ServerError = require('../../errors/ServerError');
 const PasswordAffiliationError = require('../../errors/PasswordAffiliationError')
 const bcrypt = require('bcrypt');
@@ -24,12 +23,12 @@ module.exports.updateUserByEmail = async (data, email) => {
 };
 
 
-module.exports.findUser = async (predicate, transaction) => {
-  const result = await bd.Users.findOne({ where: predicate, transaction });
-  if ( !result) {
-    throw new UserNotFoundError('user with this data didn`t exist');
-  } else {
+module.exports.findUser = async (predicate, attributes, transaction) => {
+  const result = await bd.Users.findOne({ where: predicate, attributes: attributes, transaction });
+  if (result) {
     return result.get({ plain: true });
+  } else {
+    throw new UserNotFoundError(`user with this data doesn't exist`);
   }
 };
 

@@ -4,6 +4,17 @@ const db = require('../models/index');
 const UtilFunctions = require('../utils/functions');
 const CONSTANTS = require('../../constants');
 
+module.exports.findContestById = async (req, res, next) => {
+    try{
+      const {contestId} = req.updatedOffer;
+      req.foundContest = await contestQueries.findContestByFilter({where: {contestId}, attributes: ['contestType', 'title']});
+      next();
+    }
+    catch (err) {
+      next(err);
+    }
+}
+
 module.exports.dataForContest = async (req, res, next) => {
   let response = {};
   try {
@@ -175,4 +186,6 @@ module.exports.getContests = (req, res, next) => {
       next(new ServerError());
     })
 };
+
+
 

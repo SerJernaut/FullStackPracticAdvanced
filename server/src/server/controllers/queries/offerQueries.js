@@ -11,10 +11,10 @@ module.exports.getAllOffers = async (filter) => {
 module.exports.updateOffer = async (data, predicate, transaction) => {
     const [updatedCount, [updatedOffer]] = await bd.Offers.update(data,
         { where: predicate, returning: true, transaction });
-    if (updatedCount !== 1) {
-        throw new ServerError('cannot update offer!');
-    } else {
+    if (updatedCount === 1) {
         return updatedOffer.dataValues;
+    } else {
+        throw new ServerError('cannot update offer!');
     }
 };
 
@@ -36,3 +36,4 @@ module.exports.createOffer = async (data) => {
         return result.get({ plain: true });
     }
 };
+
