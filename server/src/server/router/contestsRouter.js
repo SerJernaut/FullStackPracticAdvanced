@@ -34,6 +34,7 @@ contestsRouter.get(
     '/getContestById',
     checkToken.checkToken,
     contestController.getContestById,
+    contestController.saveRatingMarkToReqIfNotEmptyAndSendContestInfo
 );
 
 contestsRouter.post(

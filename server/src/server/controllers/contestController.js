@@ -46,8 +46,9 @@ module.exports.dataForContest = async (req, res, next) => {
 
 module.exports.getContestById = async (req, res, next) => {
   try {
-    let contestInfo = await db.Contests.findOne({
-      where: { id: req.headers.contestid },
+    const {tokenData: {userId, role}, headers: {contestid}} = req;
+    const contestInfo = await db.Contests.findOne({
+      where: {id: contestid},
       order: [
         [db.Offers, 'id', 'asc'],
       ],
@@ -67,10 +68,11 @@ module.exports.getContestById = async (req, res, next) => {
         {
           model: db.Offers,
           required: false,
-          where: req.tokenData.role === CONSTANTS.CREATOR
-            ? { userId: req.tokenData.userId }
-            : {},
-          attributes: { exclude: ['userId', 'contestId'] },
+          where: role === CONSTANTS.CREATOR
+              ? {userId}
+              : role === CONSTANTS.CUSTOMER ? {moderationStatus: CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS} :
+                  {},
+          attributes: {exclude: ['userId', 'contestId']},
           include: [
             {
               model: db.Users,
@@ -87,25 +89,33 @@ module.exports.getContestById = async (req, res, next) => {
             {
               model: db.Ratings,
               required: false,
-              where: { userId: req.tokenData.userId },
-              attributes: { exclude: ['userId', 'offerId'] },
+              where: {userId: req.tokenData.userId},
+              attributes: {exclude: ['userId', 'offerId']},
             },
           ],
         },
       ],
     });
-    contestInfo = contestInfo.get({ plain: true });
+    req.contestInfo = contestInfo.get({plain: true});
+    next()
+  } catch (e) {
+    next(new ServerError());
+  }
+};
+
+module.exports.saveRatingMarkToReqIfNotEmptyAndSendContestInfo = (req, res, next) => {
+  const {contestInfo} = req;
+  if (contestInfo) {
     contestInfo.Offers.forEach(offer => {
       if (offer.Rating) {
         offer.mark = offer.Rating.mark;
       }
       delete offer.Rating;
     });
-    res.send(contestInfo);
-  } catch (e) {
-    next(new ServerError());
+    return res.send(contestInfo);
   }
-};
+  next(new ServerError(`Can't find contestInfo in database`))
+}
 
 module.exports.downloadFile = async (req, res, next) => {
   const file = CONSTANTS.CONTESTS_DEFAULT_DIR + req.params.fileName;
@@ -130,30 +140,33 @@ module.exports.updateContest = async (req, res, next) => {
   }
 };
 
-module.exports.getCustomersContests = (req, res, next) => {
-  db.Contests.findAll({
-    where: { status: req.headers.status, userId: req.tokenData.userId },
-    limit: req.body.limit,
-    offset: req.body.offset ? req.body.offset : 0,
-    order: [['id', 'DESC']],
-    include: [
-      {
-        model: db.Offers,
-        required: false,
-        attributes: ['id'],
-      },
-    ],
-  })
-    .then(contests => {
-      contests.forEach(
-        contest => contest.dataValues.count = contest.dataValues.Offers.length);
-      let haveMore = true;
-      if (contests.length === 0) {
-        haveMore = false;
-      }
-      res.send({ contests, haveMore });
+module.exports.getCustomersContests = async (req, res, next) => {
+  try{
+    const {headers: {status}, tokenData: {userId}, body: {limit, offset}} = req
+    const contests = await db.Contests.findAll({
+      where: {status, userId},
+      limit,
+      offset: offset || 0,
+      order: [['id', 'DESC']],
+      include: [
+        {
+          model: db.Offers,
+          where: {moderationStatus: CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS},
+          required: false,
+          attributes: ['id'],
+        },
+      ],
     })
-    .catch(err => next(new ServerError(err)));
+    if (contests) {
+      contests.forEach(
+          contest => contest.dataValues.count = contest.dataValues.Offers.length);
+      res.send({ contests, hasMore: limit <= contests.length });
+    }
+    next(new ServerError())
+  }
+  catch(e) {
+    next(e);
+  }
 };
 
 module.exports.getContests = (req, res, next) => {
