@@ -34,7 +34,7 @@ module.exports.findUserByEmail = async (req, res, next) => {
 module.exports.findUserById = async (req, res, next) => {
   try{
     const {userId} = req.updatedOffer;
-    req.foundUser = await userQueries.findUser({userId}, ['firstName', 'lastName', 'email']);
+    req.foundUser = await userQueries.findUser({id: userId}, ['firstName', 'lastName', 'email']);
     next();
   }
   catch (err) {

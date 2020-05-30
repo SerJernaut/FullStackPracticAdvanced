@@ -1,7 +1,7 @@
 const {transporter} = require('../nodeMailer/config/nodeMailer')
 
 module.exports = async (req, res, next) => {
-    const {foundUser: {firstName, lastName, email}, foundContest: {contestType, title}, foundOffer: {id: offerId}} = req;
+    const {foundUser: {firstName, lastName, email}, foundContest: {contestType, title}, updatedOffer: {id: offerId}} = req;
     try {
         const messageData = {
             to: email,

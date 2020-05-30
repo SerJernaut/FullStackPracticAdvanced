@@ -10,7 +10,7 @@ const CONSTANTS = require('../../constants');
 module.exports.resolveOfferByModerator = async (req, res, next) => {
     try {
         const {offerId} = req.body;
-        req.updatedOffer = await offerQueries.updateOffer({moderationStatus: CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS}, {offerId});
+        req.updatedOffer = await offerQueries.updateOffer({moderationStatus: CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS}, {id: offerId});
         next();
     } catch (e) {
         next(e);
@@ -20,7 +20,7 @@ module.exports.resolveOfferByModerator = async (req, res, next) => {
 module.exports.rejectOfferByModerator = async (req, res, next) => {
     try {
         const {offerId} = req.body;
-        req.updatedOffer = await offerQueries.updateOffer({moderationStatus: CONSTANTS.OFFER_MODERATION_REJECTED_STATUS}, {offerId});
+        req.updatedOffer = await offerQueries.updateOffer({moderationStatus: CONSTANTS.OFFER_MODERATION_REJECTED_STATUS}, {id: offerId});
         next();
     } catch (e) {
         next(e);
@@ -56,7 +56,7 @@ module.exports.getOffersByFilter = async (req, res, next) => {
         }
         const offers = await offerQueries.getAllOffers(filter);
         if (offers.length) {
-            return res.send({offers, isMore: limit <= offers.length});
+            return res.send({offers, hasMore: limit <= offers.length});
         }
     }
     catch (e) {

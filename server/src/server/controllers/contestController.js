@@ -5,14 +5,14 @@ const UtilFunctions = require('../utils/functions');
 const CONSTANTS = require('../../constants');
 
 module.exports.findContestById = async (req, res, next) => {
-    try{
-      const {contestId} = req.updatedOffer;
-      req.foundContest = await contestQueries.findContestByFilter({where: {contestId}, attributes: ['contestType', 'title']});
-      next();
-    }
-    catch (err) {
-      next(err);
-    }
+  try{
+    const {contestId} = req.updatedOffer;
+    req.foundContest = await contestQueries.findContestByFilter({where: {id: contestId}, attributes: ['contestType', 'title']});
+    next();
+  }
+  catch (err) {
+    next(err);
+  }
 }
 
 module.exports.dataForContest = async (req, res, next) => {

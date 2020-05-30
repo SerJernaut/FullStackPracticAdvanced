@@ -98,13 +98,13 @@ const OfferBox = props => {
                     return <span>{(() => {
                         switch (moderationStatus) {
                             case CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS: {
-                                return (role === CONSTANTS.CUSTOMER) ? "Reject or resolve the offer!" : (role === CONSTANTS.CREATOR) ? "Customer has not been yet review your offer" : null
+                                return (role === CONSTANTS.CUSTOMER) ? "Reject or resolve the offer!" : (role === CONSTANTS.CREATOR) && "Customer has not been yet review your offer!"
                             }
                             case CONSTANTS.OFFER_MODERATION_REJECTED_STATUS: {
                                 return (role === CONSTANTS.CREATOR) && "Your offer is rejected by moderator!"
                             }
                             case CONSTANTS.OFFER_MODERATION_EXPECTED_STATUS: {
-                                return (role === CONSTANTS.CREATOR) && "Wait until the moderator check the offer! Then customer will see your offer and maybe will resolve it"
+                                return (role === CONSTANTS.CREATOR) && "Wait until the moderator check the offer! Then customer will see your offer and maybe will resolve it!"
                             }
                             default:
                                 return null;

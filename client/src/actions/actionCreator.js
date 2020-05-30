@@ -492,11 +492,11 @@ export const getModerationOffersRequest = paginationFilter => {
     }
 }
 
-export const getModerationOffersSuccess = (offers, isMore) => {
+export const getModerationOffersSuccess = (offers, hasMore) => {
     return {
         type: ACTION.GET_MODERATION_OFFERS_SUCCESS,
         offers,
-        isMore
+        hasMore
     }
 }
 
