@@ -64,11 +64,11 @@ export const getModerationOffers = paginationFilter => {
 }
 
 export const moderationResolvingOffer = offerId => {
-    return http.post('offers/moderationResolvingOffer')
+    return http.post('offers/moderationResolvingOffer', offerId)
 }
 
 export const moderationRejectingOffer = offerId => {
-    return http.post('offers/moderationRejectingOffer')
+    return http.post('offers/moderationRejectingOffer', offerId)
 }
 
 
