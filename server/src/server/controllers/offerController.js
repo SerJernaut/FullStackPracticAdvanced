@@ -36,6 +36,7 @@ module.exports.getOffersByFilter = async (req, res, next) => {
             limit,
             offset,
             attributes: ['id', 'text', 'fileName', 'moderationStatus', 'createdAt'],
+            order: [['id', 'DESC']],
             include: [
                 {
                     model: db.Contests,
