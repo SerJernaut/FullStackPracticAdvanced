@@ -7,11 +7,7 @@ import {
 } from "../actions/actionCreator";
 import {toast} from "react-toastify";
 import React from "react";
-
-const toastOptions = {
-    autoClose: 6000,
-    hideProgressBar: false
-}
+import {toastOptions} from "../utils/toastOptions";
 
 export  function* sendEmailForResetPasswordSaga(action){
     try{
@@ -33,13 +29,11 @@ export  function* confirmResetPasswordSaga(action){
         const {data} = yield restController.confirmResetPassword(action.accessToken);
         if (typeof data === 'string') {
             yield put(confirmResetPasswordSuccess(data));
-            console.log(data)
             toast.info(data, toastOptions);
         }
     }
     catch (err) {
         yield put(confirmResetPasswordError(err.response));
-        console.log(err)
         const {response: {data}} = err;
         toast.error(data, toastOptions);
     }
