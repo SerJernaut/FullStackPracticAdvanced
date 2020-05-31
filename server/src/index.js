@@ -20,7 +20,7 @@ app.use(router);
 app.use(errorsHandleLogger);
 app.use(errorsHandler);
 
-schedule.scheduleJob('42 16 * * *', scheduledAutoCopyingLogs);
+schedule.scheduleJob('38 21 * * *', scheduledAutoCopyingLogs);
 
 const server = http.createServer(app);
 server.listen(PORT/*,

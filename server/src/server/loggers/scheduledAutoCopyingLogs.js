@@ -1,33 +1,29 @@
-const fs = require('fs');
 const path = require('path');
+const {promises: {readFile, writeFile, appendFile}} = require('fs');
+const {exists} = require('../utils/promisifiedFunctions')
 
-module.exports = () => {
+module.exports = async () => {
     const absolutePathToLogsDir = path.resolve(__dirname, '../logs');
     const absolutePathToLogFile = path.resolve(absolutePathToLogsDir, 'errorLogs.json');
-    fs.access(absolutePathToLogsDir, err => {
-        if (err) throw err;
-        else {
-            fs.readFile(absolutePathToLogFile, (err, data) => {
-                if (err) throw err;
-                else {
-                    const jsonExistingLogs = JSON.parse(data);
-                    if (Array.isArray(jsonExistingLogs)) {
-                        const filteredData = jsonExistingLogs.map(({message, time, code, stackTrace}) => ({
-                            message,
-                            time,
-                            code
-                        }));
-                        fs.appendFile(`${absolutePathToLogsDir}/${Date.now()}.json`, JSON.stringify(filteredData, null, 2), 'utf-8', err => {
-                            if (err) throw err;
-                        });
-                    }
-                    fs.writeFile(absolutePathToLogFile, JSON.stringify([]), err => {
-                        throw err;
-                    });
+    try {
+        if (await exists(absolutePathToLogsDir)) {
+            const logFileData = await readFile(absolutePathToLogFile);
+            if (logFileData) {
+                const jsonExistingLogs = JSON.parse(logFileData);
+                if (Array.isArray(jsonExistingLogs)) {
+                    const filteredData = jsonExistingLogs.map(({message, time, code, stackTrace}) => ({
+                        message,
+                        code,
+                        time
+                    }));
+                    await appendFile(`${absolutePathToLogsDir}/${Date.now()}.json`, JSON.stringify(filteredData, null, 2), 'utf-8')
                 }
-            });
+                await writeFile(absolutePathToLogFile, JSON.stringify([]))
+            }
         }
-    });
+    }
+    catch (e) {
+        throw e;
+    }
 }
-
 
