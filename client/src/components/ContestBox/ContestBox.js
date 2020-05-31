@@ -18,21 +18,20 @@ const ContestBox = (props) => {
         return str;
     };
 
-    const getPreferenceContest = () => {
-        const data = props.data;
-        if (data.contestType === CONSTANTS.NAME_CONTEST)
-            return data.typeOfName;
-        else if (data.contestType === CONSTANTS.LOGO_CONTEST)
-            return data.brandStyle;
-        else
-            return data.typeOfTagline;
-    };
-
     const ucFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
-    const {id, title, contestType, prize, count, goToExtended} = props.data;
+    const {data: {id, title, contestType, typeOfName, brandStyle, typeOfTagline, prize, count}} = props;
+
+    const getPreferenceContest = () => {
+        switch (contestType) {
+            case CONSTANTS.NAME_CONTEST: return typeOfName
+            case CONSTANTS.LOGO_CONTEST: return brandStyle
+            case CONSTANTS.TAGLINE_CONTEST: return typeOfTagline
+        }
+    }
+
     return (
         <div className={styles.contestBoxContainer} onClick={() => props.goToExtended(id)}>
             <div className={styles.mainContestInfo}>
@@ -41,7 +40,7 @@ const ContestBox = (props) => {
                     <span className={styles.id}>{`(#${id})`}</span>
                 </div>
                 <div className={styles.contestType}>
-                    <span>{`${ucFirstLetter(contestType)} / ${getPreferenceContest()}`}</span>
+                    <span>{ucFirstLetter(contestType)}/{getPreferenceContest()}</span>
                 </div>
                 <div className={styles.contestType}>
                     <span>This is an Invitation Only Contest and is only open to those Creatives who have achieved a Tier A status.</span>
