@@ -8,9 +8,7 @@ import styles from './ResetPasswordForm.module.sass';
 import {sendMailForResetPasswordRequest} from "../../actions/actionCreator";
 import {resetPasswordValidationSchema} from "../../validationSchemas/recoveryPasswordValidationSchema";
 
-const ResetPasswordForm = props => {
-
-    const {resetNoticeMessage} = props;
+const ResetPasswordForm = ({resetNoticeMessage, isFetching, resetPassword}) => {
 
     const fieldRender = (name, type, placeholder) => {
         return (
@@ -31,21 +29,21 @@ const ResetPasswordForm = props => {
         <Formik
             initialValues={{email: '', newPassword: ''}}
             onSubmit={values => {
-                props.resetPassword(values);
+                resetPassword(values);
             }}
             validationSchema={resetPasswordValidationSchema}>
             {formik => (
                 <Form onSubmit={formik.handleSubmit}>
                     {fieldRender('email', 'email', 'Enter your email')}
                     {fieldRender('newPassword', 'password', 'Enter the new password')}
-                    <Button isDisabled={resetNoticeMessage} type='submit'>reset password</Button>
+                    <Button isDisabled={isFetching || resetNoticeMessage} type='submit'>reset password</Button>
                 </Form>
             )}
         </Formik>
     )
 };
 
-const mapStateToProps = state => ({resetNoticeMessage: state.preResetPasswordStore.resetNoticeMessage});
+const mapStateToProps = ({preResetPasswordStore: {resetNoticeMessage, isFetching}}) => ({resetNoticeMessage, isFetching});
 
 const mapDispatchToProps = dispatch => ({resetPassword: formValues => dispatch(sendMailForResetPasswordRequest(formValues))});
 
