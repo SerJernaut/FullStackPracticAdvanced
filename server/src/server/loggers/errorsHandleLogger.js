@@ -1,51 +1,39 @@
-const fs = require('fs');
 const path = require('path');
+const {promises: {readFile, writeFile, appendFile, mkdir}} = require('fs');
+const {exists} = require('../utils/promisifiedFunctions')
 
-module.exports = (err, req, res, next) => {
+module.exports = async (err, req, res, next) => {
+    const {message, code, stack} = err;
     const absolutePathToLogsDir = path.resolve(__dirname, '../logs');
-    const absolutePathToLogFile = path.resolve(absolutePathToLogsDir, 'errorLogs.json');
+    const absolutePathToLogsFile = path.resolve(absolutePathToLogsDir, 'errorLogs.json');
     const errorData = {
-        message: err.message,
+        message: message,
         time: Date.now(),
-        code: err.code,
-        stackTrace: err.stack
+        code: code,
+        stackTrace: stack
     }
-
-    fs.access(absolutePathToLogsDir, err => {
-        if (err) {
-            fs.mkdir(absolutePathToLogsDir, {recursive: true}, err => {
-                if (err) throw err;
-                else {
-                    fs.appendFile(absolutePathToLogFile, JSON.stringify([errorData]), err => {
-                        if (err) throw err;
-                    })
+    try {
+        if (await exists(absolutePathToLogsDir)) {
+            if (await exists(absolutePathToLogsFile)) {
+                const data = await readFile(absolutePathToLogsFile);
+                if (data) {
+                    const jsonExistingLogs = JSON.parse(data);
+                    if (Array.isArray(jsonExistingLogs)) {
+                        jsonExistingLogs.push(errorData);
+                        await writeFile(absolutePathToLogsFile, JSON.stringify(jsonExistingLogs, null, 2));
+                    }
                 }
-            })
+            }
+            else {
+                await appendFile(absolutePathToLogsFile, JSON.stringify([errorData], null, 2));
+            }
+        } else {
+            await mkdir(absolutePathToLogsDir);
+            if (await exists(absolutePathToLogsDir))
+                await appendFile(absolutePathToLogsFile, JSON.stringify([errorData], null, 2));
         }
-        else {
-            fs.access(absolutePathToLogFile, err => {
-                if (err) {
-                    fs.appendFile(absolutePathToLogFile, JSON.stringify([errorData], null, 2), 'utf-8', err => {
-                        if (err) throw err;
-                    })
-                } else {
-                    fs.readFile(absolutePathToLogFile, (err, data) => {
-                        if (err) throw err;
-                        else {
-                            const jsonExistingLogs = JSON.parse(data);
-                            if (Array.isArray(jsonExistingLogs)) {
-                                jsonExistingLogs.push(errorData);
-                                fs.writeFile(absolutePathToLogFile, JSON.stringify(jsonExistingLogs, null, 2), 'utf-8', err => {
-                                    if (err) throw err;
-                                })
-                            }
-                        }
-                    });
-                }
-            });
-        }
-    });
-
-    next(err);
+        next(err)
+    } catch (e) {
+        next(e);
+    }
 }
-
