@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import styles from './HowItWorksPage.module.sass'
 import stepsArticles from './stepsArticles.json'
+import StartContestButton from "../../components/StartContestButton/StartContestButton";
 
 const HowItWorksPage = () => {
     return (
@@ -43,6 +44,9 @@ const HowItWorksPage = () => {
                         )
                     )}
                 </div>
+            </section>
+            <section className={styles.startContestBlock}>
+                <StartContestButton/>
             </section>
             <Footer/>
         </>

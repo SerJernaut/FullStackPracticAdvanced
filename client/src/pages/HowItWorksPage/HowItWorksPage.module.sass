@@ -12,11 +12,11 @@
   display: flex
   width: $half
   @include mediaQuery($bootstrap-md)
-    width: 100%
+    width: $full
     justify-content: center
   & > *
     @include mediaQuery($bootstrap-md)
-      width: 100%
+      width: $full
 
 .headerLabel
   padding-left: $common-pd-mg-value
@@ -63,7 +63,7 @@
   @media screen and (max-width: 1200px)
     flex-basis: calc(50% - 30px)
   @media screen and (max-width: 768px)
-    flex-basis: 100%
+    flex-basis: $full
   h2
     text-align: center
     font-size: 16px
@@ -89,8 +89,17 @@
   cursor: pointer
 
 .activeStepCircle
-  background: #28d2d0
+  background: $light-blue-color
   color: $circle-color
 
 .stepCircle:hover
   @extend .activeStepCircle
+
+.startContestBlock
+  background: $light-blue-color
+  min-width: $full
+  text-align: center
+  padding: 33.5px 0
+  font-family: 'Raleway Bold', serif
+  font-size: 20px
+  font-weight: 900
