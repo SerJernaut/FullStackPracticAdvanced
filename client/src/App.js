@@ -19,6 +19,7 @@ import CONSTANTS from "./constants";
 import browserHistory from "./browserHistory";
 import ChatContainer from "./components/Chat/ChatComponents/ChatContainer/ChatContainer";
 import UserTransactionsPage from "./pages/UserTransactionsPage";
+import HowItWorksPage from "./pages/HowItWorksPage/HowItWorksPage";
 
 class App extends Component {
   render() {
@@ -85,6 +86,7 @@ class App extends Component {
           />
           <Route exact path="/account" component={PrivateHoc(UserProfile)} />
           <Route exact path="/transactions" component={UserTransactionsPage} />
+          <Route exact path="/howitworks" component={HowItWorksPage}/>
           <Route component={NotFound} />
         </Switch>
         <ChatContainer />
