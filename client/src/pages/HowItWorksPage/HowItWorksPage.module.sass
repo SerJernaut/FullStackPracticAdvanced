@@ -22,8 +22,8 @@
   padding-left: $common-pd-mg-value
   @include mediaQuery($bootstrap-md)
     padding-left: unset
-  h2
-    font-size: $header-font-size
+  h1
+    font-size: $big-font-size
     font-weight: 600
     line-height: 40px
     padding-bottom: $common-pd-value
@@ -36,14 +36,14 @@
       margin-bottom: unset
   p
     line-height: 25px
-    font: 16px "Raleway Regular"
+    font: $middle-font-size "Raleway Regular"
     font-weight: 300
 
 .howItWorksSteps
   @include flex-align-items(center)
   flex-direction: column
-  h1
-    font-size: $header-font-size
+  h2
+    font-size: $big-font-size
     text-align: center
     padding: 35px 0 70px 0
     text-transform: capitalize
@@ -59,14 +59,14 @@
   @include flex-align-items(center)
   flex-direction: column
   flex: 1
-  padding: 0 15px
+  padding: 0 $common-pd-mg-value
   @media screen and (max-width: 1200px)
     flex-basis: calc(50% - 30px)
   @media screen and (max-width: 768px)
     flex-basis: $full
   h2
     text-align: center
-    font-size: 16px
+    font-size: $middle-font-size
     padding: $common-pd-value 0
     font-weight: 700
     color: $common-color
@@ -80,17 +80,17 @@
   font-size: 30px
   text-align: center
   border-radius: $half
-  line-height: $circle-sizes
-  min-width: $circle-sizes
-  max-width: $circle-sizes
-  min-height: $circle-sizes
-  max-height: $circle-sizes
-  background-color: $circle-color
+  line-height: $step-circle-size
+  min-width: $step-circle-size
+  max-width: $step-circle-size
+  min-height: $step-circle-size
+  max-height: $step-circle-size
+  background-color: $step-circle-color
   cursor: pointer
 
 .activeStepCircle
   background: $light-blue-color
-  color: $circle-color
+  color: $step-circle-color
 
 .stepCircle:hover
   @extend .activeStepCircle
@@ -103,3 +103,72 @@
   font-family: 'Raleway Bold', serif
   font-size: 20px
   font-weight: 900
+
+.frequentlyAskedQuestionsHeaderContainer
+  @include flex-align-items(center)
+  justify-content: center
+  width: $full
+
+.frequentlyAskedQuestionsHeader
+  @include flex-align-items(center)
+  box-sizing: border-box
+  border-bottom: 1px solid rgb(225, 225, 225)
+  margin: 25px 0
+  width: $full
+  padding: 30px 0
+  max-width: 1150px
+  @include mediaQuery(1149px)
+    justify-content: center
+  h2
+    text-transform: capitalize
+    font-size: 30px
+    padding-bottom: 10px
+    font-weight: 500
+    color: $common-color
+
+.questionCircle
+  border-radius: $half
+  border: 2px solid $light-blue-color
+  color: $light-blue-color
+  background: #fff
+  font-size: $big-font-size
+  text-align: center
+  line-height: $question-circle-size
+  min-width: $question-circle-size
+  max-width: $question-circle-size
+  min-height: $question-circle-size
+  max-height: $question-circle-size
+  margin: 12px
+
+.frequentlyAskedQuestionsContainer
+  padding: 0 70px 60px
+  @include mediaQuery($bootstrap-md)
+    padding-left: 25px
+    padding-right: 25px
+
+.questionContainer
+  padding-bottom: 30px
+  a
+    color: $light-blue-color
+    text-decoration: underline
+  a:hover
+    text-decoration: none
+  h3
+    font-size: 18px
+    padding: $common-pd-mg-value 0
+    font-weight: 500
+    line-height: 18px
+    color: $common-color
+  p
+    line-height: 20px
+    margin-top: $common-pd-mg-value
+    font-size: $middle-font-size
+    font-weight: 300
+    strong
+      font-weight: 700
+      color: #333
+  ul
+    padding: 0 25px
+    margin-top: 20px
+    font-weight: 300
+
