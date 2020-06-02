@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import styles from './HowItWorksPage.module.sass';
+import styles from './HowItWorksPage.module.sass'
+import stepsArticles from './stepsArticles.json'
 
 const HowItWorksPage = () => {
     return (
@@ -28,6 +29,19 @@ const HowItWorksPage = () => {
                         winner. The winner gets paid, and you get a strong brand name that will help you succeed! It's
                         quick, simple, and costs a fraction of an agency.
                     </p>
+                </div>
+            </section>
+            <section className={styles.howItWorksSteps}>
+                <h1>5 simple steps</h1>
+                <div className={styles.howItWorksStepsContainer}>
+                    {stepsArticles.map(({id, name, description}, index) => (
+                            <article key={index} className={styles.howItWorksStepItem}>
+                                <div className={styles.stepCircle}>{id}</div>
+                                <h2>{name}</h2>
+                                <p>{description}</p>
+                            </article>
+                        )
+                    )}
                 </div>
             </section>
             <Footer/>

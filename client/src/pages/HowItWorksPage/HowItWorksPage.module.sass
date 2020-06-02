@@ -5,13 +5,12 @@
   padding: 80px 25px
   @include mediaQuery($bootstrap-md)
     flex-direction: column
-    padding: 20px 10px 30px
+    padding: $common-pd-value 10px 30px
 
 .videoWrapper
   padding-right: $common-pd-mg-value
   display: flex
-  width: 50%
-  min-height: 312px
+  width: $half
   @include mediaQuery($bootstrap-md)
     width: 100%
     justify-content: center
@@ -24,19 +23,74 @@
   @include mediaQuery($bootstrap-md)
     padding-left: unset
   h2
-    font-size: 36px
+    font-size: $header-font-size
     font-weight: 600
     line-height: 40px
-    padding-bottom: 20px
+    padding-bottom: $common-pd-value
     margin-bottom: 25px
-    color: #515b5f
+    color: $common-color
     text-transform: capitalize
     @include mediaQuery($bootstrap-lg)
       font-size: 22px
     @include mediaQuery($bootstrap-md)
       margin-bottom: unset
-
   p
     line-height: 25px
     font: 16px "Raleway Regular"
     font-weight: 300
+
+.howItWorksSteps
+  @include flex-align-items(center)
+  flex-direction: column
+  h1
+    font-size: $header-font-size
+    text-align: center
+    padding: 35px 0 70px 0
+    text-transform: capitalize
+
+.howItWorksStepsContainer
+  display: flex
+  padding: 0 130px
+  margin: 40px 0
+  @media screen and (max-width: $bootstrap-xlg)
+    flex-wrap: wrap
+
+.howItWorksStepItem
+  @include flex-align-items(center)
+  flex-direction: column
+  flex: 1
+  padding: 0 15px
+  @media screen and (max-width: 1200px)
+    flex-basis: calc(50% - 30px)
+  @media screen and (max-width: 768px)
+    flex-basis: 100%
+  h2
+    text-align: center
+    font-size: 16px
+    padding: $common-pd-value 0
+    font-weight: 700
+    color: $common-color
+  p
+    padding: $common-pd-value 0
+    line-height: 18px
+    font-size: 14px
+    text-align: center
+
+.stepCircle
+  font-size: 30px
+  text-align: center
+  border-radius: $half
+  line-height: $circle-sizes
+  min-width: $circle-sizes
+  max-width: $circle-sizes
+  min-height: $circle-sizes
+  max-height: $circle-sizes
+  background-color: $circle-color
+  cursor: pointer
+
+.activeStepCircle
+  background: #28d2d0
+  color: $circle-color
+
+.stepCircle:hover
+  @extend .activeStepCircle
