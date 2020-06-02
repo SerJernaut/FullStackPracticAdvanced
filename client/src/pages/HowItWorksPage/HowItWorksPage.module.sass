@@ -1,0 +1,42 @@
+@import 'src/utils/SASS/mixins/flex', 'src/utils/SASS/placeholders/flex', 'src/utils/SASS/mixins/media'
+
+.howItWorks
+  display: flex
+  padding: 80px 25px
+  @include mediaQuery($bootstrap-md)
+    flex-direction: column
+    padding: 20px 10px 30px
+
+.videoWrapper
+  padding-right: $common-pd-mg-value
+  display: flex
+  width: 50%
+  min-height: 312px
+  @include mediaQuery($bootstrap-md)
+    width: 100%
+    justify-content: center
+  & > *
+    @include mediaQuery($bootstrap-md)
+      width: 100%
+
+.headerLabel
+  padding-left: $common-pd-mg-value
+  @include mediaQuery($bootstrap-md)
+    padding-left: unset
+  h2
+    font-size: 36px
+    font-weight: 600
+    line-height: 40px
+    padding-bottom: 20px
+    margin-bottom: 25px
+    color: #515b5f
+    text-transform: capitalize
+    @include mediaQuery($bootstrap-lg)
+      font-size: 22px
+    @include mediaQuery($bootstrap-md)
+      margin-bottom: unset
+
+  p
+    line-height: 25px
+    font: 16px "Raleway Regular"
+    font-weight: 300
