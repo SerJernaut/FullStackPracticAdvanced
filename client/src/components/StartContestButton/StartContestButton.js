@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from './StartContestButton.module.sass'
+import classNames from "classnames";
 
-const StartContestButton = () => {
+const StartContestButton = ({className}) => {
+    const getInTouchStyles = classNames(className, styles.startContestBtn)
     return (
-        <button className={styles.startContestBtn}>start a contest</button>
+        <button className={getInTouchStyles}>start a contest</button>
     );
 };
 

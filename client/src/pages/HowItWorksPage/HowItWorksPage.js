@@ -6,6 +6,7 @@ import stepsArticles from './stepsArticles.json';
 import questionsArticles from './questionsArticles.json';
 import StartContestButton from "../../components/StartContestButton/StartContestButton";
 import ReactHtmlParser from 'react-html-parser';
+import GetInTouchButton from "../../components/GetInTouchButton/GetInTouchButton";
 
 const HowItWorksPage = () => {
     return (
@@ -69,6 +70,18 @@ const HowItWorksPage = () => {
                     )
                     }
                 </div>
+            </section>
+            <section className={styles.getInTouchBlock}>
+                <div className={styles.envelopeIcon}>
+                    <i className="far fa-envelope" aria-hidden="true"/>
+                </div>
+                <div className={styles.helpContainer}>
+                    <h3>Questions?</h3>
+                    <p>
+                        Check out our <a href=''>FAQs</a> or send us a <a href=''>message</a>. For assistance with launching a contest, you can also call us at (877)&nbsp;355-3585 or schedule a <a href=''>Branding Consultation</a >
+                    </p>
+                </div>
+                <GetInTouchButton/>
             </section>
             <Footer/>
         </>

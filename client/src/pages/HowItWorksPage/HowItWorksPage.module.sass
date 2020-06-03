@@ -5,7 +5,7 @@
   padding: 80px 25px
   @include mediaQuery($bootstrap-md)
     flex-direction: column
-    padding: $common-pd-value 10px 30px
+    padding: $common-px-value 10px 30px
 
 .videoWrapper
   padding-right: $common-pd-mg-value
@@ -26,7 +26,7 @@
     font-size: $big-font-size
     font-weight: 600
     line-height: 40px
-    padding-bottom: $common-pd-value
+    padding-bottom: $common-px-value
     margin-bottom: 25px
     color: $common-color
     text-transform: capitalize
@@ -67,11 +67,11 @@
   h2
     text-align: center
     font-size: $middle-font-size
-    padding: $common-pd-value 0
+    padding: $common-px-value 0
     font-weight: 700
     color: $common-color
   p
-    padding: $common-pd-value 0
+    padding: $common-px-value 0
     line-height: 18px
     font-size: 14px
     text-align: center
@@ -101,7 +101,7 @@
   text-align: center
   padding: 33.5px 0
   font-family: 'Raleway Bold', serif
-  font-size: 20px
+  font-size: $common-px-value
   font-weight: 900
 
 .frequentlyAskedQuestionsHeaderContainer
@@ -130,7 +130,7 @@
   border-radius: $half
   border: 2px solid $light-blue-color
   color: $light-blue-color
-  background: #fff
+  background: white
   font-size: $big-font-size
   text-align: center
   line-height: $question-circle-size
@@ -160,7 +160,7 @@
     line-height: 18px
     color: $common-color
   p
-    line-height: 20px
+    line-height: $common-px-value
     margin-top: $common-pd-mg-value
     font-size: $middle-font-size
     font-weight: 300
@@ -169,6 +169,59 @@
       color: #333
   ul
     padding: 0 25px
-    margin-top: 20px
+    margin-top: $common-px-value
     font-weight: 300
+
+.getInTouchBlock
+  background: #455a89
+  @include flex-justify-content(space-between)
+  align-items: start
+  padding: 45px 60px
+  font-size: $common-px-value
+  @include mediaQuery($bootstrap-lg)
+    flex-direction: column
+    align-items: center
+
+.helpContainer
+  display: flex
+  flex-direction: column
+  padding: 0 75px 0 30px
+  @include mediaQuery($bootstrap-lg)
+    margin-bottom: $common-px-value
+  h3
+    font-size: 25px
+    color: white
+    padding-top: 12px
+    padding-bottom: $common-px-value
+    margin-bottom: $common-px-value
+    @include mediaQuery($bootstrap-lg)
+      text-align: center
+  p
+    font-size: $common-px-value
+    color: white
+    max-width: 675px
+    @include mediaQuery($bootstrap-xlg)
+      max-width: 484px
+    a
+      color: #f18762
+      font-weight: 500
+      text-decoration: none
+    a:hover
+      cursor: pointer
+
+.envelopeIcon
+  @include flex-align-items(center)
+  justify-content: center
+  min-width: $envelope-icon-sizes
+  max-width: $envelope-icon-sizes
+  min-height: $envelope-icon-sizes
+  max-height: $envelope-icon-sizes
+  border-radius: $half
+  background-color: white
+  text-align: center
+  @include mediaQuery($bootstrap-xlg)
+    display: none
+  i
+    color: #455A89
+    font-size: 40px
 
