@@ -1,8 +1,16 @@
 @import 'src/utils/SASS/mixins/flex', 'src/utils/SASS/placeholders/flex', 'src/utils/SASS/mixins/media'
 
+#root
+  font-family: $common-font-family, serif
+
+h1, h2, h3
+  font-family: $bold-font-family
+  font-weight: $very-bold-font-weight
+  color: $common-color
+
 .howItWorks
   display: flex
-  padding: 80px 25px
+  padding: 80px 45px
   @include mediaQuery($bootstrap-md)
     flex-direction: column
     padding: $common-px-value 10px 30px
@@ -24,11 +32,9 @@
     padding-left: unset
   h1
     font-size: $big-font-size
-    font-weight: 600
     line-height: 40px
     padding-bottom: $common-px-value
     margin-bottom: 25px
-    color: $common-color
     text-transform: capitalize
     @include mediaQuery($bootstrap-lg)
       font-size: 22px
@@ -36,8 +42,8 @@
       margin-bottom: unset
   p
     line-height: 25px
-    font: $middle-font-size "Raleway Regular"
-    font-weight: 300
+    font: $middle-font-size
+    font-weight: $light-font-weight
 
 .howItWorksSteps
   @include flex-align-items(center)
@@ -69,12 +75,12 @@
     font-size: $middle-font-size
     padding: $common-px-value 0
     font-weight: 700
-    color: $common-color
   p
     padding: $common-px-value 0
     line-height: 18px
     font-size: 14px
     text-align: center
+    font-weight: $light-font-weight
 
 .stepCircle
   font-size: 30px
@@ -100,9 +106,7 @@
   min-width: $full
   text-align: center
   padding: 33.5px 0
-  font-family: 'Raleway Bold', serif
-  font-size: $common-px-value
-  font-weight: 900
+  font-size: 18px
 
 .frequentlyAskedQuestionsHeaderContainer
   @include flex-align-items(center)
@@ -123,8 +127,6 @@
     text-transform: capitalize
     font-size: 30px
     padding-bottom: 10px
-    font-weight: 500
-    color: $common-color
 
 .questionCircle
   border-radius: $half
@@ -148,32 +150,29 @@
 
 .questionContainer
   padding-bottom: 30px
+  font-weight: $light-font-weight
   a
     color: $light-blue-color
     text-decoration: underline
   a:hover
     text-decoration: none
   h3
-    font-size: 18px
+    font-size: $common-px-value
     padding: $common-pd-mg-value 0
-    font-weight: 500
     line-height: 18px
-    color: $common-color
   p
     line-height: $common-px-value
     margin-top: $common-pd-mg-value
     font-size: $middle-font-size
-    font-weight: 300
     strong
       font-weight: 700
-      color: #333
   ul
     padding: 0 25px
     margin-top: $common-px-value
-    font-weight: 300
 
 .getInTouchBlock
   background: #455a89
+  font-weight: $light-font-weight
   @include flex-justify-content(space-between)
   align-items: start
   padding: 45px 60px
@@ -204,7 +203,6 @@
       max-width: 484px
     a
       color: #f18762
-      font-weight: 500
       text-decoration: none
     a:hover
       cursor: pointer
