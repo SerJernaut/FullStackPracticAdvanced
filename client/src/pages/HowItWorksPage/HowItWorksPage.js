@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import styles from './HowItWorksPage.module.sass';
 import stepsArticles from './stepsArticles.json';
 import questionsArticles from './questionsArticles.json';
 import StartContestButton from "../../components/StartContestButton/StartContestButton";
 import ReactHtmlParser from 'react-html-parser';
 import GetInTouchButton from "../../components/GetInTouchButton/GetInTouchButton";
+import LinksSection from "../../components/LinksSection/LinksSection";
 
 const HowItWorksPage = () => {
     return (
@@ -83,7 +83,7 @@ const HowItWorksPage = () => {
                 </div>
                 <GetInTouchButton/>
             </section>
-            <Footer/>
+            <LinksSection/>
         </>
     );
 };
