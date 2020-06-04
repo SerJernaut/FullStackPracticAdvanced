@@ -1,11 +1,10 @@
 import React from 'react';
 import CONSTANTS from '../../constants';
-import styles from './LinksBottomSection.module.sass';
+import styles from './FooterLinksBottomSection.module.sass';
 import Icon from '@mdi/react'
 import {mdiFacebook, mdiTwitter} from '@mdi/js'
 
-
-const LinksBottomSection = () => {
+const FooterLinksBottomSection = () => {
     return (
         <section className={styles.links}>
             <div className={styles.logoAndCopyrightContainer}>
@@ -38,4 +37,4 @@ const LinksBottomSection = () => {
 
 
 
-export default LinksBottomSection;
+export default FooterLinksBottomSection;

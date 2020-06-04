@@ -6,8 +6,8 @@ import questionsArticles from './questionsArticles.json';
 import StartContestButton from "../../components/StartContestButton/StartContestButton";
 import ReactHtmlParser from 'react-html-parser';
 import GetInTouchButton from "../../components/GetInTouchButton/GetInTouchButton";
-import LinksTopSection from "../../components/LinksTopSection/LinksTopSection";
-import LinksBottomSection from "../../components/LinksBottomSection/LinksBottomSection";
+import FooterLinksTopSection from "../../components/FooterLinksTopSection/FooterLinksTopSection";
+import FooterLinksBottomSection from "../../components/FooterLinksBottomSection/FooterLinksBottomSection";
 import PageFooter from "../../components/PageFooter/PageFooter";
 
 const HowItWorksPage = () => {
@@ -86,8 +86,8 @@ const HowItWorksPage = () => {
                 <GetInTouchButton/>
             </section>
             <PageFooter>
-                <LinksTopSection/>
-                <LinksBottomSection/>
+                <FooterLinksTopSection/>
+                <FooterLinksBottomSection/>
             </PageFooter>
         </>
     );

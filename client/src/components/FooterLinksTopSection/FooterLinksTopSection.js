@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from "./LinksTopSection.module.sass";
+import styles from "./FooterLinksTopSection.module.sass";
 
-const LinksTopSection = () => {
+const FooterLinksTopSection = () => {
     return (
         <section className={styles.links}>
             <div className={styles.firstListsWrapper}>
@@ -188,4 +188,4 @@ const LinksTopSection = () => {
     );
 };
 
-export default LinksTopSection;
+export default FooterLinksTopSection;
