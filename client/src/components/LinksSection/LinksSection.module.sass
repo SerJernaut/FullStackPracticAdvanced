@@ -20,21 +20,22 @@
     text-decoration: underline
 
 .firstListsWrapper
-  div
-    article
+  .listsContainer
+    .linksWrapper
       @include mediaQuery($bootstrap-md)
         padding-bottom: $lists-common-padding
-    article:nth-child(2)
+    .linksWrapper:nth-child(2)
       padding-bottom: $lists-common-padding
 
-.secondListsWrapper div
+.secondListsWrapper .listsContainer
   @include mediaQuery($bootstrap-md)
     padding-bottom: unset
-  .linksWrapper .linksContainer li
-    font-family: 'Lato'
-  article
+  .linksWrapper
     @media screen and (min-width: $bootstrap-lg) and (max-width: $bootstrap-xlg)
       flex-basis: 25%
+    .linksContainer
+      li
+        font-family: 'Lato'
 
 .listsContainer
   display: flex
@@ -50,12 +51,12 @@
     flex-basis: $full
 
 .groupLists
-  article:nth-child(1)
+  .linksWrapper:nth-child(1)
     @include mediaQuery($bootstrap-xlg)
       padding-bottom: 60px
     @include mediaQuery($bootstrap-md)
       padding-bottom: $lists-common-padding
-  article:nth-child(2)
+  .linksWrapper:nth-child(2)
     h3
       margin-top: 25px
 
