@@ -5,6 +5,10 @@
   padding: 86px 60px
   @include mediaQuery($bootstrap-lg)
     display: none
+  @include mediaQuery($bootstrap-md)
+    display: block
+    padding-left: 15px
+    padding-right: 15px
   a
     color: #abadad
     outline: 0
@@ -14,29 +18,43 @@
   a:hover
     color: #f27e51
     text-decoration: underline
-  div:nth-child(3)
-    .linksWrapper .linksContainer li
-      font-family: 'Lato'
+
+.firstListsWrapper
+  div
     article
-      @include mediaQuery($bootstrap-xlg)
-        flex-basis: 25%
+      @include mediaQuery($bootstrap-md)
+        padding-bottom: $lists-common-padding
+    article:nth-child(2)
+      padding-bottom: $lists-common-padding
+
+.secondListsWrapper div
+  @include mediaQuery($bootstrap-md)
+    padding-bottom: unset
+  .linksWrapper .linksContainer li
+    font-family: 'Lato'
+  article
+    @media screen and (min-width: $bootstrap-lg) and (max-width: $bootstrap-xlg)
+      flex-basis: 25%
 
 .listsContainer
   display: flex
   flex-wrap: wrap
   flex-grow: 1
   padding-bottom: 90px
-  article, div
-    flex-basis: 25%
-    @include mediaQuery($bootstrap-xlg)
-      flex-basis: 50%
-  article:nth-child(2)
-      padding-bottom: 40px
+
+.linksWrapper, .groupLists
+  flex-basis: 25%
+  @include mediaQuery($bootstrap-xlg)
+    flex-basis: $half
+  @include mediaQuery($bootstrap-md)
+    flex-basis: $full
 
 .groupLists
   article:nth-child(1)
     @include mediaQuery($bootstrap-xlg)
       padding-bottom: 60px
+    @include mediaQuery($bootstrap-md)
+      padding-bottom: $lists-common-padding
   article:nth-child(2)
     h3
       margin-top: 25px
@@ -52,6 +70,9 @@
 .linksContainer
   li:not(:last-child)
     padding-bottom: 7px
+  li:last-child
+    @include mediaQuery($bootstrap-md)
+      padding-bottom: 7px
 
 .featuredHeader
   font-family: 'Lato Bold'
@@ -62,4 +83,4 @@
   margin-bottom: $common-px-value
 
 .squadReview
-  margin-top: 20px
+  margin-top: $common-px-value
