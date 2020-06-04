@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from "./LinksSection.module.sass";
+import styles from "./LinksTopSection.module.sass";
 
-const LinksSection = () => {
+const LinksTopSection = () => {
     return (
         <section className={styles.links}>
             <div className={styles.firstListsWrapper}>
@@ -188,4 +188,4 @@ const LinksSection = () => {
     );
 };
 
-export default LinksSection;
+export default LinksTopSection;

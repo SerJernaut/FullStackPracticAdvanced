@@ -6,7 +6,9 @@ import questionsArticles from './questionsArticles.json';
 import StartContestButton from "../../components/StartContestButton/StartContestButton";
 import ReactHtmlParser from 'react-html-parser';
 import GetInTouchButton from "../../components/GetInTouchButton/GetInTouchButton";
-import LinksSection from "../../components/LinksSection/LinksSection";
+import LinksTopSection from "../../components/LinksTopSection/LinksTopSection";
+import LinksBottomSection from "../../components/LinksBottomSection/LinksBottomSection";
+import PageFooter from "../../components/PageFooter/PageFooter";
 
 const HowItWorksPage = () => {
     return (
@@ -61,8 +63,8 @@ const HowItWorksPage = () => {
                     </header>
                 </div>
                 <div className={styles.frequentlyAskedQuestionsContainer}>
-                    {questionsArticles.map(({question, description}) => (
-                            <article className={styles.questionContainer}>
+                    {questionsArticles.map(({question, description}, index) => (
+                            <article key={index} className={styles.questionContainer}>
                                 <h3>{question}</h3>
                                 <div>{ReactHtmlParser(description)}</div>
                             </article>
@@ -78,12 +80,15 @@ const HowItWorksPage = () => {
                 <div className={styles.helpContainer}>
                     <h3>Questions?</h3>
                     <p>
-                        Check out our <a href=''>FAQs</a> or send us a <a href=''>message</a>. For assistance with launching a contest, you can also call us at (877)&nbsp;355-3585 or schedule a <a href=''>Branding Consultation</a >
+                        Check out our <a href=''>FAQs</a> or send us a <a href=''>message</a>. For assistance with launching a contest, you can also call us at (877)&nbsp;355-3585 or schedule a <a href=''>Branding Consultation</a>
                     </p>
                 </div>
                 <GetInTouchButton/>
             </section>
-            <LinksSection/>
+            <PageFooter>
+                <LinksTopSection/>
+                <LinksBottomSection/>
+            </PageFooter>
         </>
     );
 };
