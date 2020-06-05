@@ -44,18 +44,24 @@ const EventsForm = (props) => {
                             }
                         </Field>
 
-                        <div className={styles.eventDateWrapper}> <DatePickerField name='eventDate' autoComplete='off' timeIntervals={1} dateFormat="Pp" placeholderText={'Click and choose event date'} minDate={moment().toDate()}  showTimeSelect/>
-                            <Button onClick={()=>{
-                                resetButtonClickHandler(formik, 'eventDate', '')
-                            }}>reset event date</Button>
+                        <div className={styles.eventDateWrapper}>
+                            <div className={styles.eventDateContainer}>
+                                <DatePickerField name='eventDate' autoComplete='off' timeIntervals={1} dateFormat="Pp" placeholderText={'Click and choose event date'} minDate={moment().toDate()}  showTimeSelect/>
+                                <Button onClick={()=>{
+                                    resetButtonClickHandler(formik, 'eventDate', '')
+                                }}>reset event date</Button>
+                            </div>
+                            <CustomErrorMessage className={styles.warningMessage} name='eventDate'/>
                         </div>
-                        <CustomErrorMessage className={styles.warningMessage} name='eventDate'/>
-                        <div className={styles.eventDateWrapper}> <DatePickerField name='notifyDate' autoComplete='off' timeIntervals={1} dateFormat="Pp" placeholderText={'Click and choose notify date'} minDate={moment().toDate()} maxDate={formik.values["eventDate"]}  showTimeSelect/>
+                        <div className={styles.eventDateWrapper}>
+                            <div className={styles.eventDateContainer}>
+                            <DatePickerField name='notifyDate' autoComplete='off' timeIntervals={1} dateFormat="Pp" placeholderText={'Click and choose notify date'} minDate={moment().toDate()} maxDate={formik.values["eventDate"]}  showTimeSelect/>
                             <Button onClick={()=>{
                                 resetButtonClickHandler(formik, 'notifyDate', '')
                             }}>reset notify date</Button>
+                            </div>
+                            <CustomErrorMessage className={styles.warningMessage} name='notifyDate'/>
                         </div>
-                        <CustomErrorMessage className={styles.warningMessage} name='notifyDate'/>
                         <Button type='submit'>create event</Button>
                     </Form>
                 </div>
