@@ -1,0 +1,66 @@
+CREATE TABLE "Conversation"
+(
+    "id"  SERIAL UNIQUE NOT NULL,
+    "ownerId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL ,
+    "participantId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL,
+    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+    PRIMARY KEY ("ownerId", "participantId")
+);
+
+CREATE TABLE "Message"
+(
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    "conversationId" INTEGER REFERENCES "Conversation"(id) NOT NULL,
+    "senderId" INTEGER REFERENCES "Users"(id) NOT NULL,
+    "body" varchar(256),
+    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+);
+
+CREATE TABLE "Catalog"
+(
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    "name" varchar(64) NOT NULL,
+    "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE,
+    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+);
+
+CREATE TABLE "CatalogToConversation"
+(
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    "catalogId" INTEGER NOT NULL,
+    "conversationId" INTEGER NOT NULL,
+    FOREIGN KEY ("catalogId") REFERENCES "Catalog"(id)  ON DELETE RESTRICT,
+    FOREIGN KEY ("conversationId") REFERENCES "Conversation"(id)  ON DELETE RESTRICT
+);
+
+CREATE TABLE "BlackList"
+(
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE
+);
+
+CREATE TABLE "UserToBlackList"
+(
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "blackListId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+    FOREIGN KEY ("userId") REFERENCES "Users"(id)  ON DELETE RESTRICT,
+    FOREIGN KEY ("blackListId") REFERENCES "BlackList"(id)  ON DELETE RESTRICT
+);
+
+CREATE TABLE "FavouriteList"
+(
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE
+);
+
+CREATE TABLE "UserToFavouriteList"
+(
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    "userId" INTEGER NOT NULL,
+    "favouriteListId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+    FOREIGN KEY ("userId") REFERENCES "Users"(id)  ON DELETE RESTRICT,
+    FOREIGN KEY ("favouriteListId") REFERENCES "FavouriteList"(id)  ON DELETE RESTRICT
+);
