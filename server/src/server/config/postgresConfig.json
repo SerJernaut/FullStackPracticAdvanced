@@ -2,7 +2,7 @@
   "development": {
     "username": "serjnut",
     "password": "admin",
-    "database": "squadhelp_database",
+    "database": "squadhelp_exam",
     "host": "localhost",
     "dialect": "postgres",
     "operatorsAliases": "Op"
