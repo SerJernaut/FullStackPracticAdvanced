@@ -1,17 +1,18 @@
-
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {toast} from 'react-toastify';
 import styles from './EventsTimer.module.sass';
 import ProgressBar from "../ProgressBar/ProgressBar";
 
-const EventTimer = (props) => {
+const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationDate, index}) => {
 
-    const {eventsArr, eventName, eventDate, notifyDate, eventCreationDate, index} = props;
     const currentDate = new Date();
-    const timeFromEventCreation = Math.floor((currentDate - eventCreationDate));
-    const eventDuration = Math.floor((eventDate - eventCreationDate));
-    const progressCalc = Math.floor((timeFromEventCreation/eventDuration) * 100);
+
+    const calcProgressBarPercent = () => {
+        const timeFromEventCreation = Math.floor((currentDate - eventCreationDate));
+        const eventDuration = Math.floor((eventDate - eventCreationDate));
+        return Math.floor((timeFromEventCreation/eventDuration) * 100);
+    }
 
     const generateTimeUnits = msTime => {
         return {
@@ -31,21 +32,20 @@ const EventTimer = (props) => {
 
     const countdownTimer = () => {
         const currentDate = new Date();
-        const diffTime = eventDate - currentDate;
-        const diffTimeAsSec = Math.floor(diffTime / 1000);
-        const timeLeftToEvent = eventDate - notifyDate;
-        const timeLeftToEventAsSec = Math.floor(timeLeftToEvent / 1000);
-        if (diffTimeAsSec === timeLeftToEventAsSec && !toast.isActive(1)) {
+        const timeRemainsToEvent = eventDate - currentDate;
+        const timeRemainsToEventAsSec = Math.floor(timeRemainsToEvent / 1000);
+        const timeLeftToEventFromNotification = eventDate - notifyDate;
+        const timeLeftToEventFromNotificationAsSec = Math.floor(timeLeftToEventFromNotification / 1000);
+        if (timeRemainsToEventAsSec === timeLeftToEventFromNotificationAsSec && !toast.isActive(1)) {
             const timeToEvent = eventDate - notifyDate;
-            console.log(timeToEvent)
             const timeToEventObj = generateTimeUnits(timeToEvent);
             const notifyMessage = `ATTENTION!!! Notification message: It remains ${timeToEventObj.d} d, ${timeToEventObj.h} h, ${timeToEventObj.m} m ${timeToEventObj.s} s to ${eventName}`;
             toast(notifyMessage, {
                 toastId: 1
             })
         }
-        if (diffTime > 0) {
-            return generateTimeUnits(diffTime)
+        if (timeRemainsToEvent > 0) {
+            return generateTimeUnits(timeRemainsToEvent)
         }
         return {}
     }
@@ -72,7 +72,7 @@ const EventTimer = (props) => {
             </div>}
             {(timerArr.length) > 0 &&
             <>
-                <ProgressBar className={styles.progressBar} progress={progressCalc}/>
+                <ProgressBar className={styles.progressBar} progress={calcProgressBarPercent()}/>
                 <div className={styles.timeContainer}>
                     {timerArr.map(([timeUnit, time], index) => {
                         return (

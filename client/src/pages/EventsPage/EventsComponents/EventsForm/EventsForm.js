@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Form, Formik, Field} from 'formik';
 import styles from './EventsForm.module.sass';
 import Label from "../Label/Label";
