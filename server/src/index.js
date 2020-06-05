@@ -6,7 +6,7 @@ const cors = require('cors');
 const controller = require('./socketInit');
 const handlerError = require('./server/handlerError/handler');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9632;
 const app = express();
 
 app.use(cors());
