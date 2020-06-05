@@ -52,18 +52,17 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
         return {}
     }
     const [timerObj, setTimerData] = useState(countdownTimer());
+    const timerArr = Object.entries(timerObj);
 
     useEffect(() => {
-        const timer = setInterval(() => {
+        const timer = setTimeout(() => {
             setTimerData(countdownTimer())
         }, 1000);
+        if (timerArr.length === 0) clearTimeout(timer);
         return () => {
-            clearInterval(timer)
+            clearTimeout(timer)
         };
-
-    }, []);
-
-    const timerArr = Object.entries(timerObj);
+    });
 
     return (
         <li>
