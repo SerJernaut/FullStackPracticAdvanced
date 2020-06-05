@@ -1,12 +1,32 @@
 $common-text-color: #555C6B
 $common-px-value: 16px
 
-.buttonWrapper
-  padding-bottom: 16px
+.buttonContainer
   border: 1px solid #e7eaf3
   margin: 0 15px
   max-height: 114px
   transition: border 0.3s
+  display: flex
+  justify-content: center
+  button
+    display: flex
+    flex-direction: column
+    align-items: center
+    height: 114px
+    padding: $common-px-value $common-px-value 32px $common-px-value
+    cursor: pointer
+    border: none
+    outline: none
+    background-color: unset
+    min-width: 300px
+  p
+    padding-top: 15px
+    line-height: 18px
+    font-size: 13px
+    color: $common-text-color
+    font-weight: 400
+    text-align: center
+
   @media screen and (max-width: 1010px)
     width: 100%
     margin-bottom: 32px
@@ -19,22 +39,6 @@ $common-px-value: 16px
   .badge
     background-color: #2cb9b7
 
-.buttonContainer
-  display: flex
-  flex-direction: column
-  justify-content: space-around
-  align-items: center
-  padding: $common-px-value
-  cursor: pointer
-  h5
-    margin-bottom: 4px
-    line-height: 18px
-    color: $common-text-color
-    font-size: 12px
-    font-weight: 400
-    text-align: center
-    width: 267px
-
 .badge
   border-radius: 10rem
   padding: 7px 15px
@@ -45,9 +49,8 @@ $common-px-value: 16px
   font-weight: 500
   font-family: "Poppins",Helvetica,Arial,sans-serif
   line-height: 1
-  margin-bottom: $common-px-value
   min-width: 51px
   max-width: 51px
   min-height: 26px
   max-height: 26px
-
+  text-transform: capitalize

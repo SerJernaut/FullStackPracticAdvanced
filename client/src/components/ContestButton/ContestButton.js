@@ -2,20 +2,18 @@ import React from 'react';
 import styles from './ContestButton.module.sass';
 import classNames from 'classnames';
 
-const ContestButton = (props) => {
-    const {badgeContent, buttonText, selectedButtonId, setSelectedButtonId, index} = props;
+const ContestButton = ({badgeContent, buttonText, selectedButtonId, setSelectedButtonId, index}) => {
     const selectButton = () => {
         setSelectedButtonId(index)
     }
-    const buttonWrapperClassName = classNames(styles.buttonWrapper, {[styles.selectedButton]: selectedButtonId === index});
+    const buttonContainerClassName = classNames(styles.buttonContainer, {[styles.selectedButton]: selectedButtonId === index});
 
     return (
-        <div className={buttonWrapperClassName}>
-            <div className={styles.buttonContainer} onClick={selectButton}>
+        <div className={buttonContainerClassName}>
+            <button onClick={selectButton}>
                 <span className={styles.badge}>{badgeContent}</span>
-                <h5>{buttonText}</h5>
-            </div>
-
+                <p>{buttonText}</p>
+            </button>
         </div>
     );
 };

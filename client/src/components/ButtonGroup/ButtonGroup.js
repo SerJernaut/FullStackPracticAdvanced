@@ -7,11 +7,10 @@ const ButtonGroup = () => {
     const [selectedButtonId, setSelectedButtonId] = useState(1);
     return (
         <div className={styles.buttonGroupContainer}>
-            {buttonsData.map((buttonData, index)=> {
-                return (
-                    <ContestButton key={index} index={index} selectedButtonId={selectedButtonId} setSelectedButtonId={setSelectedButtonId} {...buttonData}/>
-                )
-            })}
+            {buttonsData.map((buttonData, index)=> (
+                <ContestButton key={index} index={index} selectedButtonId={selectedButtonId} setSelectedButtonId={setSelectedButtonId} {...buttonData}/>
+            ))
+            }
         </div>
     );
 };
