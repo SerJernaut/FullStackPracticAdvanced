@@ -15,20 +15,22 @@
     font-size: 20px
     width: 100%
     li
-      padding: 15px 30px
+      padding: 15px 40px
       background: aliceblue
       margin-bottom: 10px
       display: flex
       align-items: center
       justify-content: space-between
+      position: relative
       @media screen and (max-width: 920px)
         flex-direction: column
-
       mark
-        text-transform: uppercase
-        background: aliceblue
-        font-weight: 800
+        background-color: unset
+        color: cadetblue
       mark, p
+        text-transform: uppercase
+        font-weight: 1000
+        z-index: 1
         @media screen and (max-width: 920px)
           margin-bottom: 10px
 

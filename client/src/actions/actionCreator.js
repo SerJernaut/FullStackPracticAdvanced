@@ -449,10 +449,10 @@ export const getUserTransactionStatementsRequest = () => {
     }
 }
 
-export const createEventAction = newEvent => {
+export const createEventAction = (values, eventCreationDate) => {
 
     return {
         type: ACTION.NEW_EVENT_ACTION,
-        newEvent: newEvent
+        newEvent: {...values, eventCreationDate}
     }
 }

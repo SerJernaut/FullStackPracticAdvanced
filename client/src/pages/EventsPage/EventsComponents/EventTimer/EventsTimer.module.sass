@@ -1,22 +1,32 @@
+
 .badgeContainer
-  padding: 10px
+  position: absolute
+  top: 50%
+  transform: translateY(-50%)
+  right: 0
 
 .activeEventsBadge
   color: white
   font-weight: 700
   border-radius: 50%
-  min-height: 50px
-  max-height: 50px
-  min-width: 50px
-  max-width: 50px
-  line-height: 50px
+  min-height: 30px
+  max-height: 30px
+  min-width: 30px
+  max-width: 30px
+  line-height: 30px
   background-color: red
   text-align: center
-  padding: 0 10px
 
 .timeContainer
   display: flex
   justify-content: space-between
   padding: 0 10px
+  z-index: 1
   span
     padding: 0 5px
+
+.progressBar
+  position: absolute
+  top: 0
+  left: 0
+  z-index: 0

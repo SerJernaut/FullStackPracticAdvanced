@@ -21,8 +21,9 @@ const EventsForm = (props) => {
     return (
         <Formik
             initialValues={{ eventName: ''}}
-            onSubmit={(values, {resetForm})=> {
-                props.newEvent(values);
+            onSubmit={(values,{resetForm})=> {
+                const eventCreationDate = new Date();
+                props.newEvent(values, eventCreationDate);
                 resetForm()
 
             }}
@@ -31,29 +32,29 @@ const EventsForm = (props) => {
             {formik=>(
                 <div className={styles.formWrapper}>
                     <Form onSubmit={formik.handleSubmit}>
-                            <span>enter the name of event</span>
-                            <Field key='eventName' name='eventName' type='text' placeholder='Enter the event name'>
-                                {
-                                    fieldProps => (
-                                        <Label>
-                                            <Input className={styles.eventDateInput} {...fieldProps}/>
-                                            <CustomErrorMessage className={styles.warningMessage} name='eventName'/>
-                                        </Label>
-                                    )
-                                }
-                            </Field>
+                        <span>enter the name of event</span>
+                        <Field key='eventName' name='eventName' type='text' placeholder='Enter the event name'>
+                            {
+                                fieldProps => (
+                                    <Label>
+                                        <Input className={styles.eventDateInput} {...fieldProps}/>
+                                        <CustomErrorMessage className={styles.warningMessage} name='eventName'/>
+                                    </Label>
+                                )
+                            }
+                        </Field>
 
                         <div className={styles.eventDateWrapper}> <DatePickerField name='eventDate' autoComplete='off' timeIntervals={1} dateFormat="Pp" placeholderText={'Click and choose event date'} minDate={moment().toDate()}  showTimeSelect/>
                             <Button onClick={()=>{
                                 resetButtonClickHandler(formik, 'eventDate', '')
                             }}>reset event date</Button>
-                      </div>
+                        </div>
                         <CustomErrorMessage className={styles.warningMessage} name='eventDate'/>
                         <div className={styles.eventDateWrapper}> <DatePickerField name='notifyDate' autoComplete='off' timeIntervals={1} dateFormat="Pp" placeholderText={'Click and choose notify date'} minDate={moment().toDate()} maxDate={formik.values["eventDate"]}  showTimeSelect/>
                             <Button onClick={()=>{
                                 resetButtonClickHandler(formik, 'notifyDate', '')
                             }}>reset notify date</Button>
-                       </div>
+                        </div>
                         <CustomErrorMessage className={styles.warningMessage} name='notifyDate'/>
                         <Button type='submit'>create event</Button>
                     </Form>
@@ -67,7 +68,7 @@ const EventsForm = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        newEvent: (values) => dispatch(createEventAction(values)),
+        newEvent: (values, eventCreationDate) => dispatch(createEventAction(values, eventCreationDate)),
     };
 };
 
