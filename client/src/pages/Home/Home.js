@@ -55,11 +55,6 @@ const Home = (props) => {
                   DASHBOARD
                 </Link>
               </div>
-              <div className={styles.button}>
-                <Link className={styles.button__link} to="/events">
-                  EVENTS
-                </Link>
-              </div>
             </div>
             <div className={styles.greyContainer}>
               <SlideBar
