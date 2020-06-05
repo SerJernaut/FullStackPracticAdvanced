@@ -75,18 +75,11 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
             <>
                 <ProgressBar className={styles.progressBar} progress={calcProgressBarPercent()}/>
                 <div className={styles.timeContainer}>
-                    {timerArr.map(([timeUnit, time], index) => {
-                        return (
-                            (time >= 10) ?
-                                <span key={index}>
-                    {`${time} ${timeUnit} `}
-                    </span>
-                                :
-                                <span key={index}>
-                    {`0${time} ${timeUnit} `}
-                    </span>
+                    {timerArr.map(([timeUnit, time], index) => (
+                        (
+                            <span key={index}>{(time < 10) && `0`}{time}{timeUnit}</span>
                         )
-                    })}
+                    ))}
                 </div>
             </>
             }
