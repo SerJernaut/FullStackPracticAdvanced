@@ -187,7 +187,7 @@ router.get(
 router.get(
     '/getUserTransactionHistory',
     checkToken.checkToken,
-    userController.getUserTransactionHistory
+    userController.getUserTransactionsHistory
 )
 
 router.get(
