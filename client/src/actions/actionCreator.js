@@ -448,3 +448,11 @@ export const getUserTransactionStatementsRequest = () => {
         type: ACTION.GET_USER_TRANSACTION_STATEMENTS_REQUEST
     }
 }
+
+export const createEventAction = newEvent => {
+
+    return {
+        type: ACTION.NEW_EVENT_ACTION,
+        newEvent: newEvent
+    }
+}
