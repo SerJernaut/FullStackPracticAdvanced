@@ -4,6 +4,7 @@ import {toast} from 'react-toastify';
 import styles from './EventsTimer.module.sass';
 import ProgressBar from "../ProgressBar/ProgressBar";
 import PropTypes from 'prop-types';
+import TimerUnitsBody from "../TimerUnitsBody/TimerUnitsBody";
 
 const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationDate}) => {
 
@@ -74,13 +75,7 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
             {(timerArr.length) > 0 &&
             <>
                 <ProgressBar className={styles.progressBar} progress={calcProgressBarPercent()}/>
-                <div className={styles.timeContainer}>
-                    {timerArr.map(([timeUnit, time], index) => (
-                        (
-                            <span key={index}>{(time < 10) && `0`}{time}{timeUnit}</span>
-                        )
-                    ))}
-                </div>
+                <TimerUnitsBody className={styles.timeContainer} timerArr={timerArr}/>
             </>
             }
         </li>
