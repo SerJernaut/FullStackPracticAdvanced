@@ -3,8 +3,9 @@ import {connect} from "react-redux";
 import {toast} from 'react-toastify';
 import styles from './EventsTimer.module.sass';
 import ProgressBar from "../ProgressBar/ProgressBar";
+import PropTypes from 'prop-types';
 
-const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationDate, index}) => {
+const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationDate}) => {
 
     const currentDate = new Date();
 
@@ -64,7 +65,7 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
     const timerArr = Object.entries(timerObj);
 
     return (
-        <li key={index}>
+        <li>
             <mark>{`${eventName}`}</mark>
             <p>{`starts ${eventDate.toLocaleString()}`}</p>
             {(!timerArr.length) && <div className={styles.badgeContainer}>
@@ -90,13 +91,19 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
             </>
             }
         </li>
-
-
     )
 
 
 };
 
 const mapStateToProps = state => state.eventsStore;
+
+EventTimer.propTypes = {
+    eventsArr: PropTypes.array.isRequired,
+    eventName: PropTypes.string.isRequired,
+    eventDate: PropTypes.instanceOf(Date).isRequired,
+    notifyDate: PropTypes.instanceOf(Date).isRequired,
+    eventCreationDate: PropTypes.instanceOf(Date).isRequired,
+};
 
 export default connect(mapStateToProps)(EventTimer);

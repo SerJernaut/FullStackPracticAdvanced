@@ -13,7 +13,7 @@ const EventsList = (props) => {
                 {eventsArr.map((event, index) => {
                     const listKey = index + event.eventDate
                     return (
-                           <EventTimer key={listKey} index={index} {...event} eventsArr={eventsArr}/>
+                           <EventTimer key={listKey} {...event} eventsArr={eventsArr}/>
                     )
                 }) }
             </ul>
