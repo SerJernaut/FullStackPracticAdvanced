@@ -8,7 +8,6 @@ import {
     clearChangeMarkError,
     goToExpandedDialog,
     changeShowImage,
-    changeModalShow
 } from '../../actions/actionCreator';
 import {withRouter} from 'react-router-dom';
 import isEqual from 'lodash/isEqual';
@@ -16,9 +15,10 @@ import classNames from 'classnames';
 import {confirmAlert} from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import './confirmStyle.css';
+import PropTypes from 'prop-types';
 
 
-const OfferBox = (props) => {
+const OfferBox = props => {
 
     const findConversationInfo = () => {
         const {messagesPreview, id} = props;
@@ -38,7 +38,7 @@ const OfferBox = (props) => {
     };
 
 
-    const resolveOffer = () => {
+    const resolveOfferByCustomer = () => {
         confirmAlert({
             title: 'confirm',
             message: 'Are u sure?',
@@ -54,7 +54,7 @@ const OfferBox = (props) => {
         });
     };
 
-    const rejectOffer = () => {
+    const rejectOfferByCustomer = () => {
         confirmAlert({
             title: 'confirm',
             message: 'Are u sure?',
@@ -81,27 +81,53 @@ const OfferBox = (props) => {
         });
     };
 
+    const {data: {status, moderationStatus}, role} = props;
+
     const offerStatus = () => {
-        const {status} = props.data;
-        if (status === CONSTANTS.OFFER_STATUS_REJECTED) {
-            return <i className={classNames("fas fa-times-circle reject", styles.reject)}/>
-        } else if (status === CONSTANTS.OFFER_STATUS_WON) {
-            return <i className={classNames("fas fa-check-circle resolve", styles.resolve)}/>
+        if (role && role !== CONSTANTS.MODERATOR && status) {
+            switch (status) {
+                case CONSTANTS.OFFER_STATUS_WON: {
+                    return (moderationStatus === CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS) &&
+                        <i className={classNames("fas fa-check-circle resolve", styles.resolve)}/>
+                }
+                case CONSTANTS.OFFER_STATUS_REJECTED: {
+                    return (moderationStatus === CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS) &&
+                        <i className={classNames("fas fa-times-circle reject", styles.reject)}/>
+                }
+                case CONSTANTS.OFFER_STATUS_PENDING: {
+                    return <span>{(() => {
+                        switch (moderationStatus) {
+                            case CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS: {
+                                return (role === CONSTANTS.CUSTOMER) ? "Reject or resolve the offer!" : (role === CONSTANTS.CREATOR) && "Customer has not been yet review your offer!"
+                            }
+                            case CONSTANTS.OFFER_MODERATION_REJECTED_STATUS: {
+                                return (role === CONSTANTS.CREATOR) && "Your offer is rejected by moderator!"
+                            }
+                            case CONSTANTS.OFFER_MODERATION_EXPECTED_STATUS: {
+                                return (role === CONSTANTS.CREATOR) && "Wait until the moderator check the offer! Then customer will see your offer and maybe will resolve it!"
+                            }
+                            default:
+                                return null;
+                        }
+                    })()} </span>
+                }
+                default:
+                    return null;
+            }
         }
         return null;
-    };
-
+    }
 
     const goChat = () => {
         props.goToExpandedDialog({interlocutor: props.data.User, conversationData: findConversationInfo()});
     };
 
 
-    const {data, role, id, contestType} = props;
+    const {data, id, contestType} = props;
     const {avatar, firstName, lastName, email, rating} = props.data.User;
     return (
         <div className={styles.offerContainer}>
-            {offerStatus()}
+            {role && (role !== CONSTANTS.MODERATOR) && offerStatus()}
             <div className={styles.mainInfoContainer}>
                 <div className={styles.userInfo}>
                     <div className={styles.creativeInfoContainer}>
@@ -144,11 +170,11 @@ const OfferBox = (props) => {
                         placeholderRating={data.mark}
                     />}
                 </div>
-                {role !== CONSTANTS.CREATOR && <i onClick={goChat} className="fas fa-comments"/>}
+                {role === CONSTANTS.CUSTOMER && <i onClick={goChat} className="fas fa-comments"/>}
             </div>
             {props.needButtons(data.status) && <div className={styles.btnsContainer}>
-                <div onClick={resolveOffer} className={styles.resolveBtn}>Resolve</div>
-                <div onClick={rejectOffer} className={styles.rejectBtn}>Reject</div>
+                <div onClick={resolveOfferByCustomer} className={styles.resolveBtn}>Resolve</div>
+                <div onClick={rejectOfferByCustomer} className={styles.rejectBtn}>Reject</div>
             </div>}
         </div>
     )
@@ -170,5 +196,19 @@ const mapStateToProps = (state) => {
     const {messagesPreview} = state.chatStore;
     return {changeMarkError, id, role, messagesPreview, isShowModal};
 };
+
+OfferBox.propTypes = {
+    data: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        status: PropTypes.oneOf([CONSTANTS.OFFER_STATUS_PENDING, CONSTANTS.OFFER_STATUS_WON, CONSTANTS.OFFER_STATUS_REJECTED]).isRequired,
+        moderationStatus: PropTypes.oneOf([CONSTANTS.OFFER_MODERATION_EXPECTED_STATUS , CONSTANTS.OFFER_MODERATION_RESOLVED_STATUS, CONSTANTS.OFFER_MODERATION_REJECTED_STATUS]).isRequired,
+        text: PropTypes.string
+    }).isRequired,
+    key: PropTypes.number,
+    needButtons: PropTypes.func.isRequired,
+    setOfferStatus: PropTypes.func.isRequired,
+    contestType: PropTypes.oneOf([CONSTANTS.CONTEST_NAME_TYPE, CONSTANTS.CONTEST_TAGLINE_TYPE, CONSTANTS.CONTEST_LOGO_TYPE]).isRequired,
+    date: PropTypes.instanceOf(Date)
+}
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OfferBox));

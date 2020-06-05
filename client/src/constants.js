@@ -1,12 +1,20 @@
-const env = process.env.NODE_ENV || 'development';
+const env = 'development';
 const serverIP = 'localhost';
 const serverPort = env === 'production' ? 3000 : 9632;
 export default {
   CUSTOMER: 'customer',
   CREATOR: 'creator',
+  MODERATOR: 'moderator',
+  GET_MODERATION_OFFERS_LIMIT: 6,
   CONTEST_STATUS_ACTIVE: 'active',
   CONTEST_STATUS_FINISHED: 'finished',
   CONTEST_STATUS_PENDING: 'pending',
+  OFFER_MODERATION_EXPECTED_STATUS: 'EXPECTED',
+  OFFER_MODERATION_RESOLVED_STATUS: 'RESOLVED',
+  OFFER_MODERATION_REJECTED_STATUS: 'REJECTED',
+  CONTEST_NAME_TYPE: 'name',
+  CONTEST_TAGLINE_TYPE: 'tagline',
+  CONTEST_LOGO_TYPE: 'logo',
   NAME_CONTEST: 'name',
   LOGO_CONTEST: 'logo',
   TAGLINE_CONTEST: 'tagline',

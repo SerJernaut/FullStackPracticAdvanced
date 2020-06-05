@@ -1,0 +1,19 @@
+@import 'src/utils/SASS/variables/moderatorVariables'
+
+@mixin flex-main-props($align-items, $justify-content)
+  display: flex
+  align-items: $align-items
+  justify-content: $justify-content
+
+@mixin flex-direction-column
+  display: flex
+  flex-direction: column
+
+@mixin hover ($font-color)
+  &:hover
+    color: $font-color
+    background-color: #4e618d
+
+@mixin mediaQuery ($breakpoint)
+  @media screen and (max-width: $breakpoint)
+    @content

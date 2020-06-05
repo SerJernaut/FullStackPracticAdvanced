@@ -1,0 +1,35 @@
+@import '../client/src/utils/SASS/mixins/moderatorMixins'
+
+.moderationDashboardContainer
+  display: flex
+  justify-content: center
+  background-color: whitesmoke
+
+.filterContainer
+  width: 30%
+
+.moderationOffersContainer
+  display: flex
+  width: 70%
+  color: #4e618d
+  margin-top: 30px
+  flex-direction: column
+  align-items: center
+  @include mediaQuery($media-md-bp)
+    padding-bottom: 45px
+
+  h1
+    text-transform: uppercase
+    font-weight: 1000
+    text-align: center
+    padding-bottom: 20px
+  div
+    li:last-child
+      @include mediaQuery($media-md-bp)
+        padding-bottom: 30px
+
+
+
+
+
+

@@ -110,16 +110,12 @@ export const clearBundle = () => {
 };
 
 
-
-
 export const updateContest = (data) => {
     return {
         type: ACTION.UPDATE_CONTEST_ACTION,
         data: data
     }
 };
-
-
 
 
 export const saveContestToStore = (data) => {
@@ -153,8 +149,8 @@ export const setOfferStatus = (data) => {
 };
 
 
-export const createCatalog=(data)=>{
-    return{
+export const createCatalog = (data) => {
+    return {
         type: ACTION.CREATE_CATALOG_REQUEST,
         data: data
     }
@@ -166,8 +162,6 @@ export const updateUserData = (data) => {
         data: data
     }
 };
-
-
 
 
 export const cashOut = (data) => {
@@ -449,10 +443,112 @@ export const getUserTransactionStatementsRequest = () => {
     }
 }
 
-export const createEventAction = (values, eventCreationDate) => {
-
+export const sendMailForResetPasswordRequest = formValues => {
     return {
-        type: ACTION.NEW_EVENT_ACTION,
-        newEvent: {...values, eventCreationDate}
+        type: ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_REQUEST,
+        data: formValues
     }
 }
+
+export const sendMailForResetPasswordSuccess = noticeMessage => {
+    return {
+        type: ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_SUCCESS,
+        noticeMessage
+    }
+}
+
+export const sendMailForResetPasswordError = error => {
+    return {
+        type: ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_ERROR,
+        error
+    }
+}
+
+export const confirmResetPasswordRequest = accessToken => {
+    return {
+        type: ACTION.CONFIRM_RESET_PASSWORD_REQUEST,
+        accessToken
+    }
+}
+
+export const confirmResetPasswordSuccess = noticeMessage => {
+    return {
+        type: ACTION.CONFIRM_RESET_PASSWORD_SUCCESS,
+        noticeMessage
+    }
+}
+
+export const confirmResetPasswordError = error => {
+    return {
+        type: ACTION.CONFIRM_RESET_PASSWORD_ERROR,
+        error
+    }
+}
+
+export const getModerationOffersRequest = paginationFilter => {
+    return {
+        type: ACTION.GET_MODERATION_OFFERS_REQUEST,
+        paginationFilter
+    }
+}
+
+export const getModerationOffersSuccess = (offers, hasMore) => {
+    return {
+        type: ACTION.GET_MODERATION_OFFERS_SUCCESS,
+        offers,
+        hasMore
+    }
+}
+
+export const getModerationOffersError = error => {
+    return {
+        type: ACTION.GET_MODERATION_OFFERS_ERROR,
+        error
+    }
+}
+
+
+export const offerModerationResolvingRequest = offerId => {
+    return {
+        type: ACTION.OFFER_MODERATION_RESOLVING_REQUEST,
+        offerId
+    }
+}
+
+export const offerModerationResolvingSuccess = (offerId, resolvedNoticeMessage) => {
+    return {
+        type: ACTION.OFFER_MODERATION_RESOLVING_SUCCESS,
+        offerId,
+        resolvedNoticeMessage
+    }
+}
+
+export const offerModerationResolvingError = error => {
+    return {
+        type: ACTION.OFFER_MODERATION_RESOLVING_ERROR,
+        error
+    }
+}
+
+export const offerModerationRejectingRequest = offerId => {
+    return {
+        type: ACTION.OFFER_MODERATION_REJECTING_REQUEST,
+        offerId
+    }
+}
+
+export const offerModerationRejectingSuccess = (offerId, rejectedNoticeMessage) => {
+    return {
+        type: ACTION.OFFER_MODERATION_REJECTING_SUCCESS,
+        offerId,
+        rejectedNoticeMessage
+    }
+}
+
+export const offerModerationRejectingError = error => {
+    return {
+        type: ACTION.OFFER_MODERATION_REJECTING_ERROR,
+        error
+    }
+}
+

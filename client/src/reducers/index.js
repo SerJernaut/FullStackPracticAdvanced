@@ -12,9 +12,9 @@ import updateContestReducer from './updateContestReducer';
 import chatReducer from './chatReducer';
 import userProfileReducer from './userProfileReducer';
 import transactionsReducer from './transactionsReducer'
-import eventsReducer from "./eventsReducer";
-
-
+import confirmResetPasswordReducer from "./confirmResetPasswordReducer";
+import sendEmailForResetPasswordReducer from "./sendEmailForResetPasswordReducer";
+import moderateOffersReducer from "./moderateOffersReducer";
 
 const appReducer=combineReducers({
    form: formReducer,
@@ -30,7 +30,9 @@ const appReducer=combineReducers({
    chatStore: chatReducer,
    userProfile: userProfileReducer,
    transactionsStore: transactionsReducer,
-   eventsStore: eventsReducer
+   preResetPasswordStore: sendEmailForResetPasswordReducer,
+   confirmResetPasswordStore: confirmResetPasswordReducer,
+   moderateOffersStore: moderateOffersReducer
 });
 
 export default appReducer;

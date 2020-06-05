@@ -20,6 +20,15 @@ module.exports.validateLogin = async (req, res, next) => {
   }
 };
 
+module.exports.validateResettingPasswordData = async (req, res, next) => {
+  const validationResult = await schems.resetPasswordSchema.isValid(req.body);
+  if (validationResult) {
+    next();
+  } else {
+    next(new BadRequestError('Invalid data for resetting password'));
+  }
+};
+
 module.exports.validateOffersFiles = async (req, res, next) => {
   const validationResult = await schems.offersFilesSchem.isValid(req.body);
   if (validationResult) {

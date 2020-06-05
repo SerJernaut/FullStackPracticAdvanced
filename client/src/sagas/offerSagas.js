@@ -2,7 +2,16 @@ import {put, select} from 'redux-saga/effects';
 import ACTION from '../actions/actionTypes';
 import * as restController from '../api/rest/restController';
 import CONSTANTS from "../constants";
-
+import {
+    getModerationOffersError,
+    getModerationOffersSuccess,
+    offerModerationRejectingError,
+    offerModerationRejectingSuccess,
+    offerModerationResolvingError,
+    offerModerationResolvingSuccess
+} from "../actions/actionCreator";
+import {toast} from "react-toastify";
+import {toastOptions} from "../utils/toastOptions";
 
 export function* changeMarkSaga(action) {
     try {
@@ -35,8 +44,6 @@ export function* addOfferSaga(action) {
 }
 
 
-
-
 export function* setOfferStatusSaga(action) {
     try {
         const {data} = yield  restController.setOfferStatus(action.data);
@@ -54,4 +61,44 @@ export function* setOfferStatusSaga(action) {
     }
 }
 
+export function* getModerationOffersSaga (action) {
+    try {
+        const {data: {offers, hasMore}} = yield restController.getModerationOffers(action.paginationFilter);
+        if (Array.isArray(offers) && typeof hasMore === "boolean") {
+            yield put (getModerationOffersSuccess(offers, hasMore))
+        }
+    }
+    catch (e) {
+        yield put(getModerationOffersError(e.response))
+    }
+}
 
+export function* moderationResolvingSaga (action) {
+    try{
+        const {data: {offerId, messageForModerator}} = yield restController.moderationResolvingOffer(action.offerId)
+        if (typeof offerId === "number" && typeof messageForModerator === "string") {
+            yield put (offerModerationResolvingSuccess(offerId, messageForModerator))
+            toast.success(messageForModerator, toastOptions);
+        }
+    }
+    catch(e) {
+        yield put(offerModerationResolvingError(e.response));
+        const {response: {data}} = e;
+        toast.error(data, toastOptions);
+    }
+}
+
+export function* moderationRejectingSaga (action) {
+    try{
+        const {data: {offerId, messageForModerator}} = yield restController.moderationRejectingOffer(action.offerId)
+        if (typeof offerId === "number" && typeof messageForModerator === "string") {
+            yield put (offerModerationRejectingSuccess(offerId, messageForModerator));
+            toast.success(messageForModerator, toastOptions);
+        }
+    }
+    catch(e) {
+        yield put(offerModerationRejectingError(e.response));
+        const {response: {data}} = e;
+        toast.error(data, toastOptions);
+    }
+}

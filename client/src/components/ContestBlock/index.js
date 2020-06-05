@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./ContestBlock.module.scss";
-import { Link } from "react-router-dom";
-import { mdiLightbulbOutline } from "@mdi/js";
-import Icon from "@mdi/react";
+
 
 const ContestBlock = (props) => {
   return (
@@ -13,9 +11,6 @@ const ContestBlock = (props) => {
       </span>
 
       <button>
-        <Link>
-          <Icon path={mdiLightbulbOutline} title="Bulb Outline" size={"12px"} />
-        </Link>
       </button>
     </div>
   );

@@ -11,7 +11,13 @@ import {
     getContestByIdSaga,
     downloadContestFileSaga
 } from './contestsSagas'
-import {changeMarkSaga, setOfferStatusSaga, addOfferSaga} from './offerSagas';
+import {
+    changeMarkSaga,
+    setOfferStatusSaga,
+    addOfferSaga,
+    getModerationOffersSaga,
+    moderationResolvingSaga, moderationRejectingSaga
+} from './offerSagas';
 import {
     previewSaga,
     getDialog,
@@ -26,6 +32,10 @@ import {
     changeCatalogName
 } from './chatSagas';
 import {getUserTransactionsSaga, getUserTransactionStatementsSaga} from "./transactionSagas";
+import {
+    confirmResetPasswordSaga,
+    sendEmailForResetPasswordSaga,
+} from "./resetPasswordSagas";
 
 function* rootSaga() {
     yield  takeLatest(ACTION.AUTH_ACTION_REGISTER, registerSaga);
@@ -58,6 +68,11 @@ function* rootSaga() {
     yield  takeLatest(ACTION.CHANGE_CATALOG_NAME_REQUEST,changeCatalogName);
     yield takeLatest(ACTION.GET_USER_TRANSACTIONS_HISTORY_REQUEST, getUserTransactionsSaga);
     yield takeLatest(ACTION.GET_USER_TRANSACTION_STATEMENTS_REQUEST, getUserTransactionStatementsSaga);
+    yield takeLatest(ACTION.SEND_EMAIL_FOR_RESET_PASSWORD_REQUEST, sendEmailForResetPasswordSaga);
+    yield takeLatest(ACTION.CONFIRM_RESET_PASSWORD_REQUEST, confirmResetPasswordSaga);
+    yield takeLatest(ACTION.GET_MODERATION_OFFERS_REQUEST, getModerationOffersSaga);
+    yield takeLatest(ACTION.OFFER_MODERATION_RESOLVING_REQUEST, moderationResolvingSaga);
+    yield takeLatest(ACTION.OFFER_MODERATION_REJECTING_REQUEST, moderationRejectingSaga);
 }
 
 export default rootSaga;
