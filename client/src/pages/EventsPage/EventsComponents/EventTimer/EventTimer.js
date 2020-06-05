@@ -61,28 +61,26 @@ const EventTimer = (props) => {
     const timerArr =  Object.entries(timerObj);
     return(
         <>
-        <li key={index}><mark>{`${eventName}`}</mark>{`starts ${eventDate.toLocaleString()}`}
-            {(!timerArr.length) && <div className={styles.activeEventsBadge}>{countActiveEvents()}</div>}
+        <li key={index}><mark>{`${eventName}`}</mark><p>{`starts ${eventDate.toLocaleString()}`}</p>
+            {(!timerArr.length) && <div className={styles.badgeContainer}><div className={styles.activeEventsBadge}>{countActiveEvents()}</div></div>}
             {timerArr.length > 0 &&
-                timerArr.map(([timeUnit, time],index)=> {
-                return (
-                    (time >= 10) ?
-                        <span key={index}>
-                        {`${time} ${timeUnit} `}
-                        </span>
-                        :
-                        <span key={index}>
-                            {`0${time} ${timeUnit} `}
-                        </span>
-                )
-            })
-
-
+            <div className={styles.timeContainer}>
+                {timerArr.map(([timeUnit, time],index)=> {
+                    return (
+                        (time >= 10) ?
+                            <span key={index}>
+                    {`${time} ${timeUnit} `}
+                    </span>
+                            :
+                            <span key={index}>
+                    {`0${time} ${timeUnit} `}
+                    </span>
+                    )
+                })}
+            </div>
             }
-
         </li>
             </>
-
       )
 
 

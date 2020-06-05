@@ -63,6 +63,9 @@
     "@storybook/addons": "^5.0.5",
     "@storybook/react": "^5.3.17",
     "babel-loader": "^8.0.5",
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.13.1",
+    "formik": "^2.1.4",
+    "prop-types": "^15.7.2",
+    "react-datepicker": "^2.14.1"
   }
 }

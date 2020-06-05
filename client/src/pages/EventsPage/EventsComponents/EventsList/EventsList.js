@@ -5,13 +5,15 @@ import styles from './EventsList.module.sass'
 
 const EventsList = (props) => {
     const {eventsArr} = props;
+    eventsArr.sort((a,b) => a.eventDate - b.eventDate);
     return (
         <div className={styles.eventsContainer}>
             <h2>Live upcomming checks</h2>
             <ul>
                 {eventsArr.map((event, index) => {
+                    const listKey = index + event.eventDate
                     return (
-                           <EventTimer key={index} index={index} {...event} eventsArr={eventsArr}/>
+                           <EventTimer key={listKey} index={index} {...event} eventsArr={eventsArr}/>
                     )
                 }) }
             </ul>
