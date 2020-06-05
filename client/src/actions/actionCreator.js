@@ -552,3 +552,10 @@ export const offerModerationRejectingError = error => {
     }
 }
 
+export const createEventAction = newEvent => {
+
+    return {
+        type: ACTION.NEW_EVENT_ACTION,
+        newEvent: newEvent
+    }
+}

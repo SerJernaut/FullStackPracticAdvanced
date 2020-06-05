@@ -15,6 +15,7 @@ import transactionsReducer from './transactionsReducer'
 import confirmResetPasswordReducer from "./confirmResetPasswordReducer";
 import sendEmailForResetPasswordReducer from "./sendEmailForResetPasswordReducer";
 import moderateOffersReducer from "./moderateOffersReducer";
+import eventsReducer from "./eventsReducer";
 
 const appReducer=combineReducers({
    form: formReducer,
@@ -32,7 +33,8 @@ const appReducer=combineReducers({
    transactionsStore: transactionsReducer,
    preResetPasswordStore: sendEmailForResetPasswordReducer,
    confirmResetPasswordStore: confirmResetPasswordReducer,
-   moderateOffersStore: moderateOffersReducer
+   moderateOffersStore: moderateOffersReducer,
+   eventsStore: eventsReducer
 });
 
 export default appReducer;

@@ -21,6 +21,7 @@ import UserTransactionsPage from "./pages/UserTransactionsPage";
 import withoutUserHOC from "./components/withoutUserHOC/withoutUserHOC";
 import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import RedirectToLogin from "./pages/RedirectToLogin/RedirectToLogin";
+import EventsPage from "./pages/EventsPage/EventsPage";
 
 class App extends Component {
   render() {
@@ -96,7 +97,8 @@ class App extends Component {
             component={PrivateHoc(ContestPage)}
           />
           <Route exact path="/account" component={PrivateHoc(UserProfile)} />
-          <Route exact path="/transactions" component={UserTransactionsPage} />
+          <Route exact path="/transactions" component={PrivateHoc(UserTransactionsPage)} />
+          <Route exact path="/events" component={PrivateHoc(EventsPage)} />
           <Route component={NotFound} />
         </Switch>
         <ChatContainer />
