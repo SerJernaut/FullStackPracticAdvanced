@@ -1,0 +1,14 @@
+[
+  {
+    "badgeContent": "yes",
+    "buttonText": "The Domain should exactly match the name"
+  },
+  {
+    "badgeContent": "yes",
+    "buttonText": "But minor variations are allowed  (Recommended)"
+  },
+  {
+    "badgeContent": "no",
+    "buttonText": "I am only looking for a name, not a Domain"
+  }
+]

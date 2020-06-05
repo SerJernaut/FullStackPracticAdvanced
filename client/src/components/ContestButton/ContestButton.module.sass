@@ -1,0 +1,53 @@
+$common-text-color: #555C6B
+$common-px-value: 16px
+
+.buttonWrapper
+  padding-bottom: 16px
+  border: 1px solid #e7eaf3
+  margin: 0 15px
+  max-height: 114px
+  transition: border 0.3s
+  @media screen and (max-width: 1010px)
+    width: 100%
+    margin-bottom: 32px
+
+.selectedButton
+  box-shadow: 0 0 5px rgba(44, 185, 183, .125)
+  border-color: rgba(44, 185, 183, .5)
+  border-width: 3px
+  color: $common-text-color
+  .badge
+    background-color: #2cb9b7
+
+.buttonContainer
+  display: flex
+  flex-direction: column
+  justify-content: space-around
+  align-items: center
+  padding: $common-px-value
+  cursor: pointer
+  h5
+    margin-bottom: 4px
+    line-height: 18px
+    color: $common-text-color
+    font-size: 12px
+    font-weight: 400
+    text-align: center
+    width: 267px
+
+.badge
+  border-radius: 10rem
+  padding: 7px 15px
+  text-align: center
+  background-color: #77838f
+  color: white
+  font-size: 75%
+  font-weight: 500
+  font-family: "Poppins",Helvetica,Arial,sans-serif
+  line-height: 1
+  margin-bottom: $common-px-value
+  min-width: 51px
+  max-width: 51px
+  min-height: 26px
+  max-height: 26px
+

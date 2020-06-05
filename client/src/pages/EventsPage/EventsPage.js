@@ -4,6 +4,7 @@ import EventsList from "./EventsComponents/EventsList/EventsList";
 import styles from './EventsPage.module.sass';
 import {Link} from "react-router-dom";
 import Button from "./EventsComponents/Button/Button";
+import ButtonGroup from "../../components/ButtonGroup/ButtonGroup";
 
 
 const EventsPage = () => {
@@ -11,6 +12,7 @@ const EventsPage = () => {
         <div className={styles.eventsPageContainer}><EventsList/>
             <EventsForm/>
             <Button><Link to={'/'}>go to home page</Link></Button>
+            <ButtonGroup/>
         </div>
 
     );
