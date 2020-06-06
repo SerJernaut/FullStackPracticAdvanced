@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from './HowItWorksPage.module.sass';
 import stepsArticles from './stepsArticles.json';
 import questionsArticles from './questionsArticles.json';
+import classNames from 'classnames';
 import StartContestButton from "../../components/StartContestButton/StartContestButton";
 import ReactHtmlParser from 'react-html-parser';
 import GetInTouchButton from "../../components/GetInTouchButton/GetInTouchButton";
@@ -13,6 +14,7 @@ import HeaderTopSection from "../../components/HeaderTopSection/HeaderTopSection
 import HeaderBottomSection from "../../components/HeaderBottomSection/HeaderBottomSection";
 
 const HowItWorksPage = () => {
+    const [activeStepCircleId, setActiveStepCircleId] = useState(1)
     return (
         <div className={styles.pageContainer}>
             <div className={styles.pageContent}>
@@ -48,7 +50,7 @@ const HowItWorksPage = () => {
                     <div className={styles.howItWorksStepsContainer}>
                         {stepsArticles.map(({id, name, description}, index) => (
                                 <article key={index} className={styles.howItWorksStepItem}>
-                                    <div className={styles.stepCircle}>{id}</div>
+                                    <div className={classNames(styles.stepCircle, {[styles.activeStepCircle]: activeStepCircleId === id})} onClick={()=> setActiveStepCircleId(id)}>{id}</div>
                                     <h2>{name}</h2>
                                     <p>{description}</p>
                                 </article>
