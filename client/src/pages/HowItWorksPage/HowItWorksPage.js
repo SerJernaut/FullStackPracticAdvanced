@@ -8,13 +8,18 @@ import GetInTouchButton from "../../components/GetInTouchButton/GetInTouchButton
 import FooterLinksTopSection from "../../components/FooterLinksTopSection/FooterLinksTopSection";
 import FooterLinksBottomSection from "../../components/FooterLinksBottomSection/FooterLinksBottomSection";
 import PageFooter from "../../components/PageFooter/PageFooter";
-import Header from "../../components/Header/Header";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import HeaderTopSection from "../../components/HeaderTopSection/HeaderTopSection";
+import HeaderBottomSection from "../../components/HeaderBottomSection/HeaderBottomSection";
 
 const HowItWorksPage = () => {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.pageContent}>
-                <Header/>
+                <PageHeader>
+                    <HeaderTopSection/>
+                    <HeaderBottomSection/>
+                </PageHeader>
                 <section className={styles.howItWorks}>
                     <div className={styles.videoWrapper}>
                         <iframe title="Wistia video player"

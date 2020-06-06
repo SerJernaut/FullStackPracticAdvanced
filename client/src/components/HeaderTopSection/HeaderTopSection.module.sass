@@ -1,0 +1,55 @@
+@import 'src/utils/SASS/mixins/flex', 'src/utils/SASS/mixins/media'
+
+.top
+  border-bottom: 1px solid #ebebeb
+  @include flex-align-items(center)
+  @include mediaQuery($bootstrap-md)
+    display: none
+  a
+    font-family: "Raleway", sans-serif
+    font-weight: $light-font-weight
+    text-decoration: none
+    outline: 0
+
+.contactNumberContainer
+  flex-basis: $half
+  @include flex-justify-content(center)
+
+.contactNumber
+  @include flex-align-items(center)
+  justify-content: center
+  padding: 0 18.5px
+  border-left: 1px solid #ebebeb
+  border-right: 1px solid #ebebeb
+  line-height: 40px
+  a
+    color: #35A49C
+  a:hover
+    color: #f18762
+
+.buttonsWrapper
+  flex-basis: $half
+  margin-right: 10px
+  @include flex-justify-content(flex-end)
+
+.buttonsContainer
+  display: flex
+  border-right: 1px solid #ebebeb
+  border-left: 1px solid #ebebeb
+  .authBtn:first-child
+    a
+      border-right: 1px solid #ebebeb
+
+.authBtn
+  @include flex-align-items(center)
+  cursor: pointer
+  padding: 12.5px 0
+  color: #718888
+  font-weight: $middle-font-weight
+  text-transform: uppercase
+  font-size: 13.5px
+  background-color: transparent
+  border: none
+  a
+    padding: 0 $common-pd-mg-value
+    color: #718888

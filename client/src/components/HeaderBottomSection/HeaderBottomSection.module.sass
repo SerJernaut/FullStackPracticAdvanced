@@ -1,0 +1,204 @@
+@import 'src/utils/SASS/mixins/flex', 'src/utils/SASS/mixins/media', 'src/utils/SASS/placeholders/flex'
+
+.bottom
+  @include flex-align-items(center)
+  justify-content: space-around
+  font-family: Raleway, sans-serif
+  font-weight: $middle-font-weight
+  padding: 10px 5px
+  @include mediaQuery($bootstrap-md)
+    justify-content: space-between
+    position: relative
+  a
+    text-transform: uppercase
+    font-weight: $middle-font-weight
+    text-decoration: none
+    outline: 0
+
+.logoContainer
+  img
+    object-fit: cover
+    cursor: pointer
+    height: auto
+    width: 165px
+  img:first-child
+    display: none
+    @include mediaQuery($bootstrap-xlg)
+      display: block
+      width: 100%
+      max-width: 132px
+  img:nth-child(2)
+    @include mediaQuery($bootstrap-xlg)
+      display: none
+
+.linksWrapper
+  flex-basis: calc(100%*2/3)
+  @include flex-align-items(center)
+  justify-content: flex-end
+  padding: 0 $common-pd-mg-value
+  @media screen and (min-width: 1150px) and (max-width: $bootstrap-xlg)
+    justify-content: center
+  @include mediaQuery($bootstrap-md)
+    display: none
+
+
+.linksContainer
+  @include flex-align-items(center)
+  &>li
+    position: relative
+    &:hover > .dropdownMenu
+      @extend %flex-direction-column
+    &>a
+      padding: $common-pd-mg-value 0
+      font-size: 13px
+      color: #495d8b
+      @media screen and (min-width: 769px) and (max-width: 798px)
+        font-size: 12px
+    &:not(:last-child)
+      margin-right: 30px
+      @include mediaQuery(1150px)
+        margin-right: $common-pd-mg-value
+
+
+.btnContainer
+  margin-left: 20px
+  margin-right: 5px
+  @include mediaQuery($bootstrap-md)
+    display: none
+
+.startContestBtn
+  width: 135px
+  font-weight: $middle-font-weight
+  text-align: center
+  padding: 10px 5px
+  border-radius: $buttons-border-radius
+  border: 2px solid $light-blue-color
+  color: $light-blue-color
+  font-size: 14px
+  text-transform: uppercase
+  background-color: transparent
+  font-family: $bold-font-family
+  @include mediaQuery($bootstrap-lg)
+    padding: 7px 3px
+  &:hover
+    color: white
+    background-color: $light-blue-color
+
+.iconStyles
+  right: -12px
+  top: 3px
+  color: #ccc
+  padding-left: 5px
+  position: absolute
+  @media screen and (min-width: $bootstrap-md) and (max-width: 1150px)
+    right: -10px
+
+
+.dropdownMenu
+  display: none
+  background-color: white
+  position: absolute
+  top: -5px
+  z-index: 10000
+  border: 1px solid #ebebeb
+  &:before
+    content: ''
+    display: inline-block
+    border-left: 7px solid transparent
+    border-right: 7px solid transparent
+    border-bottom: 7px solid #ccc
+    position: absolute
+    top: -5px
+    left: 30px
+  li:not(.divider)
+    padding: 8px $common-pd-mg-value
+    font-size: 11px
+    text-align: left
+  li:hover:not(.divider)
+    background-color: #f5f5f5
+    background-image: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 100%)
+    cursor: pointer
+    & > a
+      color: $links-orange-color
+      transition: all 0.3s ease
+  a
+    color: #666
+    white-space: nowrap
+    transition: all 0.3s ease
+
+.divider
+  margin: 8px 0
+  padding: 1px 0
+  background-color: #e5e5e5
+
+.togglerMenu
+  display: none
+  background-color: transparent
+  border: none
+  @include mediaQuery($bootstrap-md)
+    display: block
+  hr
+    border: 1px solid black
+    margin-top: 0
+    margin-bottom: 4px
+    width: 25px
+
+.mobileLinksWrapper
+  display: none
+  padding: 0 20px
+  width: 100%
+  position: absolute
+  top: 61px
+  z-index: 1000
+  background-color: white
+
+.mobileLinksContainer
+  flex: 1
+  .iconStyles
+      left: 110px
+      top: 14px
+  a
+    color: #333333
+    font-family: Gotham SSm A, Gotham SSm B, Halvetica, sans-serif
+    font-size: 12px
+    font-weight: 700
+
+
+.mobileLinksContainer
+    & > li
+      position: relative
+      padding: 10px 0
+      cursor: pointer
+      &:hover > .mobileDropdownMenu
+        @extend %flex-direction-column
+      & > a
+        display: flex
+      & > a:first-child
+        @include flex-align-items(center)
+        & > span
+          padding: 0 10px
+          &:hover
+            background-color: $light-blue-color
+            color: white
+            border-radius: 7px
+
+div.isShowMenu
+  @extend %flex-direction-column
+
+.mobileDropdownMenu
+  min-width: 100%
+  display: none
+  background-color: #eee
+  position: absolute
+  top: 27px
+  left: -5px
+  z-index: 10000
+  li:not(.divider)
+    padding: 10px 15px
+  li:hover:not(.divider)
+    background-color: $links-orange-color
+    background-image: none
+    color: white
+    & > a
+      color: white
+      transition: all 0.3s ease
