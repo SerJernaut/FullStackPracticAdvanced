@@ -1,7 +1,14 @@
 @import 'src/utils/SASS/mixins/flex', 'src/utils/SASS/placeholders/flex', 'src/utils/SASS/mixins/media'
 
-#root
+.pageContainer
   font-family: $common-font-family, serif
+  @extend %flex-direction-column
+  align-items: center
+
+.pageContent
+  max-width: 1280px
+  width: $full
+  @extend %flex-direction-column
 
 h1, h2, h3
   font-family: $bold-font-family
