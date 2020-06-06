@@ -7,8 +7,11 @@
   font-weight: $middle-font-weight
   padding: 10px 5px
   @include mediaQuery($bootstrap-md)
+    position: fixed
+    min-width: 100%
     justify-content: space-between
-    position: relative
+    background-color: white
+    padding-left: 3px
   a
     text-transform: uppercase
     font-weight: $middle-font-weight
@@ -16,6 +19,8 @@
     outline: 0
 
 .logoContainer
+  @include mediaQuery($bootstrap-md)
+    position: relative
   img
     object-fit: cover
     cursor: pointer
@@ -92,7 +97,6 @@
   position: absolute
   @media screen and (min-width: $bootstrap-md) and (max-width: 1150px)
     right: -10px
-
 
 .dropdownMenu
   display: none
@@ -173,14 +177,14 @@
         @extend %flex-direction-column
       & > a
         display: flex
-      & > a:first-child
-        @include flex-align-items(center)
-        & > span
-          padding: 0 10px
-          &:hover
-            background-color: $light-blue-color
-            color: white
-            border-radius: 7px
+        &:first-child
+          @include flex-align-items(center)
+          & > span
+            padding: 0 10px
+            &:hover
+              background-color: $light-blue-color
+              color: white
+              border-radius: 7px
 
 div.isShowMenu
   @extend %flex-direction-column
