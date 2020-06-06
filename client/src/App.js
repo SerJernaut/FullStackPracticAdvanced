@@ -19,9 +19,10 @@ import browserHistory from "./browserHistory";
 import ChatContainer from "./components/Chat/ChatComponents/ChatContainer/ChatContainer";
 import UserTransactionsPage from "./pages/UserTransactionsPage";
 import withoutUserHOC from "./components/withoutUserHOC/withoutUserHOC";
-import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import RedirectToLogin from "./pages/RedirectToLogin/RedirectToLogin";
 import EventsPage from "./pages/EventsPage/EventsPage";
+import HowItWorksPage from "./pages/HowItWorksPage/HowItWorksPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 
 class App extends Component {
   render() {
@@ -45,6 +46,12 @@ class App extends Component {
             path="/login"
             component={withoutUserHOC(LoginPage)}
           />
+          <Route
+            exact
+            path="/registration"
+            component={withoutUserHOC(RegistrationPage)}
+          />
+          <Route exact path="/payment" component={PrivateHoc(Payment)} />
             <Route
                 exact
                 path="/reset_password"
@@ -55,12 +62,6 @@ class App extends Component {
                 render={({match}) => (
                     <RedirectToLogin match={match}/>)}
             />
-          <Route
-            exact
-            path="/registration"
-            component={withoutUserHOC(RegistrationPage)}
-          />
-          <Route exact path="/payment" component={PrivateHoc(Payment)} />
           <Route
             exact
             path="/startContest"
@@ -97,8 +98,9 @@ class App extends Component {
             component={PrivateHoc(ContestPage)}
           />
           <Route exact path="/account" component={PrivateHoc(UserProfile)} />
-          <Route exact path="/transactions" component={PrivateHoc(UserTransactionsPage)} />
+          <Route exact path="/transactions" component={UserTransactionsPage} />
           <Route exact path="/events" component={PrivateHoc(EventsPage)} />
+          <Route exact path="/howitworks" component={HowItWorksPage}/>
           <Route component={NotFound} />
         </Switch>
         <ChatContainer />

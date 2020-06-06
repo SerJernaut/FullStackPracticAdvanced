@@ -55,6 +55,11 @@ const Home = (props) => {
                   DASHBOARD
                 </Link>
               </div>
+              <div className={styles.button}>
+                <Link className={styles.button__link} to="/howitworks">
+                  how it works?
+                </Link>
+              </div>
             </div>
             <div className={styles.greyContainer}>
               <SlideBar

@@ -1,0 +1,230 @@
+@import 'src/utils/SASS/mixins/flex', 'src/utils/SASS/placeholders/flex', 'src/utils/SASS/mixins/media'
+
+.pageContainer
+  font-family: $common-font-family, serif
+  @extend %flex-direction-column
+  align-items: center
+
+.pageContent
+  max-width: 1280px
+  width: $full
+  @extend %flex-direction-column
+
+h1, h2, h3
+  font-family: $bold-font-family
+  font-weight: $very-bold-font-weight
+  color: $common-color
+
+.howItWorks
+  display: flex
+  padding: 80px 45px
+  @include mediaQuery($bootstrap-md)
+    flex-direction: column
+    padding: $common-px-value 10px 30px
+    margin-top: 41px
+
+.videoWrapper
+  padding-right: $common-pd-mg-value
+  display: flex
+  width: $half
+  @include mediaQuery($bootstrap-md)
+    width: $full
+    justify-content: center
+  & > *
+    @include mediaQuery($bootstrap-md)
+      width: $full
+
+.headerLabel
+  padding-left: $common-pd-mg-value
+  @include mediaQuery($bootstrap-md)
+    padding-left: unset
+  h1
+    font-size: $big-font-size
+    line-height: 40px
+    padding-bottom: $common-px-value
+    margin-bottom: 25px
+    text-transform: capitalize
+    @include mediaQuery($bootstrap-lg)
+      font-size: 22px
+    @include mediaQuery($bootstrap-md)
+      margin-bottom: unset
+  p
+    line-height: 25px
+    font: $middle-font-size
+    font-weight: $light-font-weight
+
+.howItWorksSteps
+  @include flex-align-items(center)
+  flex-direction: column
+  h2
+    font-size: $big-font-size
+    text-align: center
+    padding: 35px 0 70px 0
+    text-transform: capitalize
+
+.howItWorksStepsContainer
+  display: flex
+  padding: 0 130px
+  margin: 40px 0
+  @media screen and (max-width: $bootstrap-xlg)
+    flex-wrap: wrap
+
+.howItWorksStepItem
+  @include flex-align-items(center)
+  flex-direction: column
+  flex: 1
+  padding: 0 $common-pd-mg-value
+  @media screen and (max-width: 1200px)
+    flex-basis: calc(50% - 30px)
+  @media screen and (max-width: 768px)
+    flex-basis: $full
+  h2
+    text-align: center
+    font-size: $middle-font-size
+    padding: $common-px-value 0
+    font-weight: 700
+  p
+    padding: $common-px-value 0
+    line-height: 18px
+    font-size: 14px
+    text-align: center
+    font-weight: $light-font-weight
+
+.stepCircle
+  font-size: 30px
+  text-align: center
+  border-radius: $half
+  line-height: $step-circle-size
+  min-width: $step-circle-size
+  max-width: $step-circle-size
+  min-height: $step-circle-size
+  max-height: $step-circle-size
+  background-color: $step-circle-color
+  cursor: pointer
+
+.activeStepCircle
+  background: $light-blue-color
+  color: $step-circle-color
+
+.stepCircle:hover
+  @extend .activeStepCircle
+
+.startContestBlock
+  background: $light-blue-color
+  min-width: $full
+  text-align: center
+  padding: 33.5px 0
+  font-size: 18px
+
+.frequentlyAskedQuestionsHeaderContainer
+  @include flex-align-items(center)
+  justify-content: center
+  width: $full
+
+.frequentlyAskedQuestionsHeader
+  @include flex-align-items(center)
+  box-sizing: border-box
+  border-bottom: 1px solid rgb(225, 225, 225)
+  margin: 25px 0
+  width: $full
+  padding: 30px 0
+  max-width: 1150px
+  @include mediaQuery(1149px)
+    justify-content: center
+  h2
+    text-transform: capitalize
+    font-size: 30px
+    padding-bottom: 10px
+
+.questionCircle
+  border-radius: $half
+  border: 2px solid $light-blue-color
+  color: $light-blue-color
+  background: white
+  font-size: $big-font-size
+  text-align: center
+  line-height: $question-circle-size
+  min-width: $question-circle-size
+  max-width: $question-circle-size
+  min-height: $question-circle-size
+  max-height: $question-circle-size
+  margin: 12px
+
+.frequentlyAskedQuestionsContainer
+  padding: 0 70px 60px
+  @include mediaQuery($bootstrap-md)
+    padding-left: 25px
+    padding-right: 25px
+
+.questionContainer
+  padding-bottom: 30px
+  font-weight: $light-font-weight
+  a
+    color: $light-blue-color
+    text-decoration: underline
+  a:hover
+    text-decoration: none
+  h3
+    font-size: $common-px-value
+    padding: $common-pd-mg-value 0
+    line-height: 18px
+  p
+    line-height: $common-px-value
+    margin-top: $common-pd-mg-value
+    font-size: $middle-font-size
+    strong
+      font-weight: 700
+  ul
+    padding: 0 25px
+    margin-top: $common-px-value
+
+.getInTouchBlock
+  background: #455a89
+  font-weight: $light-font-weight
+  @include flex-align-items(start)
+  justify-content: space-between
+  padding: 45px 75px
+  font-size: $common-px-value
+  @include mediaQuery($bootstrap-lg)
+    flex-direction: column
+    align-items: center
+
+.helpContainer
+  @extend %flex-direction-column
+  padding: 0 75px 0 30px
+  @include mediaQuery($bootstrap-lg)
+    margin-bottom: $common-px-value
+  h3
+    font-size: 25px
+    color: white
+    padding-top: 12px
+    padding-bottom: $common-px-value
+    margin-bottom: $common-px-value
+    @include mediaQuery($bootstrap-lg)
+      text-align: center
+  p
+    font-size: $common-px-value
+    color: white
+    max-width: 675px
+    @include mediaQuery($bootstrap-xlg)
+      max-width: 484px
+    a
+      color: #f18762
+      text-decoration: none
+
+.envelopeIcon
+  @include flex-align-items(center)
+  justify-content: center
+  min-width: $envelope-icon-sizes
+  max-width: $envelope-icon-sizes
+  min-height: $envelope-icon-sizes
+  max-height: $envelope-icon-sizes
+  border-radius: $half
+  background-color: white
+  text-align: center
+  @include mediaQuery($bootstrap-xlg)
+    display: none
+  i
+    color: #455A89
+    font-size: 40px
+

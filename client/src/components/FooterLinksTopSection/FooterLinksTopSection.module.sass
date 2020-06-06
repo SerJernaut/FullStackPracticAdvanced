@@ -1,0 +1,87 @@
+@import 'src/utils/SASS/mixins/media', 'src/utils/SASS/mixins/flex'
+
+.links
+  background-color: #2b3030
+  padding: 86px 60px
+  @include mediaQuery($bootstrap-lg)
+    display: none
+  @include mediaQuery($bootstrap-md)
+    display: block
+    padding-left: 15px
+    padding-right: 15px
+  a
+    color: #abadad
+    outline: 0
+    text-decoration: none
+    font-weight: $light-font-weight
+    font-size: 14px
+  a:hover
+    color: $links-orange-color
+    text-decoration: underline
+
+.firstListsWrapper
+  .listsContainer
+    .linksWrapper
+      @include mediaQuery($bootstrap-md)
+        padding-bottom: $lists-common-padding
+    .linksWrapper:nth-child(2)
+      padding-bottom: $lists-common-padding
+
+.secondListsWrapper
+  .listsContainer
+    @include mediaQuery($bootstrap-md)
+      padding-bottom: unset
+    .linksWrapper
+      @media screen and (min-width: $bootstrap-lg) and (max-width: $bootstrap-xlg)
+        flex-basis: 25%
+      .linksContainer
+        li
+          font-family: 'Lato'
+
+.listsContainer
+  display: flex
+  flex-wrap: wrap
+  flex-grow: 1
+
+.linksWrapper, .groupLists
+  flex-basis: 25%
+  @include mediaQuery($bootstrap-xlg)
+    flex-basis: $half
+  @include mediaQuery($bootstrap-md)
+    flex-basis: $full
+
+.groupLists
+  .linksWrapper:nth-child(1)
+    @include mediaQuery($bootstrap-xlg)
+      padding-bottom: 60px
+    @include mediaQuery($bootstrap-md)
+      padding-bottom: $lists-common-padding
+  .linksWrapper:nth-child(2)
+    h3
+      margin-top: 25px
+
+.linksWrapper
+  h3
+    font-family: Raleway, sans-serif
+    font-size: 16px
+    font-weight: $light-font-weight
+    color: white
+    margin-bottom: $common-px-value
+
+.linksContainer
+  li:not(:last-child)
+    padding-bottom: 7px
+  li:last-child
+    @include mediaQuery($bootstrap-md)
+      padding-bottom: 7px
+
+.featuredHeader
+  font-family: 'Lato Bold'
+  font-size: $common-px-value
+  padding-bottom: 30px
+  color: white
+  border-bottom: 1px solid #555959
+  margin-bottom: $common-px-value
+
+.squadReview
+  margin-top: $common-px-value
