@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './HeaderBottomSection.module.sass';
 import CONSTANTS from "../../constants";
 import classNames from "classnames";
@@ -6,6 +6,15 @@ import {phoneIconBottomStyles} from "../../utils/iconsInlineStyles";
 
 const HeaderBottomSection = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const onResizeHandler = () => {
+        if (window.innerWidth > 768 && isOpen) setIsOpen(false);
+    };
+
+    useEffect(() => {
+        window.addEventListener('resize', onResizeHandler);
+        return () => window.removeEventListener('resize', onResizeHandler);
+    }, [isOpen]);
 
     return (
         <section className={styles.bottom}>
