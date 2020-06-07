@@ -62,27 +62,24 @@ class CustomerDashboard extends React.Component {
     };
 
     render() {
-        const {error, haveMore} = this.props;
+        const {error, hasMore} = this.props;
         const {customerFilter} = this.props;
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.filterContainer}>
                     <div onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_ACTIVE)}
-                         className={classNames({
+                         className={classNames(styles.filter, {
                              [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_ACTIVE === customerFilter,
-                             [styles.filter]: CONSTANTS.CONTEST_STATUS_ACTIVE !== customerFilter
                          })}>Active Contests
                     </div>
                     <div onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_FINISHED)}
-                         className={classNames({
+                         className={classNames(styles.filter, {
                              [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_FINISHED === customerFilter,
-                             [styles.filter]: CONSTANTS.CONTEST_STATUS_FINISHED !== customerFilter
                          })}>Completed contests
                     </div>
                     <div onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_PENDING)}
-                         className={classNames({
+                         className={classNames(styles.filter, {
                              [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_PENDING === customerFilter,
-                             [styles.filter]: CONSTANTS.CONTEST_STATUS_PENDING !== customerFilter
                          })}>Inactive contests
                     </div>
                 </div>
@@ -93,7 +90,7 @@ class CustomerDashboard extends React.Component {
                             :
                             <ContestsContainer isFetching={this.props.isFetching}
                                                loadMore={this.loadMore}
-                                               history={this.props.history} haveMore={haveMore}>
+                                               history={this.props.history} hasMore={hasMore}>
                                 {this.setContestList()}
                             </ContestsContainer>
                     }
