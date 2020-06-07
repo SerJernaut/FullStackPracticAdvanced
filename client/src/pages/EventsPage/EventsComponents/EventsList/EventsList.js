@@ -3,9 +3,7 @@ import {connect} from "react-redux";
 import EventTimer from "../EventTimer/EventTimer";
 import styles from './EventsList.module.sass'
 
-const EventsList = (props) => {
-    const {eventsArr} = props;
-    eventsArr.sort((a,b) => a.eventDate - b.eventDate);
+const EventsList = ({eventsArr}) => {
     return (
         <div className={styles.eventsContainer}>
             <h2>Live upcomming checks</h2>
