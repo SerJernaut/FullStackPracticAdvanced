@@ -13,7 +13,7 @@ const initialState = {
         awardSort: 'asc',
         ownEntries: false
     },
-    haveMore: true
+    hasMore: true
 };
 
 
@@ -32,7 +32,7 @@ export default function (state = initialState, action) {
                 isFetching: false,
                 error: null,
                 contests: [...state.contests, ...action.data.contests],
-                haveMore: action.data.haveMore
+                hasMore: action.data.hasMore
             }
         }
         case ACTION.GET_CONTESTS_ACTION_ERROR: {

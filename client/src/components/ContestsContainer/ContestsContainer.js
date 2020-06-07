@@ -1,40 +1,23 @@
 import React from 'react';
-import {withRouter} from 'react-router';
 import styles from './ContestContainer.module.sass';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Spinner from '../../components/Spinner/Spinner';
 
 
-class ContestsContainer extends React.Component {
+const ContestsContainer = ({isFetching, children, hasMore, loadMore}) => {
 
-    componentDidMount() {
-        window.addEventListener('scroll', this.scrollHandler);
-    };
-
-    componentWillUnmount() {
-        window.removeEventListener('scroll', this.scrollHandler);
-    };
-
-
-    scrollHandler = () => {
-        if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-            if (this.props.haveMore) {
-                this.props.loadMore(this.props.children.length);
-            }
-        }
-    };
-
-    render() {
-        const {isFetching} = this.props;
-        if (!isFetching && this.props.children.length === 0) {
-            return <div className={styles.notFound}>Nothing not found</div>;
-        } else return (
-            <div>
-                {this.props.children}
-                {isFetching && <div className={styles.spinnerContainer}><Spinner/></div>}
-            </div>
-        )
+    const handleNextScroll = () => {
+        loadMore(children.length)
     }
 
+    return ((!isFetching && children.length === 0) ? <div className={styles.notFound}>Nothing not found</div>
+            : <div>
+                <InfiniteScroll dataLength={children.length} next={handleNextScroll}
+                                hasMore={hasMore}
+                                loader={isFetching && <div className={styles.spinnerContainer}><Spinner/></div>}>
+                    {children}</InfiniteScroll>
+            </div>
+    )
 }
 
 
