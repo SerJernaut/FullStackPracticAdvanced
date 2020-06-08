@@ -6,11 +6,10 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import PropTypes from 'prop-types';
 import TimerUnitsBody from "../TimerUnitsBody/TimerUnitsBody";
 
-const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationDate}) => {
-
-    const currentDate = new Date();
+const EventTimer = ({eventName, eventDate, notifyDate, eventCreationDate, numberOfActiveEvents, incrementNumberOfActiveEvents}) => {
 
     const calcProgressBarPercent = () => {
+        const currentDate = new Date();
         const timeFromEventCreation = Math.floor((currentDate - eventCreationDate));
         const eventDuration = Math.floor((eventDate - eventCreationDate));
         return Math.floor((timeFromEventCreation/eventDuration) * 100);
@@ -23,13 +22,6 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
             m: Math.floor((msTime / 1000 / 60) % 60),
             s: Math.floor((msTime / 1000) % 60),
         }
-    }
-
-    const countActiveEvents = () => {
-        return eventsArr.filter(event => {
-            const diffTime = currentDate - event.eventDate;
-            return diffTime > 0
-        }).length
     }
 
     const countdownTimer = () => {
@@ -51,14 +43,20 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
         }
         return {}
     }
+
     const [timerObj, setTimerData] = useState(countdownTimer());
+    const [isExecutedIncrement, setIsExecutedIncrement] = useState(false);
     const timerArr = Object.entries(timerObj);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setTimerData(countdownTimer())
         }, 1000);
-        if (timerArr.length === 0) clearTimeout(timer);
+        if (timerArr.length === 0 && !isExecutedIncrement) {
+            clearTimeout(timer);
+            incrementNumberOfActiveEvents()
+            setIsExecutedIncrement(true)
+        }
         return () => {
             clearTimeout(timer)
         };
@@ -69,7 +67,7 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
             <mark>{`${eventName}`}</mark>
             <p>{`starts ${eventDate.toLocaleString()}`}</p>
             {(!timerArr.length) && <div className={styles.badgeContainer}>
-                <div className={styles.activeEventsBadge}>{countActiveEvents()}</div>
+                <div className={styles.activeEventsBadge}>{numberOfActiveEvents}</div>
             </div>}
             {(timerArr.length) > 0 &&
             <>
@@ -86,11 +84,12 @@ const EventTimer = ({eventsArr, eventName, eventDate, notifyDate, eventCreationD
 const mapStateToProps = state => state.eventsStore;
 
 EventTimer.propTypes = {
-    eventsArr: PropTypes.array.isRequired,
     eventName: PropTypes.string.isRequired,
     eventDate: PropTypes.instanceOf(Date).isRequired,
     notifyDate: PropTypes.instanceOf(Date).isRequired,
     eventCreationDate: PropTypes.instanceOf(Date).isRequired,
+    incrementNumberOfActiveEvents: PropTypes.func.isRequired,
+    numberOfActiveEvents: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(EventTimer);

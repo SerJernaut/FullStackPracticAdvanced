@@ -31,13 +31,13 @@ const EventsForm = (props) => {
         >
             {formik=>(
                 <div className={styles.formWrapper}>
-                    <Form onSubmit={formik.handleSubmit}>
+                    <Form onSubmit={formik.handleSubmit} className={styles.eventsForm}>
                         <span>enter the name of event</span>
                         <Field key='eventName' name='eventName' type='text' placeholder='Enter the event name'>
                             {
                                 fieldProps => (
-                                    <Label>
-                                        <Input className={styles.eventDateInput} {...fieldProps}/>
+                                    <Label className={styles.label}>
+                                        <Input className={styles.eventNameInput} {...fieldProps}/>
                                         <CustomErrorMessage className={styles.warningMessage} name='eventName'/>
                                     </Label>
                                 )

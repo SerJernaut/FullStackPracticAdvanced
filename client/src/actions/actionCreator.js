@@ -559,3 +559,9 @@ export const createEventAction = (values, eventCreationDate) => {
         newEvent: {...values, eventCreationDate}
     }
 }
+
+export const incrementNumberOfActiveEventsAction = () => {
+    return {
+        type: ACTION.INCREMENT_NUMBER_OF_ACTIVE_EVENTS_ACTION,
+    }
+}
