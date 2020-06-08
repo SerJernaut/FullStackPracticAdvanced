@@ -62,26 +62,26 @@ class CustomerDashboard extends React.Component {
     };
 
     render() {
-        const {error, hasMore} = this.props;
+        const {error, hasMore, isFetching} = this.props;
         const {customerFilter} = this.props;
         return (
             <div className={styles.mainContainer}>
                 <div className={styles.filterContainer}>
-                    <div onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_ACTIVE)}
+                    <button onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_ACTIVE)}
                          className={classNames(styles.filter, {
                              [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_ACTIVE === customerFilter,
-                         })}>Active Contests
-                    </div>
-                    <div onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_FINISHED)}
+                         })} disabled={CONSTANTS.CONTEST_STATUS_ACTIVE === customerFilter}>Active Contests
+                    </button>
+                    <button onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_FINISHED)}
                          className={classNames(styles.filter, {
                              [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_FINISHED === customerFilter,
-                         })}>Completed contests
-                    </div>
-                    <div onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_PENDING)}
+                         })} disabled={CONSTANTS.CONTEST_STATUS_FINISHED === customerFilter}>Completed contests
+                    </button>
+                    <button onClick={() => this.props.newFilter(CONSTANTS.CONTEST_STATUS_PENDING)}
                          className={classNames(styles.filter, {
                              [styles.activeFilter]: CONSTANTS.CONTEST_STATUS_PENDING === customerFilter,
-                         })}>Inactive contests
-                    </div>
+                         })} disabled={CONSTANTS.CONTEST_STATUS_PENDING === customerFilter}>Inactive contests
+                    </button>
                 </div>
                 <div className={styles.contestsContainer}>
                     {
