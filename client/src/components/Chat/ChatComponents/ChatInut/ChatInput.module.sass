@@ -6,6 +6,8 @@
   padding: 0 15px
   margin-top: 8px
   padding-top: 7px
+  input
+    max-width: 200px
   &:last-child
     border: none
     margin-top: 0
@@ -15,6 +17,13 @@
     flex-direction: row
     justify-content: space-between
     align-items: center
+    position: absolute
+    background-color: white
+    bottom: -183px
+    right: -30px
+
+    span
+      color: red
     button
       position: relative
       padding: 0
@@ -26,8 +35,8 @@
       position: absolute
       margin-left: 20px
       cursor: pointer
-      top: -15px
-      left: -8px
+      top: -20px
+      left: -53px
       transition: transform 0.2s ease
       transform: rotate(150deg)
       &:hover
@@ -51,7 +60,7 @@
         padding-top: 5px
         text-align: center
       .notValid
-         border:  1px solid red !important
+        border:  1px solid red !important
       .input
         height: 20px
         outline: none
