@@ -7,11 +7,6 @@ import {clearUserStore, headerRequest} from '../../actions/actionCreator';
 
 
 class Header extends React.Component{
-  componentDidMount () {
-    if ( !this.props.data) {
-      this.props.getUser();
-    }
-  }
 
   isForModerator = () => {
       const {data} = this.props;
@@ -172,6 +167,7 @@ class Header extends React.Component{
 const mapStateToProps = (state) => {
   return state.userStore;
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getUser: () => dispatch(headerRequest()),
