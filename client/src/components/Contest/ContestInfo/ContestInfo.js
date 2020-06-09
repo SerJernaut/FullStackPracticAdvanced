@@ -4,6 +4,7 @@ import CONSTANTS from "../../../constants";
 import LogoContestSpecialInfo from './LogoContestSpecialInfo';
 import NameContestSpecialInfo from './NameContestSpecialInfo';
 import TaglineContestSpecialInfo from './TaglineContestSpecialInfo';
+import classNames from 'classnames';
 
 
 const ContestInfo = (props) => {
@@ -29,7 +30,7 @@ const ContestInfo = (props) => {
                     {
                         role !== CONSTANTS.CUSTOMER
                         &&
-                        <i onClick={goChat} className='fas fa-comments'/>
+                        <i onClick={goChat} className={classNames('fas fa-comments', styles.cursorPointer)}/>
                     }
                 </div>
                 <div className={styles.dataContainer}>

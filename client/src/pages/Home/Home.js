@@ -9,8 +9,15 @@ import carouselConstants from "../../carouselConstants";
 import { connect } from "react-redux";
 import Spinner from "../../components/Spinner/Spinner";
 import ContestBlock from "../../components/ContestBlock";
+import {getUserAction} from "../../actions/actionCreator";
 
 const Home = (props) => {
+  useEffect (()=>{
+    if ( !props.data) {
+      props.getUser();
+    }
+  }, [])
+
   const [index, setIndex] = useState(0);
   const [styleName, setStyle] = useState(styles.headline__static);
   let timeout;
@@ -277,4 +284,8 @@ const mapStateToProps = (state) => {
   return { isFetching };
 };
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchToProps = dispatch => ((
+    {getUser: ()=> dispatch(getUserAction())}
+))
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -7,11 +7,6 @@ import {clearUserStore, headerRequest} from '../../actions/actionCreator';
 
 
 class Header extends React.Component{
-  componentDidMount () {
-    if ( !this.props.data) {
-      this.props.getUser();
-    }
-  }
 
   isForModerator = () => {
       const {data} = this.props;
@@ -90,7 +85,7 @@ class Header extends React.Component{
                     </div>
                 </div>
                 <div className={styles.navContainer}>
-                    <img src={`${CONSTANTS.STATIC_IMAGES_PATH}blue-logo.png`} className={styles.logo} alt='blue_logo'/>
+                    <Link to='/'><img src={`${CONSTANTS.STATIC_IMAGES_PATH}blue-logo.png`} className={styles.logo} alt='blue_logo'/></Link>
                     <div className={styles.leftNav}>
                         <div className={styles.nav}>
                             <ul>
@@ -172,6 +167,7 @@ class Header extends React.Component{
 const mapStateToProps = (state) => {
   return state.userStore;
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getUser: () => dispatch(headerRequest()),
