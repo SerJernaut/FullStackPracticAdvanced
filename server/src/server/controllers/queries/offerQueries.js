@@ -3,8 +3,8 @@ const ServerError = require('../../errors/ServerError');
 
 module.exports.getAllOffers = async (filter) => {
     const offers = await bd.Offers.findAll(filter);
-    if (offers.length > 0) return offers;
-    else throw "Can not get offers";
+    if (offers.length > 0) {return offers;}
+    throw "Can not get offers";
 };
 
 
@@ -21,19 +21,17 @@ module.exports.updateOffer = async (data, predicate, transaction) => {
 module.exports.updateOfferStatus = async (data, predicate, transaction) => {
     const result = await bd.Offers.update(data,
         { where: predicate, returning: true, transaction });
-    if (result[ 0 ] < 1) {
-        throw new ServerError('cannot update offer!');
-    } else {
+    if (result[ 0 ] >= 1) {
         return result[ 1 ];
     }
+    throw new ServerError('cannot update offer!');
 };
 
 module.exports.createOffer = async (data) => {
     const result = await bd.Offers.create(data);
-    if ( !result) {
-        throw new ServerError('cannot create new Offer');
-    } else {
+    if ( result) {
         return result.get({ plain: true });
     }
+    throw new ServerError('cannot create new Offer');
 };
 

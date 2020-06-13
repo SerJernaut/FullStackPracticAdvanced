@@ -16,10 +16,10 @@ module.exports.updateUser = async (data, userId, transaction) => {
 module.exports.updateUserByEmail = async (data, email) => {
   const [updatedCount, [updatedUser]] = await bd.Users.update(data,
       { where: { email }, returning: true });
-  if (updatedCount !== 1) {
-    throw new ServerError('cannot update user');
+  if (updatedCount === 1) {
+    return updatedUser.dataValues;
   }
-  return updatedUser.dataValues;
+  throw new ServerError('cannot update user');
 };
 
 
@@ -27,18 +27,17 @@ module.exports.findUser = async (predicate, attributes, transaction) => {
   const result = await bd.Users.findOne({ where: predicate, attributes: attributes, transaction });
   if (result) {
     return result.get({ plain: true });
-  } else {
-    throw new UserNotFoundError(`user with this data doesn't exist`);
   }
+    throw new UserNotFoundError(`user with this data doesn't exist`);
 };
 
 module.exports.userCreation = async (data) => {
   const newUser = await bd.Users.create(data);
-  if ( !newUser) {
-    throw new ServerError('server error on user creation');
-  } else {
-    return newUser.get({ plain: true });
+  if (newUser) {
+    return newUser.get({plain: true});
   }
+  throw new ServerError('server error on user creation');
+
 };
 
 module.exports.passwordCompare = async (pass1, pass2) => {
@@ -59,21 +58,24 @@ module.exports.comparePasswordWithCurrent = async (pass1, pass2) => {
 
 
 module.exports.findTransactionHistory = async (userId) => {
-  try{
-    return await bd.Transactions.findAll({
-      where: {
-        userId
-      }
-    });
+  const transactions = await bd.Transactions.findAll({
+    where: {
+      userId
+    }
+  });
+  if (transactions) {
+    return transactions;
   }
-  catch (e) {
-    throw e;
-  }
+  throw new ApplicationError('can not find transactions')
+
 }
 
 module.exports.findTransactionStatementsByFilter = async (filter) => {
   try{
-    return await bd.Transactions.findAll(filter);
+    const filteredTransactions = await bd.Transactions.findAll(filter);
+    if (filteredTransactions) {
+      return filteredTransactions;
+    }
   }
   catch (e) {
     throw e;
@@ -82,7 +84,7 @@ module.exports.findTransactionStatementsByFilter = async (filter) => {
 
 module.exports.createTransactionByFilter = async (filter) => {
   const result = await bd.Transactions.create(filter);
-  if (result.length > 0) {
+  if (result) {
     return result;
   }
   throw new ServerError('can not create transaction');
