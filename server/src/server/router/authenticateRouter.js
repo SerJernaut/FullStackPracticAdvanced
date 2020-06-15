@@ -9,13 +9,18 @@ authenticateRouter.post(
     '/registration',
     validators.validateRegistrationData,
     hashPass,
-    userController.registration,
+    userController.createNewUser,
+    userController.generateAccessTokenForAuthentication,
+    userController.updateUserAccessToken
 );
 
 authenticateRouter.post(
     '/login',
     validators.validateLogin,
-    userController.login,
+    userController.findUserByEmail,
+    userController.checkIfPasswordsAreEquals,
+    userController.generateAccessTokenForAuthentication,
+    userController.updateUserAccessToken
 );
 
 

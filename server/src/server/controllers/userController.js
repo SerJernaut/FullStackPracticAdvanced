@@ -1,13 +1,9 @@
-import {findTransactionHistory} from "./queries/userQueries";
-
+const {findTransactionHistory} = require("./queries/userQueries");
+const {generateAccessToken} = require("../utils/generateAndCheckUtils");
 const jwt = require('jsonwebtoken');
 const CONSTANTS = require('../../constants');
 const bd = require('../models/index');
-const NotFound = require('../errors/UserNotFoundError');
 const ServerError = require('../errors/ServerError');
-const UtilFunctions = require('../utils/functions');
-const NotEnoughMoney = require('../errors/NotEnoughMoney');
-const bcrypt = require('bcrypt');
 const NotUniqueEmail = require('../errors/NotUniqueEmail');
 const moment = require('moment');
 const uuid = require('uuid/v1');
@@ -19,12 +15,8 @@ const ratingQueries = require('./queries/ratingQueries');
 module.exports.findUserByEmail = async (req, res, next) => {
   try{
     const email = req.body.email || req.tokenData.email;
-    const foundUser = await userQueries.findUser({email});
-    if (foundUser) {
-      req.foundUser = foundUser
+      req.foundUser = await userQueries.findUser({email});
       return next();
-    }
-    next(new ServerError());
   }
   catch (err) {
     next(err);
@@ -42,12 +34,12 @@ module.exports.findUserById = async (req, res, next) => {
   }
 }
 
-module.exports.compareNewPasswordWithCurrent = async (req, res, next) => {
-  const newPassword = req.body.newPassword || req.tokenData.newPassword;
-  const {foundUser: {password}} = req;
+module.exports.checkIfPasswordsAreNotEquals = async (req, res, next) => {
   try{
-    const isPasswordsEqual = await userQueries.comparePasswordWithCurrent(newPassword, password);
-    if (!isPasswordsEqual) next();
+    const newPassword = req.body.newPassword || req.tokenData.newPassword;
+    const {foundUser: {password}} = req;
+    await userQueries.checkIfPasswordsAreNotEquals(newPassword, password);
+    next()
   }
   catch(err) {
     next(err);
@@ -55,33 +47,82 @@ module.exports.compareNewPasswordWithCurrent = async (req, res, next) => {
 }
 
 
-
-
-module.exports.login = async (req, res, next) => {
+module.exports.checkIfPasswordsAreEquals = async (req, res, next) => {
   try {
-    const foundUser = await userQueries.findUser({ email: req.body.email });
-    await userQueries.passwordCompare(req.body.password, foundUser.password);
-    const accessToken = jwt.sign({
-      firstName: foundUser.firstName,
-      userId: foundUser.id,
-      role: foundUser.role,
-      lastName: foundUser.lastName,
-      avatar: foundUser.avatar,
-      displayName: foundUser.displayName,
-      balance: foundUser.balance,
-      email: foundUser.email,
-      rating: foundUser.rating,
-    }, CONSTANTS.JWT_SECRET, { expiresIn: CONSTANTS.ACCESS_TOKEN_TIME });
-    await userQueries.updateUser({ accessToken }, foundUser.id);
+    const {foundUser, body} = req;
+    await userQueries.checkIfPasswordsAreEquals(body.password, foundUser.password);
+    next();
+  }
+  catch(err) {
+    next(err)
+  }
+}
+
+module.exports.generateAccessTokenForNewPassword = (req, res, next) => {
+  try {
+    const {foundUser: {email}, newPassword} = req;
+    req.accessToken = generateAccessToken({
+      email,
+      newPassword
+    });
+    next();
+  } catch (err) {
+    next(err)
+  }
+}
+
+module.exports.generateAccessTokenForAuthentication = (req, res, next) => {
+  try {
+    const userData = req.foundUser || req.newUser;
+    const {firstName, id, role, lastName, avatar, displayName, balance, email, rating} = userData;
+    req.accessToken = generateAccessToken({
+      firstName,
+      userId: id,
+      role,
+      lastName,
+      avatar,
+      displayName,
+      balance,
+      email,
+      rating
+    });
+    next();
+  } catch (err) {
+    next(err)
+  }
+}
+
+module.exports.createNewUser = async (req, res, next) => {
+  try{
+    const {body, hashPass} = req;
+    req.newUser = await userQueries.createUser({...body, password: hashPass});
+    next()
+  }
+  catch(err) {
+    if (err.name === 'SequelizeUniqueConstraintError') {
+      next(new NotUniqueEmail());
+    } else {
+      next(err);
+    }
+  }
+}
+
+module.exports.updateUserAccessToken= async (req, res, next) => {
+  try {
+    const {accessToken} = req;
+    const user = req.foundUser || req.newUser;
+    await userQueries.updateUser({ accessToken }, user.id);
     res.send({ token: accessToken });
   } catch (err) {
     next(err);
   }
 };
+
 module.exports.registration = async (req, res, next) => {
   try {
-    const newUser = await userQueries.userCreation(
-      Object.assign(req.body, { password: req.hashPass }));
+    const {body, hashPass} = req;
+    const newUser = await userQueries.createUser(
+      Object.assign(body, { password: hashPass }));
     const accessToken = jwt.sign({
       firstName: newUser.firstName,
       userId: newUser.id,
@@ -199,11 +240,12 @@ module.exports.payment = async (req, res, next) => {
 
 module.exports.updateUser = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.avatar = req.file.filename;
+    const {body, file, tokenData: {userId}} = req;
+    if (file) {
+      body.avatar = file.filename;
     }
-    const updatedUser = await userQueries.updateUser(req.body,
-      req.tokenData.userId);
+    const updatedUser = await userQueries.updateUser(body,
+        userId);
     res.send({
       firstName: updatedUser.firstName,
       lastName: updatedUser.lastName,
