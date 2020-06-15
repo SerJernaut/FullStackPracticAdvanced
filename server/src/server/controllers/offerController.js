@@ -66,23 +66,25 @@ module.exports.getOffersByFilter = async (req, res, next) => {
 }
 
 module.exports.setNewOffer = async (req, res, next) => {
-    const obj = {};
-    if (req.body.contestType === CONSTANTS.LOGO_CONTEST) {
-        obj.fileName = req.file.filename;
-        obj.originalFileName = req.file.originalname;
+    try{
+    const values = {};
+    const {body: {contestType, contestId, customerId, offerData}, file: {filename, originalname}, tokenData} = req;
+    if (contestType === CONSTANTS.LOGO_CONTEST) {
+        values.fileName = filename;
+        values.originalFileName = originalname;
     } else {
-        obj.text = req.body.offerData;
+        values.text = offerData;
     }
-    obj.userId = req.tokenData.userId;
-    obj.contestId = req.body.contestId;
-    try {
-        let result = await offerQueries.createOffer(obj);
-        delete result.contestId;
-        delete result.userId;
-        controller.getNotificationController().emitEntryCreated(
-            req.body.customerId);
-        const User = Object.assign({}, req.tokenData, { id: req.tokenData.userId });
-        res.send(Object.assign({}, result, { User }));
+    values.userId = tokenData.userId;
+    values.contestId = contestId;
+    let result = await offerQueries.createOffer(values);
+    delete result.contestId;
+    delete result.userId;
+    controller.getNotificationController().emitEntryCreated(
+        customerId);
+    const tokenId = {id: tokenData.userId};
+    const User = {...tokenData, ...tokenId};
+    res.send({...result, ...{User}});
     } catch (e) {
         return next(new ServerError());
     }
@@ -135,21 +137,22 @@ const resolveOfferByCustomer = async (
 };
 
 module.exports.setOfferStatus = async (req, res, next) => {
+    const {body: {command, offerId, creatorId, contestId, orderId, priority}}= req;
     let transaction;
-    if (req.body.command === 'reject') {
+    if (command === 'reject') {
         try {
-            const offer = await rejectOfferByCustomer(req.body.offerId, req.body.creatorId,
-                req.body.contestId);
+            const offer = await rejectOfferByCustomer(offerId, creatorId,
+                contestId);
             res.send(offer);
         } catch (err) {
             next(err);
         }
-    } else if (req.body.command === 'resolve') {
+    } else if (command === 'resolve') {
         try {
             transaction = await db.sequelize.transaction();
-            const winningOffer = await resolveOfferByCustomer(req.body.contestId,
-                req.body.creatorId, req.body.orderId, req.body.offerId,
-                req.body.priority, transaction);
+            const winningOffer = await resolveOfferByCustomer(contestId,
+                creatorId, orderId, offerId,
+                priority, transaction);
             res.send(winningOffer);
         } catch (err) {
             transaction.rollback();

@@ -27,8 +27,8 @@ module.exports.updateOfferStatus = async (data, predicate, transaction) => {
     throw new ServerError('cannot update offer!');
 };
 
-module.exports.createOffer = async (data) => {
-    const result = await bd.Offers.create(data);
+module.exports.createOffer = async (filter, options) => {
+    const result = await bd.Offers.create(filter, options);
     if ( result) {
         return result.get({ plain: true });
     }
