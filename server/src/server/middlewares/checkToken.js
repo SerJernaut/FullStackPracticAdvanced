@@ -27,13 +27,13 @@ module.exports.checkAuth = async (req, res, next) => {
 };
 
 module.exports.checkToken = async (req, res, next) => {
-  const accessToken = req.headers.authorization;
-  if ( !accessToken) {
-    return next(new TokenError('need token'));
-  }
   try {
-    req.tokenData = jwt.verify(accessToken, CONSTANTS.JWT_SECRET);
-    next();
+    const accessToken = req.headers.authorization;
+    if ( accessToken) {
+      req.tokenData = jwt.verify(accessToken, CONSTANTS.JWT_SECRET);
+      return next()
+    }
+    next(new TokenError('need token'));
   } catch (err) {
     next(new TokenError());
   }
