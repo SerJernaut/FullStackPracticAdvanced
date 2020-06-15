@@ -3,11 +3,10 @@ const CONSTANTS = require('../../constants');
 const ApplicationError = require('../errors/ApplicationError');
 
 module.exports.generateAccessToken = objValues => {
-    try {
-        return jwt.sign(objValues, CONSTANTS.JWT_SECRET, {expiresIn: CONSTANTS.ACCESS_TOKEN_TIME});
+    const accessToken = jwt.sign(objValues, CONSTANTS.JWT_SECRET, {expiresIn: CONSTANTS.ACCESS_TOKEN_TIME});
+    if (accessToken) {
+        return accessToken;
     }
-    catch (e) {
-        throw new ApplicationError('can not sign access token');
-    }
+    throw new ApplicationError('can not sign access token');
 }
 
