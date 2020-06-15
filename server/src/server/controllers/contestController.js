@@ -160,7 +160,7 @@ module.exports.getCustomersContests = async (req, res, next) => {
     if (contests) {
       contests.forEach(
           contest => contest.dataValues.count = contest.dataValues.Offers.length);
-      res.send({ contests, hasMore: limit <= contests.length });
+      return res.send({ contests, hasMore: limit <= contests.length });
     }
     next(new ServerError())
   }
