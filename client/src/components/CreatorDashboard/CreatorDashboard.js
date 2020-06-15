@@ -4,90 +4,34 @@ import {connect} from 'react-redux';
 import {
     getContestsForCreative,
     clearContestList,
-    setNewCreatorFilter,
     getDataForContest
 } from '../../actions/actionCreator';
 import ContestsContainer from '../../components/ContestsContainer/ContestsContainer';
 import ContestBox from "../ContestBox/ContestBox";
 import styles from './CreatorDashboard.module.sass';
-import queryString from 'query-string';
-import isEqual from 'lodash/isEqual';
 import TryAgain from '../../components/TryAgain/TryAgain';
 
 
 class CreatorDashboard extends React.Component {
 
-    componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.location.search !== this.props.location.search) {
-            this.parseUrlForParams(nextProps.location.search);
-        }
-    }
-
-
     componentDidMount() {
         this.props.getDataForContest();
-        if (this.parseUrlForParams(this.props.location.search) && !this.props.contests.length)
-            this.getContests(this.props.creatorFilter);
+        this.getContests();
     }
 
-    getContests = (filter) => {
+    getContests = () => {
         this.props.getContests(Object.assign({}, {
             limit: 8,
             offset: 0
-        }, filter));
-    };
-
-    changePredicate = ({name, value}) => {
-        const {creatorFilter} = this.props;
-        this.props.newFilter({[name]: value === 'Choose industry' ? null : value});
-        this.parseParamsToUrl({...creatorFilter, ...{[name]: value === 'Choose industry' ? null : value}});
+        }));
     };
 
 
-    parseParamsToUrl = (creatorFilter) => {
-        const obj = {};
-        Object.keys(creatorFilter).forEach(el => {
-            if (creatorFilter[el])
-                obj[el] = creatorFilter[el];
-        });
-        this.props.history.push('/Dashboard?' + queryString.stringify(obj));
-    };
-
-    parseUrlForParams = (search) => {
-        const obj = queryString.parse(search);
-        const filter = {
-            typeIndex: obj.typeIndex || 1,
-            contestId: obj.contestId ? obj.contestId : '',
-            industry: obj.industry ? obj.industry : '',
-            awardSort: obj.awardSort || 'asc',
-            ownEntries: typeof obj.ownEntries === "undefined" ? false : obj.ownEntries
-        };
-        if (!isEqual(filter, this.props.creatorFilter)) {
-            this.props.newFilter(filter);
-            this.props.clearContestsList();
-            this.getContests(filter);
-            return false;
-        } else
-            return true;
-    };
-
-    getPredicateOfRequest = () => {
-        const obj = {};
-        const {creatorFilter} = this.props;
-        Object.keys(creatorFilter).forEach((el) => {
-            if (creatorFilter[el]) {
-                obj[el] = creatorFilter[el];
-            }
-        });
-        obj.ownEntries = creatorFilter.ownEntries;
-        return obj;
-    };
-
-    loadMore = (startFrom) => {
+    loadMore = startFrom => {
         this.props.getContests(Object.assign({}, {
             limit: 8,
             offset: startFrom
-        }, this.getPredicateOfRequest()));
+        }))
     };
 
     setContestList = () => {
@@ -106,12 +50,12 @@ class CreatorDashboard extends React.Component {
 
     tryLoadAgain = () => {
         this.props.clearContestsList();
-        this.props.getContests({limit: 8, offset: 0, ...this.getPredicateOfRequest()});
+        this.props.getContests({limit: 8, offset: 0});
     };
 
 
     render() {
-        const {error, haveMore} = this.props;
+        const {error, hasMore} = this.props;
         return (
             <div className={styles.mainContainer}>
                 {
@@ -122,7 +66,7 @@ class CreatorDashboard extends React.Component {
                         :
                         <ContestsContainer isFetching={this.props.isFetching}
                                            loadMore={this.loadMore}
-                                           history={this.props.history} haveMore={haveMore}>
+                                           history={this.props.history} hasMore={hasMore}>
                             {this.setContestList()}
                         </ContestsContainer>
                 }
@@ -141,7 +85,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getContests: (data) => dispatch(getContestsForCreative(data)),
         clearContestsList: () => dispatch(clearContestList()),
-        newFilter: (filter) => dispatch(setNewCreatorFilter(filter)),
         getDataForContest: () => dispatch(getDataForContest())
     }
 };
