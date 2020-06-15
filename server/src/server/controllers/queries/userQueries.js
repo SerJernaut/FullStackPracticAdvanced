@@ -7,10 +7,10 @@ const bcrypt = require('bcrypt');
 module.exports.updateUser = async (data, userId, transaction) => {
   const [updatedCount, [updatedUser]] = await bd.Users.update(data,
     { where: { id: userId }, returning: true, transaction });
-  if (updatedCount !== 1) {
-    throw new ServerError('cannot update user');
+  if (updatedCount === 1) {
+    return updatedUser.dataValues;
   }
-  return updatedUser.dataValues;
+  throw new ServerError('cannot update user');
 };
 
 module.exports.updateUserByEmail = async (data, email) => {

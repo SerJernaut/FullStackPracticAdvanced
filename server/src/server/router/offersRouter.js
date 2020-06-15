@@ -22,6 +22,7 @@ offersRouter.post(
     '/setNewOffer',
     checkToken.checkToken,
     upload.uploadLogoFiles,
+    basicMiddlewares.onlyForCreative,
     basicMiddlewares.canSendOffer,
     offerController.setNewOffer,
 );
