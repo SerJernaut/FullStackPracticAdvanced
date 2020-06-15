@@ -66,25 +66,25 @@ module.exports.getOffersByFilter = async (req, res, next) => {
 }
 
 module.exports.setNewOffer = async (req, res, next) => {
-    try{
-    const values = {};
-    const {body: {contestType, contestId, customerId, offerData}, file: {filename, originalname}, tokenData} = req;
+    const obj = {};
+    const {body: {contestType, contestId, customerId, offerData}, file, tokenData} = req;
     if (contestType === CONSTANTS.LOGO_CONTEST) {
-        values.fileName = filename;
-        values.originalFileName = originalname;
+        obj.fileName = file.filename;
+        obj.originalFileName = file.originalname;
     } else {
-        values.text = offerData;
+        obj.text = offerData;
     }
-    values.userId = tokenData.userId;
-    values.contestId = contestId;
-    let result = await offerQueries.createOffer(values);
-    delete result.contestId;
-    delete result.userId;
-    controller.getNotificationController().emitEntryCreated(
-        customerId);
-    const tokenId = {id: tokenData.userId};
-    const User = {...tokenData, ...tokenId};
-    res.send({...result, ...{User}});
+    obj.userId = tokenData.userId;
+    obj.contestId = contestId;
+    try {
+        let result = await offerQueries.createOffer(obj);
+        delete result.contestId;
+        delete result.userId;
+        controller.getNotificationController().emitEntryCreated(
+            customerId);
+        const tokenId = {id: tokenData.userId};
+        const User = {...tokenData, ...tokenId};
+        res.send({...result, ...{User}});
     } catch (e) {
         return next(new ServerError());
     }
