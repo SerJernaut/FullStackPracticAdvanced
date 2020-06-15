@@ -1,10 +1,10 @@
 CREATE TABLE "Conversation"
 (
-    "id"  SERIAL UNIQUE NOT NULL,
-    "ownerId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL ,
-    "participantId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL,
-    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
-    PRIMARY KEY ("ownerId", "participantId")
+    "name" varchar(64) NOT NULL,
+    "userA" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL ,
+    "userB" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL,
+    timestamp timestamp default current_timestamp
+    PRIMARY KEY ("userA", "userB")
 );
 
 CREATE TABLE "Message"
@@ -13,7 +13,7 @@ CREATE TABLE "Message"
     "conversationId" INTEGER REFERENCES "Conversation"(id) NOT NULL,
     "senderId" INTEGER REFERENCES "Users"(id) NOT NULL,
     "body" varchar(256),
-    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+    timestamp timestamp default current_timestamp
 );
 
 CREATE TABLE "Catalog"
@@ -21,7 +21,7 @@ CREATE TABLE "Catalog"
     "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
     "name" varchar(64) NOT NULL,
     "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE,
-    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL
+    timestamp timestamp default current_timestamp
 );
 
 CREATE TABLE "CatalogToConversation"
@@ -36,6 +36,7 @@ CREATE TABLE "CatalogToConversation"
 CREATE TABLE "BlackList"
 (
     "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    timestamp timestamp default current_timestamp,
     "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE
 );
 
@@ -44,7 +45,7 @@ CREATE TABLE "UserToBlackList"
     "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
     "userId" INTEGER NOT NULL,
     "blackListId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+    timestamp timestamp default current_timestamp,
     FOREIGN KEY ("userId") REFERENCES "Users"(id)  ON DELETE RESTRICT,
     FOREIGN KEY ("blackListId") REFERENCES "BlackList"(id)  ON DELETE RESTRICT
 );
@@ -52,6 +53,7 @@ CREATE TABLE "UserToBlackList"
 CREATE TABLE "FavouriteList"
 (
     "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
+    timestamp timestamp default current_timestamp,
     "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE
 );
 
@@ -60,7 +62,7 @@ CREATE TABLE "UserToFavouriteList"
     "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
     "userId" INTEGER NOT NULL,
     "favouriteListId" INTEGER NOT NULL,
-    "createdAt" TIMESTAMP DEFAULT NOW() NOT NULL,
+    timestamp timestamp default current_timestamp,
     FOREIGN KEY ("userId") REFERENCES "Users"(id)  ON DELETE RESTRICT,
     FOREIGN KEY ("favouriteListId") REFERENCES "FavouriteList"(id)  ON DELETE RESTRICT
 );
