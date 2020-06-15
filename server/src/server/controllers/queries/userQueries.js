@@ -55,7 +55,6 @@ module.exports.checkIfPasswordsAreNotEquals = async (pass1, pass2) => {
 };
 
 
-
 module.exports.findTransactionHistory = async (userId) => {
   const transactions = await bd.Transactions.findAll({
     where: {

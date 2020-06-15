@@ -13,9 +13,9 @@ module.exports.updateOffer = async (data, predicate, transaction) => {
         { where: predicate, returning: true, transaction });
     if (updatedCount === 1) {
         return updatedOffer.dataValues;
-    } else {
-        throw new ServerError('cannot update offer!');
     }
+    throw new ServerError('cannot update offer!');
+
 };
 
 module.exports.updateOfferStatus = async (data, predicate, transaction) => {
