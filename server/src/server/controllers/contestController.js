@@ -170,38 +170,31 @@ module.exports.getCustomersContests = async (req, res, next) => {
 };
 
 module.exports.getContests = async (req, res, next) => {
-  const {body: {limit, offset, ownEntries}, tokenData: {userId}} = req;
   try{
+    const {body: {typeIndex,contestId, industry, awardSort, limit, offset, ownEntries}, tokenData: {userId}} = req;
+    const predicates = UtilFunctions.createWhereForAllContests(typeIndex,
+        contestId, industry, awardSort);
     const contests = await db.Contests.findAll({
-      where: {
-        status: {
-          [db.Sequelize.Op.or]: [
-            CONSTANTS.CONTEST_STATUS_FINISHED,
-            CONSTANTS.CONTEST_STATUS_ACTIVE,
-          ],
-        }
-      },
+      where: predicates.where,
+      order: predicates.order,
       limit: limit,
       offset: offset || 0,
       include: [
         {
           model: db.Offers,
           required: ownEntries,
-          where: ownEntries ? { userId } : {},
+          where: ownEntries ? {userId} : {},
           attributes: ['id'],
         },
       ],
     })
-    if(contests) {
       contests.forEach(
           contest => contest.dataValues.count = contest.dataValues.Offers.length);
-      return res.send({ contests, hasMore: contests.length >= limit });
+          res.send({ contests, hasMore: contests.length >= limit });
     }
-    next(new ServerError())
+  catch(e) {
+    next (e);
   }
-    catch(err) {
-      next(err)
-    }
 };
 
 
