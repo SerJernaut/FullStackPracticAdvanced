@@ -351,7 +351,7 @@ module.exports.updateUserByAccessToken = async (req, res, next) => {
       req.updatedUser = updatedUser;
       return next();
     }
-    return new ServerError("can't find the user")
+    new ServerError("can't find the user")
   }
   catch(e) {
     next(e);
