@@ -1,10 +1,11 @@
 CREATE TABLE "Conversation"
 (
+    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
     "name" varchar(64) NOT NULL,
     "userA" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL ,
     "userB" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL,
-    timestamp timestamp default current_timestamp
-    PRIMARY KEY ("userA", "userB")
+    timestamp timestamp default current_timestamp,
+    UNIQUE ("userA", "userB")
 );
 
 CREATE TABLE "Message"
@@ -20,8 +21,7 @@ CREATE TABLE "Catalog"
 (
     "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
     "name" varchar(64) NOT NULL,
-    "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE,
-    timestamp timestamp default current_timestamp
+    "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE
 );
 
 CREATE TABLE "CatalogToConversation"
@@ -36,18 +36,8 @@ CREATE TABLE "CatalogToConversation"
 CREATE TABLE "BlackList"
 (
     "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
-    timestamp timestamp default current_timestamp,
-    "userId" INTEGER REFERENCES "Users"(id) ON DELETE RESTRICT NOT NULL UNIQUE
-);
-
-CREATE TABLE "UserToBlackList"
-(
-    "id" SERIAL UNIQUE PRIMARY KEY NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "blackListId" INTEGER NOT NULL,
-    timestamp timestamp default current_timestamp,
-    FOREIGN KEY ("userId") REFERENCES "Users"(id)  ON DELETE RESTRICT,
-    FOREIGN KEY ("blackListId") REFERENCES "BlackList"(id)  ON DELETE RESTRICT
+    "userId" INTEGER REFERENCES "Users"(id) NOT NULL UNIQUE ,
+    "blockedConversationId" INTEGER REFERENCES "Conversation"(id) NOT NULL
 );
 
 CREATE TABLE "FavouriteList"
