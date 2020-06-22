@@ -5,9 +5,9 @@ const router = require('./server/router');
 const cors = require('cors');
 const controller = require('./socketInit');
 const errorsHandler = require('./server/handlerError/handler');
-const errorsHandleLogger = require('./server/loggers/errorsHandleLogger');
+const {errorsHandleLogger} = require('./server/loggers/errorsHandleLogger');
 const schedule = require('node-schedule');
-const scheduledAutoCopyingLogs = require('./server/loggers/scheduledAutoCopyingLogs');
+const {scheduledAutoCopyingLogs} = require('./server/loggers/scheduledAutoCopyingLogs');
 
 const PORT = process.env.PORT || 9632;
 const app = express();
@@ -20,7 +20,7 @@ app.use(router);
 app.use(errorsHandleLogger);
 app.use(errorsHandler);
 
-schedule.scheduleJob('38 21 * * *', scheduledAutoCopyingLogs);
+schedule.scheduleJob('53 20 * * *', scheduledAutoCopyingLogs);
 
 const server = http.createServer(app);
 server.listen(PORT/*,

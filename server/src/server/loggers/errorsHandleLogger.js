@@ -1,11 +1,8 @@
-const path = require('path');
-const {promises: {readFile, appendFile, writeFile}} = require('fs');
+const {promises: {readFile}} = require('fs');
+const {absolutePathToLogsFile} = require('./paths');
+const {stringifyDataAndAppendFile, stringifyDataAndWriteFile} = require('../utils/fileUtils')
 
-const writeLogFile = async (path, data) => {
-    await writeFile(path, JSON.stringify(data, null, 2));
-}
-
-const parseJsonAndAppendLogsToFile = async (json, path, errorData) => {
+const parseJsonAndWriteLogsToFile = async (json, path, errorData) => {
     try{
         let newLogs = [];
         const jsonExistingLogs = JSON.parse(json);
@@ -13,17 +10,14 @@ const parseJsonAndAppendLogsToFile = async (json, path, errorData) => {
             newLogs = [...jsonExistingLogs]
         }
         newLogs.push(errorData);
-        await writeLogFile(path, newLogs)
+        await stringifyDataAndWriteFile(path, newLogs);
     }
     catch(e) {
-        await writeLogFile(path, [errorData]);
+        await stringifyDataAndWriteFile(path, [errorData]);
     }
 }
 
-const absolutePathToLogsDir = path.resolve(__dirname, '../logs');
-const absolutePathToLogsFile = path.resolve(absolutePathToLogsDir, 'errorLogs.json');
-
-module.exports = async (err, req, res, next) => {
+module.exports.errorsHandleLogger = async (err, req, res, next) => {
     const {message, code, stack} = err;
     const errorData = {
         message: message,
@@ -33,11 +27,11 @@ module.exports = async (err, req, res, next) => {
     }
     try {
         const oldLogs = await readFile(absolutePathToLogsFile);
-        await parseJsonAndAppendLogsToFile(oldLogs, absolutePathToLogsFile, errorData)
+        await parseJsonAndWriteLogsToFile(oldLogs, absolutePathToLogsFile, errorData)
         next(err);
     } catch (e) {
         if (e.code === 'ENOENT') {
-            await appendFile(absolutePathToLogsFile, JSON.stringify([errorData], null, 2));
+            await stringifyDataAndAppendFile(absolutePathToLogsFile, [errorData]);
         }
         next(e);
     }

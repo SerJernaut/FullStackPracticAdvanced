@@ -1,28 +1,36 @@
-const path = require('path');
-const {promises: {readFile, writeFile, appendFile}} = require('fs');
-const {exists} = require('../utils/promisifiedFunctions')
+const {promises: {readFile}} = require('fs');
+const {absolutePathToLogsDir, absolutePathToLogsFile} = require('./paths');
+const {stringifyDataAndAppendFile, stringifyDataAndWriteFile} = require('../utils/fileUtils')
 
-module.exports = async () => {
-    const absolutePathToLogsDir = path.resolve(__dirname, '../logs');
-    const absolutePathToLogFile = path.resolve(absolutePathToLogsDir, 'errorLogs.json');
-    try {
-        if (await exists(absolutePathToLogsDir)) {
-            const logFileData = await readFile(absolutePathToLogFile);
-            if (logFileData) {
-                const jsonExistingLogs = JSON.parse(logFileData);
-                if (Array.isArray(jsonExistingLogs)) {
-                    const filteredData = jsonExistingLogs.map(({message, time, code, stackTrace}) => ({
-                        message,
-                        code,
-                        time
-                    }));
-                    await appendFile(`${absolutePathToLogsDir}/${Date.now()}.json`, JSON.stringify(filteredData, null, 2), 'utf-8')
-                }
-                await writeFile(absolutePathToLogFile, JSON.stringify([]))
-            }
+const parseJsonAndCreateFileWithFilteredLogs = async (json, path) => {
+    try{
+        let filteredLogs = [];
+        const jsonExistingLogs = JSON.parse(json);
+        if (Array.isArray(jsonExistingLogs)) {
+            filteredLogs = jsonExistingLogs.map(({message, time, code, stackTrace}) => ({
+                message,
+                code,
+                time
+            }));
         }
+        await stringifyDataAndAppendFile(path, filteredLogs);
+    }
+    catch(e) {
+        await stringifyDataAndAppendFile(path, []);
+    }
+}
+
+module.exports.scheduledAutoCopyingLogs = async () => {
+    try {
+            const existingLogs = await readFile(absolutePathToLogsFile);
+            await parseJsonAndCreateFileWithFilteredLogs(existingLogs, `${absolutePathToLogsDir}/${Date.now()}.json`);
+            await stringifyDataAndWriteFile(absolutePathToLogsFile, []);
     }
     catch (e) {
+        if (e.code === 'ENOENT') {
+            await stringifyDataAndAppendFile(absolutePathToLogsFile, []);
+            await stringifyDataAndAppendFile(`${absolutePathToLogsDir}/${Date.now()}.json`, []);
+        }
         throw e;
     }
 }
